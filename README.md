@@ -26,8 +26,10 @@ No, the intention of OYA is not to provide advice, legal or otherwise. OYA volun
   <img src="https://media.giphy.com/media/7fNXLdViGSlKo/giphy.gif">
 </p>
 
+<br>
+<br>
 
-### Technologies Used
+## Technologies Used
 * React Native
 * Node
 * Express
@@ -35,7 +37,7 @@ No, the intention of OYA is not to provide advice, legal or otherwise. OYA volun
 * MySQL
 * Google Translate API
 
-### Future Developements
+## Future Developements
 * Allow users to:
   * Create accounts
   * Send documents to volunteers
