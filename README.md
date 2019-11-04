@@ -1,5 +1,9 @@
 # OYA: Connecting Monolingual users with Bilingual volunteers
 
+<p align="center">
+  <img src="https://media.giphy.com/media/7fNXLdViGSlKo/giphy.gif">
+</p>
+
 #### WHAT IS OYA?
 Oya is a FREE peer to peer translation service that connects you with bilingual speakers able to provide you with translation and context either for simple phrases or to help you facilitate a conversation. Whether it’s to better communicate with a loved one, coworker or make a request of your landlord. OYA voluteeners will help you with what to say and how to say it.
 
@@ -22,13 +26,6 @@ No, the intention of OYA is not to provide advice, legal or otherwise. OYA volun
 * That being said, if you make threats or ask volunteers to assist with illegal activities they will be forced to end your session and pending the severity of the comments, those may be reported to the police.
 
 
-<p align="center">
-  <img src="https://media.giphy.com/media/7fNXLdViGSlKo/giphy.gif">
-</p>
-
-<br>
-<br>
-
 ## Technologies Used
 * React Native
 * Node
@@ -44,3 +41,4 @@ No, the intention of OYA is not to provide advice, legal or otherwise. OYA volun
   * Make phone calls to translators
 * Expand features into document review and phone calls
 * Allow customization of Volunteer accounts
+* Be able to support multiple languages
