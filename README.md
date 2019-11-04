@@ -22,7 +22,7 @@ No, the intention of OYA is not to provide advice, legal or otherwise. OYA volun
 * That being said, if you make threats or ask volunteers to assist with illegal activities they will be forced to end your session and pending the severity of the comments, those may be reported to the police.
 
 
-<img src="https://media.giphy.com/media/7fNXLdViGSlKo/giphy.gif">
+<img align="center" src="https://media.giphy.com/media/7fNXLdViGSlKo/giphy.gif">
 
 ### Technologies Used
 * React Native
