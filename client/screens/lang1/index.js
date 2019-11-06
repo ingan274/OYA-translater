@@ -17,8 +17,7 @@ function Lang1() {
     <View style={style.container}>
       <View style={style.infoContainer}>
         <Ionicons
-          name="md-info"
-          type="Feather"
+          name="md-information-circle-outline"
           size={26}
           style={style.info}
           // onPress={}

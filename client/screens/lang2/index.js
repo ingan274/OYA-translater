@@ -1,6 +1,6 @@
 import style from "./style";
 import React, { Component } from 'react';
-import Langbtn from "../../components/langbtn"
+import Langbtn from "../../components/Langbtn"
 import {
   Image,
   Platform,
