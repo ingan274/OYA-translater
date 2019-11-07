@@ -1,14 +1,18 @@
-import { createSwitchNavigator } from 'react-navigation';
-import Lang1 from '../screens/Lang1';
-import Lang2 from '../screens/Lang2';
+import React from 'react';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+
+import Lang1 from '../screens/lang1';
+import Lang2 from '../screens/lang2/index.js';
 import About from '../screens/about';
-export default createSwitchNavigator(
-  {
-    Home: Lang1,
-    Language: Lang2,
-    About: About
-  },
-  {
-    initialRouteName: 'Home',
-  },
-);
+
+export default createAppContainer(
+  createSwitchNavigator(
+    {
+      Home: { screen: Lang1 },
+      Language: { screen: Lang2 },
+      About: { screen: About }
+    },
+    {
+      initialRouteName: 'About',
+    },
+  )
