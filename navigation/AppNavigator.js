@@ -1,19 +1,16 @@
-import React from 'react';
-import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+  
+import { createDrawerNavigator, createAppContainer } from 'react-navigation';
+import Account from '../screens/V-account';
+import About from '../screens/V-about';
+import Settings from '../screens/V-settings';
 
-import Lang1 from '../screens/lang1';
-import Lang2 from '../screens/lang2/index.js';
-import About from '../screens/about';
+const AccountNavDrawer = createDrawerNavigator({
+  Account,
+  About,
+  // Settings
+},
+{
+  initialRouteName: 'Account',
+});
 
-export default createAppContainer(
-  createSwitchNavigator(
-    {
-      Home: { screen: Lang1 },
-      Language: { screen: Lang2 },
-      About: { screen: About }
-    },
-    {
-      initialRouteName: 'Home',
-    },
-  )
-)
+export default createAppContainer(AccountNavDrawer);

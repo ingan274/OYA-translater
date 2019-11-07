@@ -21,6 +21,10 @@ class Lang1 extends PureComponent {
     console.log('Lang Unmounted');
   }
 
+  static navigationOptions = {
+    title: null,
+  };
+
   render() {
     return (
       <View style={style.container}>

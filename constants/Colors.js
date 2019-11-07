@@ -6,7 +6,8 @@ export default {
   blue2: '#8CAFAF',
   blue3: '#416B75',
   blue4: '#0B3646', // dark blue
-  white: '#FFF5E9', // white
+  cream: '#FFF5E9', // cream
+  white: 'white', // white
   errorBackground: 'red',
   softRed: '#C88276',
   beige: '#F3DFC6',

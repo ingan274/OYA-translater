@@ -21,6 +21,10 @@ class Lang1 extends PureComponent {
     console.log('Home Unmounted');
   }
 
+  static navigationOptions = {
+    title: null,
+  };
+
   render() {
     return (
       <View style={style.container}>

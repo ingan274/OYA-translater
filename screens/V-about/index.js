@@ -3,7 +3,6 @@ import React, { PureComponent } from 'react';
 import { Text, View, ScrollView, Image, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-
 class Aboutscreen extends PureComponent {
   componentDidMount() {
     console.log('About did mount');
@@ -16,17 +15,8 @@ class Aboutscreen extends PureComponent {
   render() {
     return (
       <View style={style.container}>
-        <View style={style.header}>
-          <Ionicons
-            name={Platform.OS === 'ios' ? 'ios-close' : 'md-close'}
-            size={40}
-            style={style.back}
-            onPress={this.handleBackPress}
-          />
-        </View>      
-       
         <ScrollView style={style.textBox}>
-           <Image
+          <Image
             source={
               __DEV__
                 ? require('../../assets/images/logo.png')
@@ -100,13 +90,6 @@ class Aboutscreen extends PureComponent {
       </View>
     );
   }
-
-  handleBackPress = () => {
-    const {
-      navigation: { navigate },
-    } = this.props;
-    navigate('Home');
-  };
 }
 
 export default Aboutscreen;
