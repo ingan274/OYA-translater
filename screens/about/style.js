@@ -12,14 +12,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: 20,
     paddingTop: 50,
-    alignItems: "center",
+    alignItems: 'center',
     marginTop: 20,
     marginBottom: 0,
   },
   back: {
     color: color.white,
-     marginBottom: 0,
+    marginBottom: 0,
     paddingVertical: 0,
+    marginLeft: 10,
   },
   logo: {
     width: 120,
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     paddingTop: 10,
     color: 'white',
-  }
+  },
 });
 
 export default styles;

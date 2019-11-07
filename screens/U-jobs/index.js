@@ -1,7 +1,9 @@
 import style from './style';
 import React, { PureComponent } from 'react';
-import Langbtn from '../../components/Langbtn.js';
+import Jobbtn from '../../components/Jobbtn';
+import JobModal from '../../components/JobModal';
 import { Ionicons } from '@expo/vector-icons';
+import color from '../../constants/Colors';
 import {
   Image,
   Platform,
@@ -10,9 +12,27 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Modal,
+  TouchableHighlight,
+  Alert,
 } from 'react-native';
 
-class Lang1 extends PureComponent {
+class Job extends PureComponent {
+  state = {
+    modalVisible: false,
+  };
+
+  static navigationOptions = {
+    title: 'Assistance',
+    headerStyle: {
+      backgroundColor: color.blue4,
+    },
+    headerTintColor: color.white,
+    headerTitleStyle: {
+      fontWeight: 'bold',
+    },
+  };
+
   componentDidMount() {
     console.log('About did mount');
   }
@@ -21,57 +41,62 @@ class Lang1 extends PureComponent {
     console.log('About Unmounted');
   }
 
+  setModalVisible(visible) {
+    this.setState({ modalVisible: visible });
+  }
+
   render() {
+
     return (
       <View style={style.container}>
-      <View style={style.header}>
-         
-          <Text>Assistance</Text>
-         
+        <View style={style.dotContainer}>
+          <Image
+            source={require('../../assets/images/dots.png')}
+            style={style.dots}
+          />
         </View>
-        <View style={style.header}>
-         
-          <View style={style.dotContainer}>
-            <Image
-              source={require('../../assets/images/dots.png')}
-              style={style.dots}
-            />
-          </View>
-         
+        <View style={style.container}>
+          <JobModal
+            onPressOut={() => {
+              this.setModalVisible(!this.state.modalVisible);
+            }}
+            visible={this.state.modalVisible}
+          />
+          <Jobbtn
+            btntext="Message Volunteer"
+            onPress={this.handleMessageReq}
+            icon="text"
+          />
+          <Jobbtn
+            btntext="Call Volunteer"
+            onPress={() => {
+              this.setModalVisible(true);
+            }}
+            icon="call"
+          />
+          <Jobbtn
+            btntext="Document Review"
+            onPress={this.handleDocReq}
+            icon="paper"
+          />
         </View>
-         <Text style={style.subhead}>
-          What language do you need translated?
-        </Text>
-        
-        <Langbtn btntext="English" onPress={this.handleTransLanguage} />
-        <Langbtn btntext="Spanish" onPress={this.handleTransLanguage} />
-        <Langbtn btntext="Chinese" onPress={this.handleTransLanguage} />
-        <Langbtn btntext="French" onPress={this.handleTransLanguage} />
-        <Langbtn btntext="Farsi" onPress={this.handleTransLanguage} />
       </View>
     );
   }
 
-  handleAccount = () => {
+  handleMessageReq = () => {
     const {
       navigation: { navigate },
     } = this.props;
-    navigate('AccountLogIn');
+    navigate('Chat');
   };
 
-  handleBackPress = () => {
+  handleDocReq = () => {
     const {
       navigation: { navigate },
     } = this.props;
-    navigate('Home');
-  };
-
-  handleTransLanguage = () => {
-    const {
-      navigation: { navigate },
-    } = this.props;
-    navigate('JobsStack');
+    navigate('Upload');
   };
 }
 
-export default Lang1;
+export default Job;

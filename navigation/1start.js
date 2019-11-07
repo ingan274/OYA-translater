@@ -13,7 +13,7 @@ export default createAppContainer(
       About: { screen: About }
     },
     {
-      initialRouteName: 'About',
+      initialRouteName: 'Home',
     },
   )
 )

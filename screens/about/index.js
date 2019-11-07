@@ -18,8 +18,8 @@ class Aboutscreen extends PureComponent {
       <View style={style.container}>
         <View style={style.header}>
           <Ionicons
-            name={Platform.OS === 'ios' ? 'ios-arrow-dropleft' : 'md-arrow-dropleft'}
-            size={30}
+            name={Platform.OS === 'ios' ? 'ios-close' : 'md-close'}
+            size={40}
             style={style.back}
             onPress={this.handleBackPress}
           />

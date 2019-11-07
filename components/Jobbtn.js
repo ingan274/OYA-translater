@@ -1,14 +1,24 @@
 import React, { Component } from 'react';
 import Colors from '../constants/Colors';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Platform } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
-function LangButton(props) {
+function Jobbtn (props) {
   return (
     <View>
       <TouchableOpacity
         style={styles.button}
         onPress={props.onPress} // navigation
       >
+      <Ionicons
+            name={
+              Platform.OS === 'ios'
+                ? `ios-${props.icon}`
+                : `md-${props.icon}`
+            }
+            size={35}
+            color={Colors.white}
+          />
         <Text style={styles.btntext}>{props.btntext}</Text>
       </TouchableOpacity>
     </View>
@@ -21,7 +31,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.blue4,
     paddingHorizontal: 50,
     paddingVertical: 20,
-    marginTop: 30,
+    marginBottom: 30,
     borderRadius: 10,
     marginHorizontal: 50
   },
@@ -31,4 +41,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LangButton;
+export default Jobbtn;
