@@ -13,7 +13,7 @@ import {
   View,
 } from 'react-native';
 
-class Message extends PureComponent {
+class Upload extends PureComponent {
   componentDidMount() {
     console.log('Chatroom did mount');
   }
@@ -22,8 +22,8 @@ class Message extends PureComponent {
     console.log('Chatroom Unmounted');
   }
 
-  static navigationOptions = {
-    title: 'Chatroom',
+   static navigationOptions = {
+    title: 'Upload',
     headerStyle: {
       backgroundColor: color.blue4,
     },
@@ -36,11 +36,10 @@ class Message extends PureComponent {
   render() {
     return (
       <View style={style.container}>
-        <Text>This is the chatroom</Text>
+        <Text>This is where you will uplod document (insert design but not active)</Text>
       </View>
     );
   }
-
 }
 
-export default Message;
+export default Upload;

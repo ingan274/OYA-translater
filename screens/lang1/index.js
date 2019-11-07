@@ -14,12 +14,16 @@ import {
 
 class Lang1 extends PureComponent {
   componentDidMount() {
-    console.log('About did mount');
+    console.log('Home did mount');
   }
 
   componentWillUnmount() {
-    console.log('About Unmounted');
+    console.log('Home Unmounted');
   }
+
+  static navigationOptions = {
+    title: null,
+  };
 
   render() {
     return (
@@ -31,7 +35,6 @@ class Lang1 extends PureComponent {
                 ? 'ios-information-circle-outline'
                 : 'md-information-circle-outline'
             }
-            type="Feather"
             size={30}
             style={style.info}
             onPress={this.handleAbout}

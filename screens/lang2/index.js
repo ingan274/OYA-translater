@@ -14,12 +14,16 @@ import {
 
 class Lang1 extends PureComponent {
   componentDidMount() {
-    console.log('About did mount');
+    console.log('Lang did mount');
   }
 
   componentWillUnmount() {
-    console.log('About Unmounted');
+    console.log('Lang Unmounted');
   }
+
+  static navigationOptions = {
+    title: null,
+  };
 
   render() {
     return (
