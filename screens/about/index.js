@@ -23,14 +23,17 @@ class Aboutscreen extends PureComponent {
             style={style.back}
             onPress={this.handleBackPress}
           />
-          <View style={style.dotContainer}>
-            <Image
-              source={require('../../assets/images/dots.png')}
-              style={style.dots}
-            />
-          </View>
-        </View>
+        </View>      
+       
         <ScrollView style={style.textBox}>
+           <Image
+            source={
+              __DEV__
+                ? require('../../assets/images/logo.png')
+                : require('../../assets/images/logo.png')
+            }
+            style={style.logo}
+          />
           <Text style={style.title}> WHAT IS OYA? </Text>
           <Text style={style.desc}>
             {' '}

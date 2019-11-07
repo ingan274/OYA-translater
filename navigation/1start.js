@@ -16,3 +16,4 @@ export default createAppContainer(
       initialRouteName: 'About',
     },
   )
+)

@@ -40,20 +40,20 @@ class Lang1 extends PureComponent {
             />
           </View>
           <Ionicons
-            name={
-              Platform.OS === 'ios' ? 'ios-person' : 'md-person'
-            }
+            name={Platform.OS === 'ios' ? 'ios-person' : 'md-person'}
             size={30}
             style={style.account}
             onPress={this.handleAccount}
           />
         </View>
-
-        <Langbtn btntext="English" onPress={this.handleTransLanguage} />
-        <Langbtn btntext="Spanish" onPress={this.handleTransLanguage} />
-        <Langbtn btntext="Chinese" onPress={this.handleTransLanguage} />
-        <Langbtn btntext="French" onPress={this.handleTransLanguage} />
-        <Langbtn btntext="Farsi" onPress={this.handleTransLanguage} />
+        <Text style={style.subhead}>What language do you need translated?</Text>
+        <ScrollView>
+          <Langbtn btntext="English" onPress={this.handleTransLanguage} />
+          <Langbtn btntext="Spanish" onPress={this.handleTransLanguage} />
+          <Langbtn btntext="Chinese" onPress={this.handleTransLanguage} />
+          <Langbtn btntext="French" onPress={this.handleTransLanguage} />
+          <Langbtn btntext="Farsi" onPress={this.handleTransLanguage} />
+        </ScrollView>
       </View>
     );
   }

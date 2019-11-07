@@ -26,7 +26,11 @@ class Lang1 extends PureComponent {
       <View style={style.container}>
         <View style={style.infoContainer}>
           <Ionicons
-            name={Platform.OS === 'ios' ? 'ios-information-circle-outline' : 'md-information-circle-outline'}
+            name={
+              Platform.OS === 'ios'
+                ? 'ios-information-circle-outline'
+                : 'md-information-circle-outline'
+            }
             type="Feather"
             size={30}
             style={style.info}
@@ -47,22 +51,23 @@ class Lang1 extends PureComponent {
           A peer to peer translation service that connects you with bilingual
           speakers
         </Text>
-
-        <Langbtn btntext="English" onPress={this.handleLanguage}/>
-        <Langbtn btntext="Español" onPress={this.handleLanguage} />
-        <Langbtn btntext="中文" onPress={this.handleLanguage} />
+        <ScrollView>
+          <Langbtn btntext="English" onPress={this.handleLanguage} />
+          <Langbtn btntext="Español" onPress={this.handleLanguage} />
+          <Langbtn btntext="中文" onPress={this.handleLanguage} />
+        </ScrollView>
       </View>
     );
   }
 
-   handleAbout = () => {
+  handleAbout = () => {
     const {
       navigation: { navigate },
     } = this.props;
     navigate('About');
   };
 
-   handleLanguage = () => {
+  handleLanguage = () => {
     const {
       navigation: { navigate },
     } = this.props;
