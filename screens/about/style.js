@@ -27,6 +27,21 @@ const styles = StyleSheet.create({
   },
   textBox: {
     paddingHorizontal: 30,
+  },
+  title: {
+    fontSize: 17,
+    paddingTop: 20,
+    fontWeight: 'bold',
+  },
+  desc: {
+    fontSize: 15,
+    paddingTop: 10,
+  },
+  emphesis: {
+    fontWeight: 'bold',
+    fontStyle: 'italic',
+    fontSize: 15,
+    paddingTop: 10,
   }
 });
 

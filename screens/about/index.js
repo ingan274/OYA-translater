@@ -1,6 +1,6 @@
 import style from './style';
 import React, { PureComponent } from 'react';
-import { Text, View, ScrollView, Image } from 'react-native';
+import { Text, View, ScrollView, Image, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 
@@ -18,8 +18,8 @@ class Aboutscreen extends PureComponent {
       <View style={style.container}>
         <View style={style.header}>
           <Ionicons
-            name="md-backspace"
-            size={26}
+            name={Platform.OS === 'ios' ? 'ios-arrow-dropleft' : 'md-arrow-dropleft'}
+            size={30}
             style={style.back}
             onPress={this.handleBackPress}
           />

@@ -13,7 +13,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   info: {
-    marginTop: 40,
+    marginTop: 45,
+    color: color.blue4,
   },
   logoContainer: {
     alignItems: "center",
