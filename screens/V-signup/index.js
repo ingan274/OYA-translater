@@ -15,32 +15,37 @@ import {
 
 class SignUp extends PureComponent {
   componentDidMount() {
-    console.log('Chatroom did mount');
+    console.log('SignUp did mount');
   }
 
   componentWillUnmount() {
-    console.log('Chatroom Unmounted');
+    console.log('SignUp Unmounted');
   }
-
-  static navigationOptions = {
-    title: 'Volunteer Form',
-    headerStyle: {
-      backgroundColor: color.blue4,
-    },
-    headerTintColor: color.white,
-    headerTitleStyle: {
-      fontWeight: 'bold',
-    },
-  };
 
   render() {
     return (
       <View style={style.container}>
         <Text>THIS IS WHERE THE SIGN UP FORM WILL GO</Text>
+        <TouchableOpacity
+          onPress={this.handleSubmit} // navigation
+        >
+          <Ionicons
+            name={Platform.OS === 'ios' ? 'ios-arrow-dropright-circle' : 'md-arrow-dropright-circle'}
+            size={40}
+            color= {color.blue5}
+            onPress={this.handleBackPress}
+          />
+        </TouchableOpacity>
       </View>
     );
   }
 
+  handleSubmit = () => {
+    const {
+      navigation: { navigate },
+    } = this.props;
+    navigate('Form');
+  };
 }
 
 export default SignUp;

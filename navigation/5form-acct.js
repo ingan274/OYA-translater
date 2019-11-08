@@ -1,18 +1,17 @@
-
 import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
-import LogIn from '../screens/V-login';
+import Form from '../screens/V-form';
 import Account from './5acct-settings';
 
 export default createAppContainer(
   createSwitchNavigator(
     {
-      LogIn: { screen: LogIn },
+      Form: { screen: Form },
       Account: { screen: Account }
     },
     {
-      initialRouteName: 'LogIn',
+      initialRouteName: 'Form',
     },
   )
 )

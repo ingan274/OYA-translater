@@ -1,18 +1,17 @@
+import React from 'react';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
+import SignUp from '../screens/V-signup';
+import Form from './5form-acct';
 
-const EmployeeSchema = {
-    name: 'Employee',
-    primaryKey: 'key',
-    properties: {
-      key: 'string', //primary key
-      firstname:  'string',
-      middlename: 'string',
-      lastname: 'string',
-      nickname: 'string',
-      birthday: {type: 'date'},
-      gender: 'string',
-      address: 'string',
-      position: 'string',
-      salary: {type: 'double'},
-    }
-  };
+export default createAppContainer(
+  createSwitchNavigator(
+    {
+      Form: { screen: Form },
+      SignUp: { screen: SignUp }
+    },
+    {
+      initialRouteName: 'SignUp',
+    },
+  )
+)
