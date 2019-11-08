@@ -25,12 +25,14 @@ function JobModal(props) {
           Alert.alert('Modal has been closed.');
         }}
         >
-        <View style={{ marginTop: 30 }}>
+        <View style={{ marginTop: 30, backgroundColor: Colors.blue4, flex:1 }}>
           <View style={styles.modal}>
              <TouchableHighlight onPress={props.onPressOut}>
               <Ionicons
                 name={Platform.OS === 'ios' ? 'ios-close' : 'md-close'}
                 size={40}
+                color={Colors.white}
+                style={styles.exit}
               />
             </TouchableHighlight>
 
@@ -56,21 +58,26 @@ const styles = StyleSheet.create({
   modal: {
     paddingHorizontal: 30
   },
+  exit: {
+    marginTop: 10
+  },
   textCont: {
     alignItems: 'center',
     marginTop: 100,
   },
   text: {
      fontSize: 20,
-     paddingHorizontal: 50
+     paddingHorizontal: 50,
+     color: Colors.white
   },
   textLine: {
     marginTop: 10,
     fontWeight: 'bold',
     fontSize: 20,
+    color: Colors.white
   },
   plane: {
-    color: Colors.blue3
+    color: Colors.blue2
   }
 });
 

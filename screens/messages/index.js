@@ -36,10 +36,30 @@ class Message extends PureComponent {
   render() {
     return (
       <View style={style.container}>
-        <Text>This is the chatroom</Text>
+        <View style={style.header}>
+          <Ionicons
+            name={
+              Platform.OS === 'ios' ? 'ios-arrow-dropleft' : 'md-arrow-dropleft'
+            }
+            size={30}
+            style={style.back}
+            onPress={this.handleBackPress}
+          />
+        </View>
+        <View style={style.Textcontainer}>
+          <Text>This is the chatroom</Text>
+        </View>
       </View>
     );
   }
+
+
+  handleBackPress = () => {
+    const {
+      navigation: { navigate },
+    } = this.props;
+    navigate('Jobs');
+  };
 
 }
 

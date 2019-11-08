@@ -4,8 +4,8 @@ import color from '../../constants/Colors';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: "center",
-    // alignItems: "center"
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: color.blue1,
   },
   header: {

@@ -49,13 +49,26 @@ class Job extends PureComponent {
 
     return (
       <View style={style.container}>
+        <View style={style.header}>
+          <Ionicons
+            name={
+              Platform.OS === 'ios' ? 'ios-arrow-dropleft' : 'md-arrow-dropleft'
+            }
+            size={30}
+            style={style.back}
+            onPress={this.handleBackPress}
+          />
+        </View>
+        <View style={style.titleContainer}>
+          <Text style={style.headerTitle}>Assistance</Text>
+        </View>
         <View style={style.dotContainer}>
           <Image
             source={require('../../assets/images/dots.png')}
             style={style.dots}
           />
         </View>
-        <View style={style.container}>
+        <View style={style.ButtonContainer}>
           <JobModal
             onPressOut={() => {
               this.setModalVisible(!this.state.modalVisible);
@@ -83,6 +96,13 @@ class Job extends PureComponent {
       </View>
     );
   }
+
+  handleBackPress = () => {
+    const {
+      navigation: { navigate },
+    } = this.props;
+    navigate('Language');
+  };
 
   handleMessageReq = () => {
     const {

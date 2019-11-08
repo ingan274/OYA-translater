@@ -1,18 +1,19 @@
-import { createDrawerNavigator, createAppContainer } from 'react-navigation';
-import Account from '../screens/V-account';
-import About from '../screens/V-about';
-import Settings from '../screens/V-settings';
-import { Ionicons } from '@expo/vector-icons';
-import { Switch, Text, View, StyleSheet, Platform, Image, TouchableOpacity } from 'react-native';
-import React from 'react'
+import React from 'react';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
-const AccountNavDrawer = createDrawerNavigator({
-  Account,
-  Settings,
-  About,
-},
-{
-  initialRouteName: 'Account',
-});
+import Lang1 from '../screens/lang1';
+import Lang2 from './2lang2-job_Vlogin';
+import About from '../screens/about';
 
-export default createAppContainer(AccountNavDrawer);
+export default createAppContainer(
+  createSwitchNavigator(
+    {
+      Home: { screen: Lang1 },
+      Language: { screen: Lang2 },
+      About: { screen: About }
+    },
+    {
+      initialRouteName: 'Home',
+    },
+  )
+)
