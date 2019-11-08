@@ -15,36 +15,51 @@ import {
 
 class SignUp extends PureComponent {
   componentDidMount() {
-    console.log('SignUp did mount');
+    console.log('Chatroom did mount');
   }
 
   componentWillUnmount() {
-    console.log('SignUp Unmounted');
+    console.log('Chatroom Unmounted');
   }
+
+  static navigationOptions = {
+    header: null
+}
 
   render() {
     return (
       <View style={style.container}>
-        <Text>THIS IS WHERE THE SIGN UP FORM WILL GO</Text>
+        <Text>THIS IS WHERE THE Sign Up FORM WILL GO</Text>
         <TouchableOpacity
-          onPress={this.handleSubmit} // navigation
+          onPress={this.handleSUSubmit} // navigation
         >
           <Ionicons
             name={Platform.OS === 'ios' ? 'ios-arrow-dropright-circle' : 'md-arrow-dropright-circle'}
             size={40}
             color= {color.blue5}
-            onPress={this.handleBackPress}
           />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={this.handleSignUp} // navigation
+        >
+          <Text>switch to LogIn</Text>
         </TouchableOpacity>
       </View>
     );
   }
 
-  handleSubmit = () => {
+  handleSUSubmit = () => {
     const {
       navigation: { navigate },
     } = this.props;
     navigate('Form');
+  };
+
+  handleSignUp = () => {
+    const {
+      navigation: { navigate },
+    } = this.props;
+    navigate('LogIn');
   };
 }
 

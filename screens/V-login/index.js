@@ -15,32 +15,52 @@ import {
 
 class LogIn extends PureComponent {
   componentDidMount() {
-    console.log('Chatroom did mount');
+    console.log('LogIn did mount');
   }
 
   componentWillUnmount() {
-    console.log('Chatroom Unmounted');
+    console.log('LogIn Unmounted');
   }
 
   static navigationOptions = {
-    title: 'Volunteer Form',
-    headerStyle: {
-      backgroundColor: color.blue4,
-    },
-    headerTintColor: color.white,
-    headerTitleStyle: {
-      fontWeight: 'bold',
-    },
-  };
+    header: null
+}
 
   render() {
     return (
       <View style={style.container}>
-        <Text>THIS IS WHERE THE LOG IN FORM WILL GO</Text>
+        <Text>THIS IS WHERE THE LOGIN FORM WILL GO</Text>
+        <TouchableOpacity
+          onPress={this.handleLISubmit} // navigation
+        >
+          <Ionicons
+            name={Platform.OS === 'ios' ? 'ios-arrow-dropright-circle' : 'md-arrow-dropright-circle'}
+            size={40}
+            color= {color.blue5}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={this.handleSignUp} // navigation
+        >
+          <Text>switch to SignUp</Text>
+        </TouchableOpacity>
       </View>
     );
   }
 
+  handleLISubmit = () => {
+    const {
+      navigation: { navigate },
+    } = this.props;
+    navigate('Account');
+  };
+
+  handleSignUp = () => {
+    const {
+      navigation: { navigate },
+    } = this.props;
+    navigate('SignUp');
+  };
 }
 
 export default LogIn;
