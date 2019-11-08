@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Text, View, StyleSheet, Platform, Image, TouchableOpacity } from 'react-native';
+import { Switch, Text, View, StyleSheet, Platform, Image, TouchableOpacity, ScrollView } from 'react-native';
 import colors from '../../constants/Colors';
 import NameLang from '../../components/accntLang';
 import style from './style';
@@ -55,89 +55,92 @@ export default class Account extends React.Component {
           />
         </View>
 
-        <View style={style.availrow}>
-          <Ionicons
-            name={Platform.OS === 'ios' ? 'ios-text' : 'md-text'}
-            size={40}
-            color={colors.blue2}
-          />
-          <Switch
-            onValueChange={this.toggleMessage}
-            value={this.state.messageValue}
-          />
-        </View>
+        <ScrollView>
 
-        <View style={style.availrow}>
-          <Ionicons
-            name={Platform.OS === 'ios' ? 'ios-call' : 'me-call'}
-            size={40}
-            color={colors.blue2}
-          />
-          <Switch
-            onValueChange={this.togglePhone}
-            value={this.state.phoneValue}
-          />
-        </View>
+          <View style={style.availrow}>
+            <Ionicons
+              name={Platform.OS === 'ios' ? 'ios-text' : 'md-text'}
+              size={40}
+              color={colors.blue2}
+            />
+            <Switch
+              onValueChange={this.toggleMessage}
+              value={this.state.messageValue}
+            />
+          </View>
 
-        <View style={style.availrow}>
-          <Ionicons
-            name={Platform.OS === 'ios' ? 'ios-paper' : 'md-paper'}
-            size={40}
-            color={colors.blue2}
-          />
-          <Switch
-            onValueChange={this.toggleDocument}
-            value={this.state.documentValue}
-          />
-        </View>
-        <View style={style.availrow}>
-          <Ionicons
-            name={Platform.OS === 'ios' ? 'ios-text' : 'md-text'}
-            size={40}
-            style={style.message}
-            color={this.state.messageNotification ? colors.blue4 : colors.bluegrey}
-          />
-          <Ionicons
-            name={Platform.OS === 'ios' ? 'ios-alert' : 'md-alert'}
-            size={22}
-            style={this.state.messageNotification ? style.Notification : style.noneNotification}
-            color="red"
-          />
-          <Ionicons
-            name={Platform.OS === 'ios' ? 'ios-arrow-dropright-circle' : 'me-arrow-dropright-circle'}
-            size={40}
-            color={colors.white}
-          // onPress={this.}
-          />
-        </View>
+          <View style={style.availrow}>
+            <Ionicons
+              name={Platform.OS === 'ios' ? 'ios-call' : 'me-call'}
+              size={40}
+              color={colors.blue2}
+            />
+            <Switch
+              onValueChange={this.togglePhone}
+              value={this.state.phoneValue}
+            />
+          </View>
 
-        <View style={style.availrow}>
-          <Ionicons
-            name={Platform.OS === 'ios' ? 'ios-call' : 'me-call'}
-            size={40}
-            color={colors.bluegrey}
-          />
-          <Ionicons
-            name={Platform.OS === 'ios' ? 'ios-arrow-dropright-circle' : 'me-arrow-dropright-circle'}
-            size={40}
-            color={colors.white}
-          // onPress={this.}
-          />
-        </View>
+          <View style={style.availrow}>
+            <Ionicons
+              name={Platform.OS === 'ios' ? 'ios-paper' : 'md-paper'}
+              size={40}
+              color={colors.blue2}
+            />
+            <Switch
+              onValueChange={this.toggleDocument}
+              value={this.state.documentValue}
+            />
+          </View>
+          <View style={style.availrow}>
+            <Ionicons
+              name={Platform.OS === 'ios' ? 'ios-text' : 'md-text'}
+              size={40}
+              style={style.message}
+              color={this.state.messageNotification ? colors.blue4 : colors.bluegrey}
+            />
+            <Ionicons
+              name={Platform.OS === 'ios' ? 'ios-alert' : 'md-alert'}
+              size={22}
+              style={this.state.messageNotification ? style.Notification : style.noneNotification}
+              color="red"
+            />
+            <Ionicons
+              name={Platform.OS === 'ios' ? 'ios-arrow-dropright-circle' : 'me-arrow-dropright-circle'}
+              size={40}
+              color={colors.white}
+            // onPress={this.}
+            />
+          </View>
 
-        <View style={style.availrow}>
-          <Ionicons
-            name={Platform.OS === 'ios' ? 'ios-paper' : 'md-paper'}
-            size={40}
-            color={colors.bluegrey}
-          />
-          <Ionicons
-            name={Platform.OS === 'ios' ? 'ios-arrow-dropright-circle' : 'me-arrow-dropright-circle'}
-            size={40}
-            color={colors.white}
-          // onPress={this.}
-          />
-        </View>
+          <View style={style.availrow}>
+            <Ionicons
+              name={Platform.OS === 'ios' ? 'ios-call' : 'me-call'}
+              size={40}
+              color={colors.bluegrey}
+            />
+            <Ionicons
+              name={Platform.OS === 'ios' ? 'ios-arrow-dropright-circle' : 'me-arrow-dropright-circle'}
+              size={40}
+              color={colors.white}
+            // onPress={this.}
+            />
+          </View>
+
+          <View style={style.availrow}>
+            <Ionicons
+              name={Platform.OS === 'ios' ? 'ios-paper' : 'md-paper'}
+              size={40}
+              color={colors.bluegrey}
+            />
+            <Ionicons
+              name={Platform.OS === 'ios' ? 'ios-arrow-dropright-circle' : 'me-arrow-dropright-circle'}
+              size={40}
+              color={colors.white}
+            // onPress={this.}
+            />
+          </View>
+        </ScrollView>
       </View>
     );
   }
@@ -146,6 +149,6 @@ export default class Account extends React.Component {
     const {
       navigation: { navigate },
     } = this.props;
-    navigate.openDrawer() ;
+    navigate.openDrawer();
   };
 }

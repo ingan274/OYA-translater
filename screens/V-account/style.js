@@ -12,9 +12,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
   }, 
   image: {
-    height: 100,
+    height: 80,
     resizeMode: 'contain',
-    width: 100,
+    width: 80,
   },
   availrow: {
     flexDirection: 'row',
