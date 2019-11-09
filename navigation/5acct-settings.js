@@ -4,9 +4,9 @@ import About from '../screens/V-about';
 import Settings from '../screens/V-settings';
 
 const AccountNavDrawer = createDrawerNavigator({
-  Account,
-  Settings,
-  About
+  Account: {screen: Account},
+  Settings: {screen: Settings},
+  About: {screen: About},
 },
 {
   initialRouteName: 'Account',

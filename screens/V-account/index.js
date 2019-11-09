@@ -1,5 +1,14 @@
 import React from 'react';
-import { Switch, Text, View, StyleSheet, Platform, Image, TouchableOpacity, ScrollView } from 'react-native';
+import {
+  Switch,
+  Text,
+  View,
+  StyleSheet,
+  Platform,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import colors from '../../constants/Colors';
 import NameLang from '../../components/accntLang';
 import style from './style';
@@ -25,6 +34,31 @@ export default class Account extends React.Component {
     this.setState({ documentValue: value });
   };
 
+  static navigationOptions = {
+    drawerLabel: 'Account',
+    drawerIcon: ({ tintColor }) => (
+      <Ionicons
+        name={Platform.OS === 'ios' ? 'ios-person' : 'md-person'}
+        size={30}
+        color={colors.blue2}
+      />
+    ),
+  };
+
+  //  <TouchableOpacity
+  //         onPress={this.handleMenu} // navigation
+  //       >
+  //         <View style={style.drawernav}>
+  //           <Ionicons
+  //             name={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
+  //             size={40}
+  //             style={style.menu}
+  //             color={colors.blue2}
+
+  //           />
+  //         </View>
+  //       </TouchableOpacity>
+
   // this.props.navigation.openDrawer();
   render() {
     return (
@@ -38,7 +72,6 @@ export default class Account extends React.Component {
               size={40}
               style={style.menu}
               color={colors.blue2}
-
             />
           </View>
         </TouchableOpacity>
@@ -56,7 +89,6 @@ export default class Account extends React.Component {
         </View>
 
         <ScrollView>
-
           <View style={style.availrow}>
             <Ionicons
               name={Platform.OS === 'ios' ? 'ios-text' : 'md-text'}
@@ -97,19 +129,29 @@ export default class Account extends React.Component {
               name={Platform.OS === 'ios' ? 'ios-text' : 'md-text'}
               size={40}
               style={style.message}
-              color={this.state.messageNotification ? colors.blue4 : colors.bluegrey}
+              color={
+                this.state.messageNotification ? colors.blue4 : colors.bluegrey
+              }
             />
             <Ionicons
               name={Platform.OS === 'ios' ? 'ios-alert' : 'md-alert'}
               size={22}
-              style={this.state.messageNotification ? style.Notification : style.noneNotification}
+              style={
+                this.state.messageNotification
+                  ? style.Notification
+                  : style.noneNotification
+              }
               color="red"
             />
             <Ionicons
-              name={Platform.OS === 'ios' ? 'ios-arrow-dropright-circle' : 'me-arrow-dropright-circle'}
+              name={
+                Platform.OS === 'ios'
+                  ? 'ios-arrow-dropright-circle'
+                  : 'me-arrow-dropright-circle'
+              }
               size={40}
               color={colors.white}
-            // onPress={this.}
+              // onPress={this.}
             />
           </View>
 
@@ -120,10 +162,14 @@ export default class Account extends React.Component {
               color={colors.bluegrey}
             />
             <Ionicons
-              name={Platform.OS === 'ios' ? 'ios-arrow-dropright-circle' : 'me-arrow-dropright-circle'}
+              name={
+                Platform.OS === 'ios'
+                  ? 'ios-arrow-dropright-circle'
+                  : 'me-arrow-dropright-circle'
+              }
               size={40}
               color={colors.white}
-            // onPress={this.}
+              // onPress={this.}
             />
           </View>
 
@@ -134,10 +180,14 @@ export default class Account extends React.Component {
               color={colors.bluegrey}
             />
             <Ionicons
-              name={Platform.OS === 'ios' ? 'ios-arrow-dropright-circle' : 'me-arrow-dropright-circle'}
+              name={
+                Platform.OS === 'ios'
+                  ? 'ios-arrow-dropright-circle'
+                  : 'me-arrow-dropright-circle'
+              }
               size={40}
               color={colors.white}
-            // onPress={this.}
+              // onPress={this.}
             />
           </View>
         </ScrollView>
@@ -146,9 +196,6 @@ export default class Account extends React.Component {
   }
 
   handleMenu = () => {
-    const {
-      navigation: { navigate },
-    } = this.props;
-    navigate.openDrawer();
+    this.props.navigation.openDrawer();
   };
 }

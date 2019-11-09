@@ -48,6 +48,10 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     color: 'white',
   },
+    menu: {
+    paddingLeft: 30,
+    marginTop: 40,
+  }
 });
 
 export default styles;

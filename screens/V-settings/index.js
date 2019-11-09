@@ -33,14 +33,42 @@ class Message extends PureComponent {
     },
   };
 
+  static navigationOptions = {
+    drawerLabel: 'Settings',
+    drawerIcon: ({ tintColor }) => (
+      <Ionicons
+        name={Platform.OS === 'ios' ? 'ios-settings' : 'md-settings'}
+        size={30}
+        color={color.blue2}
+      />
+    ),
+  };
+
   render() {
     return (
       <View style={style.container}>
-        <Text>Pretend settings will go here</Text>
+        <TouchableOpacity
+          onPress={this.handleMenu} // navigation
+        >
+          <View style={style.drawernav}>
+            <Ionicons
+              name={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
+              size={40}
+              style={style.menu}
+              color={color.blue2}
+            />
+          </View>
+        </TouchableOpacity>
+        <View styles={style.textcontainer}>
+          <Text style={style.text}>Pretend settings will go here</Text>
+        </View>
       </View>
     );
   }
 
+  handleMenu = () => {
+    this.props.navigation.openDrawer();
+  };
 }
 
 export default Message;
