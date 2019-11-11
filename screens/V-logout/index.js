@@ -1,8 +1,8 @@
 import style from './style';
 import React, { PureComponent } from 'react';
+import Langbtn from '../../components/Langbtn.js';
 import { Ionicons } from '@expo/vector-icons';
 import color from '../../constants/Colors';
-import {LANGUAGE_OPTIONS, PROFICIENCY_OPTIONS} from '../../data'
 import {
   Image,
   Platform,
@@ -13,53 +13,59 @@ import {
   View,
 } from 'react-native';
 
-class VForm extends PureComponent {
+class SignUp extends PureComponent {
   componentDidMount() {
-    console.log('Form did mount');
+    console.log('Chatroom did mount');
   }
 
   componentWillUnmount() {
-    console.log('Form Unmounted');
+    console.log('Chatroom Unmounted');
   }
 
   static navigationOptions = {
-    title: 'Volunteer Form',
-    headerStyle: {
-      backgroundColor: color.blue4,
-    },
-    headerTintColor: color.white,
-    headerTitleStyle: {
-      fontWeight: 'bold',
-    },
-  };
+    header: null
+}
 
   render() {
     return (
       <View style={style.container}>
-        <Text>THIS IS WHERE THE FORM WILL GO</Text>
+        <Text>THIS IS WHERE THE Sign Up FORM WILL GO</Text>
         <TouchableOpacity
-          onPress={this.handleSubmit} // navigation
+          onPress={this.handleSUSubmit} // navigation
         >
           <Ionicons
             name={Platform.OS === 'ios' ? 'ios-arrow-dropright-circle' : 'md-arrow-dropright-circle'}
             size={40}
-            style={style.back}
-            onPress={this.handleBackPress}
+            color= {color.blue5}
           />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={this.handleSignUp} // navigation
+        >
+          <Text>switch to LogIn</Text>
         </TouchableOpacity>
       </View>
     );
   }
 
-  handleSubmit = () => {
+  handleSUSubmit = () => {
     const {
       navigation: { navigate },
     } = this.props;
-    navigate('Account');
+    navigate('Form');
+  };
+
+  handleSignUp = () => {
+    const {
+      navigation: { navigate },
+    } = this.props;
+    navigate('LogIn');
   };
 }
 
-export default VForm;
+export default SignUp;
+
+
 
 // import React, { Component } from 'react';
 // import {
@@ -81,39 +87,25 @@ export default VForm;
 // import stylesheet from '../customTcomb/styles';
 
 // //Constants
-// import { GENDER_OPTIONS, POSITION_OPTIONS } from './data';
 // const ERROR_MESSAGE = '*Required field';
 // const Form = t.form.Form;
 
 // export default class VolunteerFrom extends Component {
-
+ 
 //         this.state = {
 //   volunteer: {
-//     firstname: '',
-//     lastname: '',
-//     phonenumber: '',
-//     email: '',
-//     language1: '',
-//     proficiency1: '',
-//     language2: '',
-//     proficiency2: '',
-//     language3: '',
-//     proficiency4: '',
+//     username: '',
+//     password: '',
+//     password2: '',
+//
 //   }
+   
 
 //     handleonChange = (value) => {
 //     let volunteer = { ...this.state.volunteer};
-//     volunteer.firstname = value.firstname || '';
-//     volunteer.lastname = value.lastname || '';
-//     volunteer.phonenumber = value.phonenumber || null;
-//     volunteer.email = value.email || '';
-//     volunteer.language1 = value.language1 || '';
-//     volunteer.proficiency1 = value.proficiency1 || '';
-//     volunteer.language2 = value.language2 || '';
-//     volunteer.proficiency2 = value.proficiency2 || '';
-//     volunteer.language3 = value.language3 || '';
-//     volunteer.proficiency3 = value.proficiency3 || '';
-//     this.setState({ volunteer: volunteer })
+//     volunteer.username = value.username || '';
+//     volunteer.password = value.password || '';
+//     volunteer.phonenumber = value.password2 || null;
 //   }
 
 //     handleonSubmit = () => {
@@ -142,43 +134,28 @@ export default VForm;
 //       )
 //     }
 //   }
-
+    
+    
 //     render() {
-//     console.log('LANGUAGE_OPTIONS: ' + JSON.stringify(LANGUAGE_OPTIONS));
-//     console.log('PROFICIENCY_OPTIONS: ' + JSON.stringify(PROFICIENCY_OPTIONS));
-//     const LANGUAGE = t.enums(LANGUAGE_OPTIONS)
-//     const PROFICIENCY = t.enums(PROFICIENCY_OPTIONS)
 //     const OPTIONS = {
 //       fields: {
-//         firstname: {
-//           label: 'FIRST NAME',
+//         username: {
+//           label: 'USERNAME',
 //           returnKeyType: 'next',
 //           autoCorrect: false,
-//           onSubmitEditing: (event) => { this.refs.form_employee.getComponent('lastname').refs.input.focus() },
+//           onSubmitEditing: (event) => { this.refs.form_employee.getComponent('password').refs.input.focus() },
 //           error: ERROR_MESSAGE
 //         },
-//         lastname: {
+//         password: {
 //           label: 'LAST NAME',
 //           returnKeyType: 'next',
-//           onSubmitEditing: (event) => { this.refs.form_employee.getComponent('phonenumber').refs.input.focus() },
+//           onSubmitEditing: (event) => { this.refs.form_employee.getComponent('password1').refs.input.focus() },
 //           error: ERROR_MESSAGE
 //         },
-//         phonenumber: {
+//         password1: {
 //           label: 'PHONE NUMBER',
 //           returnKeyType: 'next',
 //           onSubmitEditing: (event) => { this.refs.form_employee.getComponent('email').refs.input.focus() },
-//           error: ERROR_MESSAGE
-//         },
-//         email: {
-//           label: 'PHONE NUMBER',
-//           returnKeyType: 'next',
-//           onSubmitEditing: (event) => { this.refs.form_employee.getComponent('gender').refs.input.focus() },
-//           error: ERROR_MESSAGE
-//         },
-
-//         gender: {
-//           template: CustomSelectPickerTemplate,
-//           label: 'GENDER',
 //           error: ERROR_MESSAGE
 //         },
 //       stylesheet: stylesheet

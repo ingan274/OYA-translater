@@ -1,193 +1,100 @@
 import style from './style';
 import React, { PureComponent } from 'react';
-import Langbtn from '../../components/Langbtn.js';
 import { Ionicons } from '@expo/vector-icons';
-import color from '../../constants/Colors';
-import {
-  Image,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Image, View, Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from "react-native";
+import Button from "../../components/login-signup/loginbtn";
+import Form from "../../components/login-signup/loginFrom";
+import imageLogo from "../../assets/images/logo.png";
+import strings from "../../components/login-signup/strings";
 
-class LogIn extends PureComponent {
-  componentDidMount() {
-    console.log('LogIn did mount');
+class LoginScreen extends PureComponent {
+
+  state = {
+    email: '',
+    password: '',
+    error: false,
   }
 
-  componentWillUnmount() {
-    console.log('LogIn Unmounted');
-  }
-
-  static navigationOptions = {
-    header: null
-}
-
-  render() {
-    return (
-      <View style={style.container}>
-        <Text>THIS IS WHERE THE LOGIN FORM WILL GO</Text>
-        <TouchableOpacity
-          onPress={this.handleLISubmit} // navigation
-        >
-          <Ionicons
-            name={Platform.OS === 'ios' ? 'ios-arrow-dropright-circle' : 'md-arrow-dropright-circle'}
-            size={40}
-            color= {color.blue5}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={this.handleSignUp} // navigation
-        >
-          <Text>switch to SignUp</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-
-  handleLISubmit = () => {
-    const {
-      navigation: { navigate },
-    } = this.props;
-    navigate('Account');
+  handleEmailChange = (email) => {
+    this.setState({ email: email });
   };
 
+  handlePasswordChange = (password) => {
+    this.setState({ password: password });
+  };
+
+  handleLoginPress = (event) => {
+    let user = this.state.email;
+    let pass = this.state.password;
+
+    const login = {
+      username: user,
+      password: pass
+    }
+
+    console.info(login)
+    // add ajax call .then the navigation
+    // const {
+    //   navigation: { navigate },
+    // } = this.props;
+    // navigate('Account');
+    // MAKE SURE CHANEL CAN PASS BACK A TRUE OR FASLE TO TRIGGER ERROR
+  };
+
+  showError = () => {
+    if (this.state.error) {
+      return <Text style={style.error}>Oops! Looks like your email or password did not match. Please try again.</Text>
+    }
+  };
+
+
   handleSignUp = () => {
+
     const {
       navigation: { navigate },
     } = this.props;
     navigate('SignUp');
   };
+
+  render() {
+    return (
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <View style={style.container}>
+          <Image source={imageLogo} style={style.logo} />
+          <Text style={style.title}>{strings.LOGIN}</Text>
+          <View style={style.form}>
+            {this.showError()}
+            <Form
+              value={this.state.email}
+              onChangeText={this.handleEmailChange}
+              onSubmitEditing={this.handleEmailSubmitPress}
+              placeholder={strings.EMAIL_PLACEHOLDER}
+              autoCorrect={false}
+              keyboardType="email-address"
+              returnKeyType="next"
+            />
+            <Form
+              ref={this.passwordInputRef}
+              value={this.state.password}
+              onChangeText={this.handlePasswordChange}
+              placeholder={strings.PASSWORD_PLACEHOLDER}
+              secureTextEntry={true}
+              returnKeyType="done"
+            />
+            <Button label={strings.LOGIN} onPress={this.handleLoginPress} />
+            <TouchableOpacity
+              onPress={this.handleSignUp} // navigation
+              style={style.SU}
+            >
+              <Text>Switch to Sign Up</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+    );
+  }
+
 }
 
-export default LogIn;
 
-
-
-// import React, { Component } from 'react';
-// import {
-//   Platform,
-//   StyleSheet,
-//   Text,
-//   View,
-//   TouchableOpacity,
-//   Alert,
-//   Keyboard
-// } from 'react-native';
-// import t from 'tcomb-form-native';
-
-// import styles from './styles';
-
-// import FormContainer from '../../components/FormContainer';
-
-// import * as utils from '../utils';
-// import stylesheet from '../customTcomb/styles';
-
-// //Constants
-// const ERROR_MESSAGE = '*Required field';
-// const Form = t.form.Form;
-
-// export default class VolunteerFrom extends Component {
- 
-//         this.state = {
-//   volunteer: {
-//     username: '',
-//     password: '',
-//     password2: '',
-//
-//   }
-   
-
-//     handleonChange = (value) => {
-//     let volunteer = { ...this.state.volunteer};
-//     volunteer.username = value.username || '';
-//     volunteer.password = value.password || '';
-//     volunteer.phonenumber = value.password2 || null;
-//   }
-
-//     handleonSubmit = () => {
-//     Keyboard.dismiss();
-//     let volunteer = this.refs.form_employee.getValue();
-
-//     if (volunteer) {
-//       this.props.onSave(volunteer);
-//     }
-//   }
-
-//     handleonCancel = () => {
-//     Keyboard.dismiss();
-//     if (JSON.stringify(this.state._oEmployee) === JSON.stringify(this.state._oOriginalData)) {
-//       this.props.onCancel()
-//     }
-//     else {
-//       Alert.alert(
-//         'Warning',
-//         'Unsaved data will be lost. Are you sure you want to exit ?',
-//         [
-//           { text: 'NO', onPress: () => { } },
-//           { text: 'YES', onPress: () => this.props.onCancel() },
-//         ],
-//         { cancelable: false }
-//       )
-//     }
-//   }
-    
-    
-//     render() {
-//     const OPTIONS = {
-//       fields: {
-//         username: {
-//           label: 'USERNAME',
-//           returnKeyType: 'next',
-//           autoCorrect: false,
-//           onSubmitEditing: (event) => { this.refs.form_employee.getComponent('password').refs.input.focus() },
-//           error: ERROR_MESSAGE
-//         },
-//         password: {
-//           label: 'LAST NAME',
-//           returnKeyType: 'next',
-//           onSubmitEditing: (event) => { this.refs.form_employee.getComponent('password1').refs.input.focus() },
-//           error: ERROR_MESSAGE
-//         },
-//         password1: {
-//           label: 'PHONE NUMBER',
-//           returnKeyType: 'next',
-//           onSubmitEditing: (event) => { this.refs.form_employee.getComponent('email').refs.input.focus() },
-//           error: ERROR_MESSAGE
-//         },
-//       stylesheet: stylesheet
-//     }
-//     const EMPLOYEE = t.struct({
-//       firstname: t.String,
-//       middlename: t.String,
-//       lastname: t.String,
-//       nickname: t.maybe(t.String),
-//       birthday: t.Date,
-//       gender: GENDER,
-//       address: t.String,
-//       position: POSITION,
-//       salary: t.Number
-//     })
-
-//     console.log('rendering form')
-//     return (
-//       <FormContainer
-//         onSubmit={this._onSubmit}
-//         onCancel={this._onCancel}
-//         padding={35}
-//         title={this.props.title}>
-
-//         <Form
-//           ref='form_employee'
-//           type={EMPLOYEE}
-//           onChange={this._onChange}
-//           value={this.state._oEmployee}
-//           options={OPTIONS} />
-
-//       </FormContainer>
-//     )
-//   }
-// }
+export default LoginScreen;

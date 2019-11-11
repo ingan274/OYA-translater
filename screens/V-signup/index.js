@@ -1,193 +1,127 @@
 import style from './style';
 import React, { PureComponent } from 'react';
-import Langbtn from '../../components/Langbtn.js';
 import { Ionicons } from '@expo/vector-icons';
-import color from '../../constants/Colors';
-import {
-  Image,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Image, View, Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from "react-native";
+import Button from "../../components/login-signup/loginbtn";
+import Form from "../../components/login-signup/loginFrom";
+import imageLogo from "../../assets/images/logo.png";
+import strings from "../../components/login-signup/strings";
+
+
 
 class SignUp extends PureComponent {
-  componentDidMount() {
-    console.log('Chatroom did mount');
-  }
-
-  componentWillUnmount() {
-    console.log('Chatroom Unmounted');
-  }
-
-  static navigationOptions = {
-    header: null
-}
-
-  render() {
-    return (
-      <View style={style.container}>
-        <Text>THIS IS WHERE THE Sign Up FORM WILL GO</Text>
-        <TouchableOpacity
-          onPress={this.handleSUSubmit} // navigation
-        >
-          <Ionicons
-            name={Platform.OS === 'ios' ? 'ios-arrow-dropright-circle' : 'md-arrow-dropright-circle'}
-            size={40}
-            color= {color.blue5}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={this.handleSignUp} // navigation
-        >
-          <Text>switch to LogIn</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-
-  handleSUSubmit = () => {
-    const {
-      navigation: { navigate },
-    } = this.props;
-    navigate('Form');
+  state = {
+    email: "",
+    password: "",
+    passwordC: "",
+    passerror: false,
+    usererror: false,
   };
 
-  handleSignUp = () => {
+  handleEmailChange = (email) => {
+    this.setState({ email: email });
+  };
+
+  handlePasswordChange = (password) => {
+    this.setState({ password: password });
+  };
+
+  handlePasswordConfirmChange = (password) => {
+    this.setState({ password: password });
+  };
+
+  handleSignUpPress = () => {
+    let user = this.state.email;
+    let pass = this.state.password;
+    let passC = this.state.passwordC;
+
+    // ajax call to GET all usernames and compare to username implemented
+
+    // ajax call to PUT new user un
+
+    if (passC === pass) {
+      const newUser = {
+        username: user,
+        password: pass
+      }
+      // post call .then
+      const {
+        navigation: { navigate },
+      } = this.props;
+      navigate('Form');
+    }
+    // passwords don't match
+    else if (pass !== passC) {
+      this.setState({ passerror: true });
+    }
+    // checking if username is unique
+    // else if () {
+
+    // }
+  };
+
+
+  handleLogIn = () => {
     const {
       navigation: { navigate },
     } = this.props;
     navigate('LogIn');
   };
+
+  showError = () => {
+    if (this.state.passerror) {
+      return <Text style={style.error}>Please make sure your passwords match. Please try again.</Text>
+    } else if (this.state.usererror) {
+      return <Text style={style.error}>Please choose another username. Looks like that one has been taken</Text>
+    }
+  };
+
+  render() {
+    return (
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <View style={style.container}>
+          <Image source={imageLogo} style={style.logo} />
+          <Text style={style.title}>{strings.SIGNUP}</Text>
+          <View style={style.form}>
+            {this.showError()}
+            <Form
+              value={this.state.email}
+              onChangeText={this.handleEmailChange}
+              onSubmitEditing={this.handleEmailSubmitPress}
+              placeholder={strings.EMAIL_PLACEHOLDER}
+              autoCorrect={false}
+              keyboardType="email-address"
+              returnKeyType="next"
+            />
+            <Form
+              ref={this.passwordInputRef}
+              value={this.state.password}
+              onChangeText={this.handlePasswordChange}
+              placeholder={strings.PASSWORD_PLACEHOLDER}
+              secureTextEntry={true}
+              returnKeyType="done"
+            />
+            <Form
+              ref={this.passwordInputRef}
+              value={this.state.password}
+              onChangeText={this.handlePasswordConfirmChange}
+              placeholder={strings.PASSWORD_CONFIRM_PLACEHOLDER}
+              secureTextEntry={true}
+              returnKeyType="done"
+            />
+            <Button label={strings.SIGNUP} onPress={this.handleSignUpPress} />
+            <TouchableOpacity
+              onPress={this.handleLogIn} // navigation
+              style={style.SU}
+            >
+              <Text>Switch to LogIn</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+    );
+  }
+
 }
 
 export default SignUp;
-
-
-
-// import React, { Component } from 'react';
-// import {
-//   Platform,
-//   StyleSheet,
-//   Text,
-//   View,
-//   TouchableOpacity,
-//   Alert,
-//   Keyboard
-// } from 'react-native';
-// import t from 'tcomb-form-native';
-
-// import styles from './styles';
-
-// import FormContainer from '../../components/FormContainer';
-
-// import * as utils from '../utils';
-// import stylesheet from '../customTcomb/styles';
-
-// //Constants
-// const ERROR_MESSAGE = '*Required field';
-// const Form = t.form.Form;
-
-// export default class VolunteerFrom extends Component {
- 
-//         this.state = {
-//   volunteer: {
-//     username: '',
-//     password: '',
-//     password2: '',
-//
-//   }
-   
-
-//     handleonChange = (value) => {
-//     let volunteer = { ...this.state.volunteer};
-//     volunteer.username = value.username || '';
-//     volunteer.password = value.password || '';
-//     volunteer.phonenumber = value.password2 || null;
-//   }
-
-//     handleonSubmit = () => {
-//     Keyboard.dismiss();
-//     let volunteer = this.refs.form_employee.getValue();
-
-//     if (volunteer) {
-//       this.props.onSave(volunteer);
-//     }
-//   }
-
-//     handleonCancel = () => {
-//     Keyboard.dismiss();
-//     if (JSON.stringify(this.state._oEmployee) === JSON.stringify(this.state._oOriginalData)) {
-//       this.props.onCancel()
-//     }
-//     else {
-//       Alert.alert(
-//         'Warning',
-//         'Unsaved data will be lost. Are you sure you want to exit ?',
-//         [
-//           { text: 'NO', onPress: () => { } },
-//           { text: 'YES', onPress: () => this.props.onCancel() },
-//         ],
-//         { cancelable: false }
-//       )
-//     }
-//   }
-    
-    
-//     render() {
-//     const OPTIONS = {
-//       fields: {
-//         username: {
-//           label: 'USERNAME',
-//           returnKeyType: 'next',
-//           autoCorrect: false,
-//           onSubmitEditing: (event) => { this.refs.form_employee.getComponent('password').refs.input.focus() },
-//           error: ERROR_MESSAGE
-//         },
-//         password: {
-//           label: 'LAST NAME',
-//           returnKeyType: 'next',
-//           onSubmitEditing: (event) => { this.refs.form_employee.getComponent('password1').refs.input.focus() },
-//           error: ERROR_MESSAGE
-//         },
-//         password1: {
-//           label: 'PHONE NUMBER',
-//           returnKeyType: 'next',
-//           onSubmitEditing: (event) => { this.refs.form_employee.getComponent('email').refs.input.focus() },
-//           error: ERROR_MESSAGE
-//         },
-//       stylesheet: stylesheet
-//     }
-//     const EMPLOYEE = t.struct({
-//       firstname: t.String,
-//       middlename: t.String,
-//       lastname: t.String,
-//       nickname: t.maybe(t.String),
-//       birthday: t.Date,
-//       gender: GENDER,
-//       address: t.String,
-//       position: POSITION,
-//       salary: t.Number
-//     })
-
-//     console.log('rendering form')
-//     return (
-//       <FormContainer
-//         onSubmit={this._onSubmit}
-//         onCancel={this._onCancel}
-//         padding={35}
-//         title={this.props.title}>
-
-//         <Form
-//           ref='form_employee'
-//           type={EMPLOYEE}
-//           onChange={this._onChange}
-//           value={this.state._oEmployee}
-//           options={OPTIONS} />
-
-//       </FormContainer>
-//     )
-//   }
-// }

@@ -16,15 +16,15 @@
 //     }
 //   };
   
-  export default EmployeeSchema;
+  // export default EmployeeSchema;
   
   //Enum Type options
   export const LANGUAGE_OPTIONS = {
     English: 'English',
-    Spanish: 'Spanish'
-    Chinese: 'Chinese'
-    French: 'French'
-    Farsi: 'Farsi'
+    Spanish: 'Spanish',
+    Chinese: 'Chinese',
+    French: 'French',
+    Farsi: 'Farsi',
   }
   
   //Codelisted type options
