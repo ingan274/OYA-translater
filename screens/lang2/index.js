@@ -66,7 +66,7 @@ class Lang1 extends PureComponent {
     const {
       navigation: { navigate },
     } = this.props;
-    navigate('AccountLogIn');
+    navigate('VolunteerLogIn');
   };
 
   handleBackPress = () => {
@@ -80,7 +80,7 @@ class Lang1 extends PureComponent {
     const {
       navigation: { navigate },
     } = this.props;
-    navigate('JobsStack');
+    navigate('Jobs');
   };
 }
 

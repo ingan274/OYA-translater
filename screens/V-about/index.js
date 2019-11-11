@@ -1,7 +1,8 @@
 import style from './style';
 import React, { PureComponent } from 'react';
-import { Text, View, ScrollView, Image, Platform } from 'react-native';
+import { Text, View, ScrollView, Image, Platform, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import colors from '../../constants/Colors';
 
 class Aboutscreen extends PureComponent {
   componentDidMount() {
@@ -12,9 +13,34 @@ class Aboutscreen extends PureComponent {
     console.log('About Unmounted');
   }
 
+  static navigationOptions = {
+    drawerLabel: 'About OYA',
+    drawerIcon: ({ tintColor }) => (
+      <Ionicons
+              name={Platform.OS === 'ios' ? 'ios-information-circle-outline' : 'md-information-circle-outline'}
+              size={30}
+              color={colors.blue2}
+
+            />
+    ),
+  };
+
   render() {
     return (
       <View style={style.container}>
+       <TouchableOpacity
+          onPress={this.handleMenu} // navigation
+        >
+          <View style={style.drawernav}>
+            <Ionicons
+              name={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
+              size={40}
+              style={style.menu}
+              color={colors.blue2}
+
+            />
+          </View>
+        </TouchableOpacity>
         <ScrollView style={style.textBox}>
           <Image
             source={
@@ -90,6 +116,11 @@ class Aboutscreen extends PureComponent {
       </View>
     );
   }
+
+    handleMenu = () => {
+    this.props.navigation.openDrawer();
+  };
+  
 }
 
 export default Aboutscreen;

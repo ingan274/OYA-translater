@@ -2,7 +2,7 @@ import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
 import Lang1 from '../screens/lang1';
-import Lang2 from '../screens/lang2/index.js';
+import Lang2 from './2lang2-job_Vlogin';
 import About from '../screens/about';
 
 export default createAppContainer(
@@ -13,7 +13,7 @@ export default createAppContainer(
       About: { screen: About }
     },
     {
-      initialRouteName: 'About',
+      initialRouteName: 'Home',
     },
   )
 )

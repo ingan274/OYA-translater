@@ -4,8 +4,21 @@ import color from '../../constants/Colors';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    // justifyContent: "center",
     backgroundColor: color.white,
+  },
+  ButtonContainer: {
+    flex: 0.9,
+    justifyContent: "center",
+  },
+  header: {
+    flexDirection: 'row',
+    paddingHorizontal: 5,
+    alignItems: 'center',
+    marginTop: 6,
+  },
+  back: {
+    color: color.blue3,
   },
   dotContainer: {
     alignItems: 'center',
@@ -15,17 +28,15 @@ const styles = StyleSheet.create({
     height: 20,
     resizeMode: 'contain',
   },
+  titleContainer: {
+    alignItems: 'center',
+  },
   headerTitle: {
-    fontSize: 28,
+    fontSize: 25,
   },
   back: {
     marginTop: 50,
     marginLeft: 20,
-  },
-  subhead: {
-    textAlign: 'center',
-    marginTop: 100,
-    fontSize: 20,
   },
 });
 

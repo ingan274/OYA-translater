@@ -1,17 +1,23 @@
 import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
-import LogIn from '../screens/V-login';
-import Account from './5acct-settings';
+import LogIn from './4long-autho';
+import SignUp from './4signup-Form';
 
 export default createAppContainer(
   createSwitchNavigator(
     {
       LogIn: { screen: LogIn },
-      Account: { screen: Account }
+      SignUp: { screen: SignUp },
     },
     {
       initialRouteName: 'LogIn',
     },
+    {
+      headerMode: 'none',
+      navigationOptions: {
+        headerVisible: false,
+      },
+    }
   )
-)
+);

@@ -4,17 +4,44 @@ import colors from '../../constants/Colors';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: colors.blue1,
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: 40,
+    marginTop: 20,
   }, 
-  availTitle: {
-    textAlign: 'center',
-    fontSize: 20,
-    color: colors.darkred,
+  image: {
+    height: 80,
+    resizeMode: 'contain',
+    width: 80,
+  },
+  availrow: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 50,
+  },
+  Profilerow: {
+    flexDirection: 'row',
+    // alignContent: 'center',
+    justifyContent: 'space-between',
     marginTop: 30,
+    paddingHorizontal: 20,
+  },
+  message: {
+    position: 'relative'
+  },
+  Notification: {
+    position: 'absolute',
+    left: 110,
+  },
+  noneNotification: {
+    position: 'absolute',
+    height: 0,
+  },
+  menu: {
+    paddingLeft: 30,
+    marginTop: 40,
   }
 });
 

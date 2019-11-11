@@ -2,6 +2,7 @@ import style from './style';
 import React, { PureComponent } from 'react';
 import Langbtn from '../../components/Langbtn.js';
 import { Ionicons } from '@expo/vector-icons';
+import color from '../../constants/Colors';
 import {
   Image,
   Platform,
@@ -23,6 +24,17 @@ class Lang1 extends PureComponent {
 
   static navigationOptions = {
     title: null,
+  };
+
+  static navigationOptions = {
+    drawerLabel: 'Log Out',
+    drawerIcon: ({ tintColor }) => (
+      <Ionicons
+        name={Platform.OS === 'ios' ? 'ios-settings' : 'md-settings'}
+        size={30}
+        color={color.blue2}
+      />
+    ),
   };
 
   render() {

@@ -8,13 +8,17 @@ const styles = StyleSheet.create({
     // alignItems: "center"
     backgroundColor: color.blue1,
   },
+  Textcontainer: {
+    flex: 0.8,
+    justifyContent: "center",
+    alignItems: "center"
+    // backgroundColor: color.blue1,
+  },
   header: {
     flexDirection: 'row',
-    paddingHorizontal: 20,
-    paddingTop: 50,
-    alignItems: "center",
-    marginTop: 20,
-    marginBottom: 0,
+    paddingHorizontal: 25,
+    alignItems: 'center',
+    marginTop: 55,
   },
   back: {
     color: color.white,

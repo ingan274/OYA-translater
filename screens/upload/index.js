@@ -13,33 +13,44 @@ import {
   View,
 } from 'react-native';
 
-class Upload extends PureComponent {
+class Message extends PureComponent {
   componentDidMount() {
-    console.log('Chatroom did mount');
+    console.log('Upload doc did mount');
   }
 
   componentWillUnmount() {
-    console.log('Chatroom Unmounted');
+    console.log('Upload doc Unmounted');
   }
 
-   static navigationOptions = {
-    title: 'Upload',
-    headerStyle: {
-      backgroundColor: color.blue4,
-    },
-    headerTintColor: color.white,
-    headerTitleStyle: {
-      fontWeight: 'bold',
-    },
-  };
 
   render() {
     return (
       <View style={style.container}>
-        <Text>This is where you will uplod document (insert design but not active)</Text>
+        <View style={style.header}>
+          <Ionicons
+            name={
+              Platform.OS === 'ios' ? 'ios-arrow-dropleft' : 'md-arrow-dropleft'
+            }
+            size={30}
+            style={style.back}
+            onPress={this.handleBackPress}
+          />
+        </View>
+        <View style={style.Textcontainer}>
+          <Text>This is the Area where users will upload docs</Text>
+        </View>
       </View>
     );
   }
+
+
+  handleBackPress = () => {
+    const {
+      navigation: { navigate },
+    } = this.props;
+    navigate('Jobs');
+  };
+
 }
 
-export default Upload;
+export default Message;
