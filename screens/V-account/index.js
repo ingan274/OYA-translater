@@ -20,18 +20,38 @@ export default class Account extends React.Component {
     phoneValue: false,
     documentValue: false,
     messageNotification: true,
+    phoneNotification: false,
+    documentNotification: true,
   };
 
   toggleMessage = value => {
     this.setState({ messageValue: value });
+    // put call
+    fetch('Heroku link will go here', {
+      method: 'PUT',
+      body: { massage: value }
+    })
+      .catch(err => console.warn(err))
   };
 
   togglePhone = value => {
     this.setState({ phoneValue: value });
+    // put call
+    fetch('Heroku link will go here', {
+      method: 'PUT',
+      body: { phone: value }
+    })
+      .catch(err => console.warn(err))
   };
 
   toggleDocument = value => {
     this.setState({ documentValue: value });
+    // put call
+    fetch('Heroku link will go here', {
+      method: 'PUT',
+      body: { document: value }
+    })
+      .catch(err => console.warn(err))
   };
 
   static navigationOptions = {
@@ -45,24 +65,19 @@ export default class Account extends React.Component {
     ),
   };
 
-  //  <TouchableOpacity
-  //         onPress={this.handleMenu} // navigation
-  //       >
-  //         <View style={style.drawernav}>
-  //           <Ionicons
-  //             name={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
-  //             size={40}
-  //             style={style.menu}
-  //             color={colors.blue2}
+  console = value => {
+    console.log("=================")
+    this.state.messageValue ? console.log('message is ON') : console.log('message is OFF')
+    this.state.phoneValue ? console.log('phone is ON') : console.log('phone is OFF')
+    this.state.documentValue ? console.log('doc is ON') : console.log('doc is OFF')
 
-  //           />
-  //         </View>
-  //       </TouchableOpacity>
+  };
 
-  // this.props.navigation.openDrawer();
+
   render() {
     return (
       <View style={style.container}>
+        {this.console()}
         <TouchableOpacity
           onPress={this.handleMenu} // navigation
         >
@@ -151,7 +166,7 @@ export default class Account extends React.Component {
               }
               size={40}
               color={colors.white}
-              // onPress={this.}
+            // onPress={this.}
             />
           </View>
 
@@ -162,6 +177,16 @@ export default class Account extends React.Component {
               color={colors.bluegrey}
             />
             <Ionicons
+              name={Platform.OS === 'ios' ? 'ios-alert' : 'md-alert'}
+              size={22}
+              style={
+                this.state.phoneNotification
+                  ? style.Notification
+                  : style.noneNotification
+              }
+              color="red"
+            />
+            <Ionicons
               name={
                 Platform.OS === 'ios'
                   ? 'ios-arrow-dropright-circle'
@@ -169,7 +194,7 @@ export default class Account extends React.Component {
               }
               size={40}
               color={colors.white}
-              // onPress={this.}
+            // onPress={this.}
             />
           </View>
 
@@ -180,6 +205,16 @@ export default class Account extends React.Component {
               color={colors.bluegrey}
             />
             <Ionicons
+              name={Platform.OS === 'ios' ? 'ios-alert' : 'md-alert'}
+              size={22}
+              style={
+                this.state.documentNotification
+                  ? style.Notification
+                  : style.noneNotification
+              }
+              color="red"
+            />
+            <Ionicons
               name={
                 Platform.OS === 'ios'
                   ? 'ios-arrow-dropright-circle'
@@ -187,7 +222,7 @@ export default class Account extends React.Component {
               }
               size={40}
               color={colors.white}
-              // onPress={this.}
+            // onPress={this.}
             />
           </View>
         </ScrollView>

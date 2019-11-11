@@ -54,11 +54,18 @@ class SignUp extends PureComponent {
         username: user,
         password: pass
       }
-      // post call .then
-      const {
-        navigation: { navigate },
-      } = this.props;
-      navigate('Form');
+      // post call
+      fetch('Heroku link will go here', {
+        method: 'POST',
+        body: newUser
+      })
+        .then(() => {
+          const {
+            navigation: { navigate },
+          } = this.props;
+          navigate('Form');
+        })
+        .catch(err => console.warn(err)) 
     }
     // passwords don't match
     else if (pass !== passC) {

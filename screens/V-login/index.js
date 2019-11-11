@@ -42,66 +42,77 @@ class LoginScreen extends PureComponent {
     }
 
     console.info(login)
-    // add ajax call .then the navigation
-    // const {
-    //   navigation: { navigate },
-    // } = this.props;
-    // navigate('Account');
-    // MAKE SURE CHANEL CAN PASS BACK A TRUE OR FASLE TO TRIGGER ERROR
-  };
 
-  showError = () => {
-    if (this.state.error) {
-      return <Text style={style.error}>Oops! Looks like your email or password did not match. Please try again.</Text>
-    }
-  };
-
-
-  handleSignUp = () => {
-
-    const {
-      navigation: { navigate },
-    } = this.props;
-    navigate('SignUp');
-  };
-
-  render() {
-    return (
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={style.container}>
-          <Image source={imageLogo} style={style.logo} />
-          <Text style={style.title}>{strings.LOGIN}</Text>
-          <View style={style.form}>
-            {this.showError()}
-            <Form
-              value={this.state.email}
-              onChangeText={this.handleEmailChange}
-              onSubmitEditing={this.handleEmailSubmitPress}
-              placeholder={strings.EMAIL_PLACEHOLDER}
-              autoCorrect={false}
-              keyboardType="email-address"
-              returnKeyType="next"
-            />
-            <Form
-              ref={this.passwordInputRef}
-              value={this.state.password}
-              onChangeText={this.handlePasswordChange}
-              placeholder={strings.PASSWORD_PLACEHOLDER}
-              secureTextEntry={true}
-              returnKeyType="done"
-            />
-            <Button label={strings.LOGIN} onPress={this.handleLoginPress} />
-            <TouchableOpacity
-              onPress={this.handleSignUp} // navigation
-              style={style.SU}
-            >
-              <Text>Switch to Sign Up</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </TouchableWithoutFeedback>
-    );
+    //is this a post call? 
+    fetch('Heroku link will go here', {
+      method: 'POST',
+      body: {
+        "email": this.state.email,
+        "password": this.state.password
+      }
+    })
+      .then(() => {
+        const {
+          navigation: { navigate },
+        } = this.props;
+        navigate('Account');
+      })
+      .catch(err => console.warn(err))
   }
+};
+
+showError = () => {
+  if (this.state.error) {
+    return <Text style={style.error}>Oops! Looks like your email or password did not match. Please try again.</Text>
+  }
+};
+
+
+handleSignUp = () => {
+
+  const {
+    navigation: { navigate },
+  } = this.props;
+  navigate('SignUp');
+};
+
+render() {
+  return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View style={style.container}>
+        <Image source={imageLogo} style={style.logo} />
+        <Text style={style.title}>{strings.LOGIN}</Text>
+        <View style={style.form}>
+          {this.showError()}
+          <Form
+            value={this.state.email}
+            onChangeText={this.handleEmailChange}
+            onSubmitEditing={this.handleEmailSubmitPress}
+            placeholder={strings.EMAIL_PLACEHOLDER}
+            autoCorrect={false}
+            keyboardType="email-address"
+            returnKeyType="next"
+          />
+          <Form
+            ref={this.passwordInputRef}
+            value={this.state.password}
+            onChangeText={this.handlePasswordChange}
+            placeholder={strings.PASSWORD_PLACEHOLDER}
+            secureTextEntry={true}
+            returnKeyType="done"
+          />
+          <Button label={strings.LOGIN} onPress={this.handleLoginPress} />
+          <TouchableOpacity
+            onPress={this.handleSignUp} // navigation
+            style={style.SU}
+          >
+            <Text>Switch to Sign Up</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </TouchableWithoutFeedback>
+  );
+}
 
 }
 

@@ -22,7 +22,8 @@ import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
 import Form from '../screens/V-form';
-import Account from './5acct-settings';
+import Account from '../screens/V-account';
+// import Account from './5acct-settings';
 
 export default createAppContainer(
   createSwitchNavigator(
@@ -31,7 +32,7 @@ export default createAppContainer(
       Account: { screen: Account }
     },
     {
-      initialRouteName: 'Form',
+      initialRouteName: 'Account',
     },
   )
 )

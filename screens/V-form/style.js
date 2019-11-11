@@ -4,22 +4,36 @@ import color from '../../constants/Colors';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: color.cream,
+    alignItems: "center",
+    // justifyContent: "space-between"
+  },
+  logo: {
+    width: 100,
+    height: 30,
+    resizeMode: "contain",
+    alignSelf: "center"
+  },
+  form: {
+    flex: 1,
     justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: color.blue1,
+    width: "80%"
+  }, 
+  title: {
+    fontSize: 20,
+    marginTop: 50,
+  }, 
+  formLabel: {
+    fontSize: 13,
   },
-  header: {
-    flexDirection: 'row',
-    paddingHorizontal: 20,
-    paddingTop: 50,
-    alignItems: "center",
-    marginTop: 20,
-    marginBottom: 0,
+  SU: {
+    alignSelf: "center",
+    marginTop: 30,
   },
-  back: {
-    color: color.white,
-     marginBottom: 0,
-    paddingVertical: 0,
+  error: {
+    color: color.softRed,
+    fontSize: 15,
+    marginTop: 15,
   }
 });
 

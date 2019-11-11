@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import Colors from '../../constants/Colors';
-import { StyleSheet, Text, TouchableOpacity, View, TextInput } from 'react-native';
+import { StyleSheet, TextInput } from 'react-native';
 
 
-function LoginForm(props) {
+function Vform(props) {
     return (
         <TextInput
             selectionColor={Colors.blue3}
             style={styles.textInput}
+            title={props.title}
+            name={props.name}
             placeholder={props.placeholder}
             autoCorrect={props.autoCorrect}
             keyboardType={props.keyboardType}
-            secureTextEntry={props.secureTextEntry}
             autoCorrect={props.autoCorrect}
             onChangeText={props.onChangeText}
             onSubmitEditing={props.onSubmitEditing}
@@ -29,4 +30,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default LoginForm;
+export default Vform;

@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   Profilerow: {
     flexDirection: 'row',
     // alignContent: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     marginTop: 30,
     paddingHorizontal: 20,
   },

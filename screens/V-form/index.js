@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import color from '../../constants/Colors';
 import imageLogo from "../../assets/images/dots.png";
 import Button from "../../components/V-form/formbutton";
-import Form from "../../components/V-form/forminput";
+import Forminput from "../../components/V-form/forminput";
 import {
   Image,
   Platform,
@@ -13,7 +13,7 @@ import {
   Text,
   TouchableWithoutFeedback, Keyboard,
   View,
-  ScrollView
+  Select
 } from 'react-native';
 
 class VForm extends PureComponent {
@@ -57,10 +57,16 @@ class VForm extends PureComponent {
   }
 
   handleInputChange = event => {
-    const { name, value } = event.target;
-    this.setState({
-      [name]: value
-    });
+    let { name, value } = event.target;
+    this.setState(
+      prevState => ({
+        newUser: {
+          ...prevState.newUser,
+          [name]: value
+        }
+      }),
+      () => console.log(this.state.newUser)
+    );
   };
 
   handleSubmit = () => {
@@ -74,57 +80,52 @@ class VForm extends PureComponent {
   render() {
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <ScrollView style={style.container}>
+
+        <View style={style.container}>
           <Text style={style.title}>Volunteer Form</Text>
           <Image source={imageLogo} style={style.logo} />
-          <Text style={style.title}>{strings.LOGIN}</Text>
-          <View style={style.form}>
-            <Text style={style.formlabel}>First Name:</Text>
-            <Form
-              name="firstname"
-              value={this.state.newUser.firstname}
-              onChangeText={this.handleInputChange}
-              placeholder="First Name"
-              returnKeyType="next"
-            />
-            <Text style={style.formlabel}>Last Name:</Text>
-            <Form
-              name="lastname"
-              value={this.state.newUser.lastname}
-              onChangeText={this.handleInputChange}
-              placeholder="First Name"
-              returnKeyType="next"
-            />
-            <Text style={style.formlabel}>Email:</Text>
-            <Form
-              value={this.state.newUser.email}
-              onChangeText={this.handleInputChange}
-              placeholder="Email"
-              name="Email"
-              autoCorrect={false}
-              keyboardType="email-address"
-              returnKeyType="next"
-            />
-            <Text style={style.formlabel}>Phone Number:</Text>
-            <Form
-              value={this.state.newUser.phonenumber}
-              onChangeText={this.handleInputChange}
-              placeholder="Phone Number"
-              name="Phone Number"
-              autoCorrect={false}
-              keyboardType="phone-pad"
-              returnKeyType="next"
-            />
-            <Form
-              name="firstname"
-              value={this.state.password}
-              onChangeText={this.handleInputChange}
-              placeholder={strings.PASSWORD_PLACEHOLDER}
-              returnKeyType="next"
-            />
-            <Button label="Submit" onPress={this.handleSubmit} />
+          <View style={style.form} onSubmit={this.handleSubmit}>
+            <ScrollView>
+              <Text style={style.formLabel}>First Name:</Text>
+              <Forminput
+                name="firstname"
+                value={this.state.newUser.firstname}
+                onChangeText={this.handleInputChange}
+                placeholder="Enter first name"
+                returnKeyType="next"
+              />
+              <Text style={style.formLabel}>Last Name:</Text>
+              <Forminput
+                name="lastname"
+                value={this.state.newUser.lastname}
+                onChangeText={this.handleInputChange}
+                placeholder="Enter last name"
+                returnKeyType="next"
+              />
+              <Text style={style.formLabel}>Email:</Text>
+              <Forminput
+                value={this.state.newUser.email}
+                onChangeText={this.handleInputChange}
+                placeholder="Input email"
+                name="email"
+                autoCorrect={false}
+                keyboardType="email-address"
+                returnKeyType="next"
+              />
+              <Text style={style.formLabel}>Phone Number:</Text>
+              <Forminput
+                value={this.state.newUser.phonenumber}
+                onChangeText={this.handleInputChange}
+                placeholder="Phone number"
+                name="phonenumber"
+                autoCorrect={false}
+                keyboardType="phone-pad"
+                returnKeyType="next"
+              />
+              <Button label="Submit" onPress={this.handleSubmit} />
+            </ScrollView>
           </View>
-        </ScrollView>
+        </View>
       </TouchableWithoutFeedback>
     );
   }
