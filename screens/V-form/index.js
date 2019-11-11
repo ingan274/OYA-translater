@@ -2,25 +2,21 @@ import style from './style';
 import React, { PureComponent } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import color from '../../constants/Colors';
-import {LANGUAGE_OPTIONS, PROFICIENCY_OPTIONS} from '../../data'
+import imageLogo from "../../assets/images/dots.png";
+import Button from "../../components/V-form/formbutton";
+import Form from "../../components/V-form/forminput";
 import {
   Image,
   Platform,
   ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
+  TouchableWithoutFeedback, Keyboard,
   View,
+  ScrollView
 } from 'react-native';
 
 class VForm extends PureComponent {
-  componentDidMount() {
-    console.log('Form did mount');
-  }
-
-  componentWillUnmount() {
-    console.log('Form Unmounted');
-  }
 
   static navigationOptions = {
     title: 'Volunteer Form',
@@ -33,23 +29,37 @@ class VForm extends PureComponent {
     },
   };
 
-  render() {
-    return (
-      <View style={style.container}>
-        <Text>THIS IS WHERE THE FORM WILL GO</Text>
-        <TouchableOpacity
-          onPress={this.handleSubmit} // navigation
-        >
-          <Ionicons
-            name={Platform.OS === 'ios' ? 'ios-arrow-dropright-circle' : 'md-arrow-dropright-circle'}
-            size={40}
-            style={style.back}
-            onPress={this.handleBackPress}
-          />
-        </TouchableOpacity>
-      </View>
-    );
+  componentDidMount() {
+    console.log('Form did mount');
   }
+
+  componentWillUnmount() {
+    console.log('Form Unmounted');
+  }
+
+  state = {
+    newUser: {
+      firstname: '',
+      lastname: '',
+      email: '',
+      phonenumber: '',
+      language1: '',
+      language2: '',
+      language3: '',
+      proficiency1: '',
+      proficiency2: '',
+      proficiency3: '',
+    },
+
+    error: false,
+  }
+
+  handleInputChange = event => {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value
+    });
+  };
 
   handleSubmit = () => {
     const {
@@ -57,160 +67,67 @@ class VForm extends PureComponent {
     } = this.props;
     navigate('Account');
   };
+
+  // should there be an error message?
+  render() {
+    return (
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <ScrollView style={style.container}>
+          <Text style={style.title}>Volunteer Form</Text>
+          <Image source={imageLogo} style={style.logo} />
+          <Text style={style.title}>{strings.LOGIN}</Text>
+          <View style={style.form}>
+            <Text style={style.formlabel}>First Name:</Text>
+            <Form
+              name="firstname"
+              value={this.state.newUser.firstname}
+              onChangeText={this.handleInputChange}
+              placeholder="First Name"
+              returnKeyType="next"
+            />
+            <Text style={style.formlabel}>Last Name:</Text>
+            <Form
+              name="lastname"
+              value={this.state.newUser.lastname}
+              onChangeText={this.handleInputChange}
+              placeholder="First Name"
+              returnKeyType="next"
+            />
+            <Text style={style.formlabel}>Email:</Text>
+            <Form
+              value={this.state.newUser.email}
+              onChangeText={this.handleInputChange}
+              placeholder="Email"
+              name="Email"
+              autoCorrect={false}
+              keyboardType="email-address"
+              returnKeyType="next"
+            />
+            <Text style={style.formlabel}>Phone Number:</Text>
+            <Form
+              value={this.state.newUser.phonenumber}
+              onChangeText={this.handleInputChange}
+              placeholder="Phone Number"
+              name="Phone Number"
+              autoCorrect={false}
+              keyboardType="phone-pad"
+              returnKeyType="next"
+            />
+            <Form
+              name="firstname"
+              value={this.state.password}
+              onChangeText={this.handleInputChange}
+              placeholder={strings.PASSWORD_PLACEHOLDER}
+              returnKeyType="next"
+            />
+            <Button label={strings.LOGIN} onPress={this.handleSubmit} />
+          </View>
+        </ScrollView>
+      </TouchableWithoutFeedback>
+    );
+  }
+
+
 }
 
 export default VForm;
-
-// import React, { Component } from 'react';
-// import {
-//   Platform,
-//   StyleSheet,
-//   Text,
-//   View,
-//   TouchableOpacity,
-//   Alert,
-//   Keyboard
-// } from 'react-native';
-// import t from 'tcomb-form-native';
-
-// import styles from './styles';
-
-// import FormContainer from '../../components/FormContainer';
-
-// import * as utils from '../utils';
-// import stylesheet from '../customTcomb/styles';
-
-// //Constants
-// import { GENDER_OPTIONS, POSITION_OPTIONS } from './data';
-// const ERROR_MESSAGE = '*Required field';
-// const Form = t.form.Form;
-
-// export default class VolunteerFrom extends Component {
-
-//         this.state = {
-//   volunteer: {
-//     firstname: '',
-//     lastname: '',
-//     phonenumber: '',
-//     email: '',
-//     language1: '',
-//     proficiency1: '',
-//     language2: '',
-//     proficiency2: '',
-//     language3: '',
-//     proficiency4: '',
-//   }
-
-//     handleonChange = (value) => {
-//     let volunteer = { ...this.state.volunteer};
-//     volunteer.firstname = value.firstname || '';
-//     volunteer.lastname = value.lastname || '';
-//     volunteer.phonenumber = value.phonenumber || null;
-//     volunteer.email = value.email || '';
-//     volunteer.language1 = value.language1 || '';
-//     volunteer.proficiency1 = value.proficiency1 || '';
-//     volunteer.language2 = value.language2 || '';
-//     volunteer.proficiency2 = value.proficiency2 || '';
-//     volunteer.language3 = value.language3 || '';
-//     volunteer.proficiency3 = value.proficiency3 || '';
-//     this.setState({ volunteer: volunteer })
-//   }
-
-//     handleonSubmit = () => {
-//     Keyboard.dismiss();
-//     let volunteer = this.refs.form_employee.getValue();
-
-//     if (volunteer) {
-//       this.props.onSave(volunteer);
-//     }
-//   }
-
-//     handleonCancel = () => {
-//     Keyboard.dismiss();
-//     if (JSON.stringify(this.state._oEmployee) === JSON.stringify(this.state._oOriginalData)) {
-//       this.props.onCancel()
-//     }
-//     else {
-//       Alert.alert(
-//         'Warning',
-//         'Unsaved data will be lost. Are you sure you want to exit ?',
-//         [
-//           { text: 'NO', onPress: () => { } },
-//           { text: 'YES', onPress: () => this.props.onCancel() },
-//         ],
-//         { cancelable: false }
-//       )
-//     }
-//   }
-
-//     render() {
-//     console.log('LANGUAGE_OPTIONS: ' + JSON.stringify(LANGUAGE_OPTIONS));
-//     console.log('PROFICIENCY_OPTIONS: ' + JSON.stringify(PROFICIENCY_OPTIONS));
-//     const LANGUAGE = t.enums(LANGUAGE_OPTIONS)
-//     const PROFICIENCY = t.enums(PROFICIENCY_OPTIONS)
-//     const OPTIONS = {
-//       fields: {
-//         firstname: {
-//           label: 'FIRST NAME',
-//           returnKeyType: 'next',
-//           autoCorrect: false,
-//           onSubmitEditing: (event) => { this.refs.form_employee.getComponent('lastname').refs.input.focus() },
-//           error: ERROR_MESSAGE
-//         },
-//         lastname: {
-//           label: 'LAST NAME',
-//           returnKeyType: 'next',
-//           onSubmitEditing: (event) => { this.refs.form_employee.getComponent('phonenumber').refs.input.focus() },
-//           error: ERROR_MESSAGE
-//         },
-//         phonenumber: {
-//           label: 'PHONE NUMBER',
-//           returnKeyType: 'next',
-//           onSubmitEditing: (event) => { this.refs.form_employee.getComponent('email').refs.input.focus() },
-//           error: ERROR_MESSAGE
-//         },
-//         email: {
-//           label: 'PHONE NUMBER',
-//           returnKeyType: 'next',
-//           onSubmitEditing: (event) => { this.refs.form_employee.getComponent('gender').refs.input.focus() },
-//           error: ERROR_MESSAGE
-//         },
-
-//         gender: {
-//           template: CustomSelectPickerTemplate,
-//           label: 'GENDER',
-//           error: ERROR_MESSAGE
-//         },
-//       stylesheet: stylesheet
-//     }
-//     const EMPLOYEE = t.struct({
-//       firstname: t.String,
-//       middlename: t.String,
-//       lastname: t.String,
-//       nickname: t.maybe(t.String),
-//       birthday: t.Date,
-//       gender: GENDER,
-//       address: t.String,
-//       position: POSITION,
-//       salary: t.Number
-//     })
-
-//     console.log('rendering form')
-//     return (
-//       <FormContainer
-//         onSubmit={this._onSubmit}
-//         onCancel={this._onCancel}
-//         padding={35}
-//         title={this.props.title}>
-
-//         <Form
-//           ref='form_employee'
-//           type={EMPLOYEE}
-//           onChange={this._onChange}
-//           value={this.state._oEmployee}
-//           options={OPTIONS} />
-
-//       </FormContainer>
-//     )
-//   }
-// }

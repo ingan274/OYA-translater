@@ -94,15 +94,13 @@ class SignUp extends PureComponent {
               returnKeyType="next"
             />
             <Form
-              ref={this.passwordInputRef}
               value={this.state.password}
               onChangeText={this.handlePasswordChange}
               placeholder={strings.PASSWORD_PLACEHOLDER}
               secureTextEntry={true}
-              returnKeyType="done"
+              returnKeyType="next"
             />
             <Form
-              ref={this.passwordInputRef}
               value={this.state.password}
               onChangeText={this.handlePasswordConfirmChange}
               placeholder={strings.PASSWORD_CONFIRM_PLACEHOLDER}
