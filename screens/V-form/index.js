@@ -52,6 +52,8 @@ class VForm extends PureComponent {
     },
 
     error: false,
+    LanguageOptions: ["English", "Chinese", "Farsi", "French", "Spanish"],
+    LanguageProf: ["Basic Knowledge", "Conversant", "Proficient", "Fluent", "Native Language / Native Speaker"],
   }
 
   handleInputChange = event => {
@@ -120,7 +122,7 @@ class VForm extends PureComponent {
               placeholder={strings.PASSWORD_PLACEHOLDER}
               returnKeyType="next"
             />
-            <Button label={strings.LOGIN} onPress={this.handleSubmit} />
+            <Button label="Submit" onPress={this.handleSubmit} />
           </View>
         </ScrollView>
       </TouchableWithoutFeedback>

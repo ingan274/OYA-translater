@@ -10,13 +10,23 @@ import strings from "../../components/login-signup/strings";
 
 
 class SignUp extends PureComponent {
-  state = {
-    email: "",
-    password: "",
-    passwordC: "",
-    passerror: false,
-    usererror: false,
-  };
+  constructor(props) {
+    super(props);
+
+    state = {
+      email: "",
+      password: "",
+      passwordC: "",
+      passerror: false,
+      usererror: false,
+    };
+
+    this.handleEmailChange = this.handleEmailChange.bind(this);
+    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.handlePasswordConfirmChange = this.handlePasswordConfirmChange.bind(this);
+    this.handleSignUpPress = this.handleSignUpPress.bind(this);
+    this.showError = this.showError.bind(this);
+  }
 
   handleEmailChange = (email) => {
     this.setState({ email: email });
