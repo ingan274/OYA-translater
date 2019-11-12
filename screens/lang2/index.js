@@ -13,13 +13,6 @@ import {
 } from 'react-native';
 
 class Lang1 extends PureComponent {
-  componentDidMount() {
-    console.log('Lang did mount');
-  }
-
-  componentWillUnmount() {
-    console.log('Lang Unmounted');
-  }
 
   static navigationOptions = {
     title: null,
@@ -28,6 +21,7 @@ class Lang1 extends PureComponent {
   render() {
     return (
       <View style={style.container}>
+         <Image style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }} source={require('../../assets/images/language.jpeg')}/>   
         <View style={style.header}>
           <Ionicons
             name={

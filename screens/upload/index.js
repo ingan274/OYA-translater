@@ -14,14 +14,6 @@ import {
 } from 'react-native';
 
 class Message extends PureComponent {
-  componentDidMount() {
-    console.log('Upload doc did mount');
-  }
-
-  componentWillUnmount() {
-    console.log('Upload doc Unmounted');
-  }
-
 
   render() {
     return (

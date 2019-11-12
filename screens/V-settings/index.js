@@ -14,14 +14,6 @@ import {
 } from 'react-native';
 
 class Message extends PureComponent {
-  componentDidMount() {
-    console.log('Settings did mount');
-  }
-
-  componentWillUnmount() {
-    console.log('Settings Unmounted');
-  }
-
   static navigationOptions = {
     title: 'Account Settings',
     headerStyle: {

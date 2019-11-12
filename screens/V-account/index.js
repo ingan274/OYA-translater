@@ -166,7 +166,7 @@ export default class Account extends React.Component {
               }
               size={40}
               color={colors.white}
-            // onPress={this.}
+              onPress={this.handleMessage}
             />
           </View>
 
@@ -228,9 +228,17 @@ export default class Account extends React.Component {
         </ScrollView>
       </View>
     );
-  }
+  };
 
   handleMenu = () => {
     this.props.navigation.openDrawer();
   };
+
+  handleMessage = () => {
+    const {
+      navigation: { navigate },
+    } = this.props;
+    navigate('Chat');
+  };
+
 }

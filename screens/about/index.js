@@ -5,13 +5,6 @@ import { Ionicons } from '@expo/vector-icons';
 
 
 class Aboutscreen extends PureComponent {
-  componentDidMount() {
-    console.log('About did mount');
-  }
-
-  componentWillUnmount() {
-    console.log('About Unmounted');
-  }
 
   render() {
     return (

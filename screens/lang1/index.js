@@ -1,5 +1,5 @@
-import style from './style';
 import React, { PureComponent } from 'react';
+import style from './style';
 import Langbtn from '../../components/Langbtn.js';
 import { Ionicons } from '@expo/vector-icons';
 import color from '../../constants/Colors';
@@ -14,17 +14,6 @@ import {
 } from 'react-native';
 
 class Lang1 extends PureComponent {
-  componentDidMount() {
-    console.log('Home did mount');
-  }
-
-  componentWillUnmount() {
-    console.log('Home Unmounted');
-  }
-
-  static navigationOptions = {
-    title: null,
-  };
 
   static navigationOptions = {
     drawerLabel: 'Log Out',
@@ -40,6 +29,8 @@ class Lang1 extends PureComponent {
   render() {
     return (
       <View style={style.container}>
+         <Image style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }} source={require('../../assets/images/home.jpeg')}/>
+         
         <View style={style.infoContainer}>
           <Ionicons
             name={

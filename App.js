@@ -41,7 +41,8 @@ async function loadResourcesAsync() {
       // remove this if you are not using it in your app
       // 'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
       Roboto: require('native-base/Fonts/Roboto.ttf'),
-      Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf')
+      Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
+      Main: require('./assets/fonts/mainFont.ttf')
     }),
   ]);
 }

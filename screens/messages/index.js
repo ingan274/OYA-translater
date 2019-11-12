@@ -14,14 +14,6 @@ import {
 } from 'react-native';
 
 class Message extends PureComponent {
-  componentDidMount() {
-    console.log('Chatroom did mount');
-  }
-
-  componentWillUnmount() {
-    console.log('Chatroom Unmounted');
-  }
-
   static navigationOptions = {
     title: 'Chatroom',
     headerStyle: {

@@ -5,14 +5,6 @@ import { Ionicons } from '@expo/vector-icons';
 import colors from '../../constants/Colors';
 
 class Aboutscreen extends PureComponent {
-  componentDidMount() {
-    console.log('About did mount');
-  }
-
-  componentWillUnmount() {
-    console.log('About Unmounted');
-  }
-
   static navigationOptions = {
     drawerLabel: 'About OYA',
     drawerIcon: ({ tintColor }) => (

@@ -29,14 +29,6 @@ class VForm extends PureComponent {
     },
   };
 
-  componentDidMount() {
-    console.log('Form did mount');
-  }
-
-  componentWillUnmount() {
-    console.log('Form Unmounted');
-  }
-
   state = {
     newUser: {
       firstname: '',
@@ -122,6 +114,15 @@ class VForm extends PureComponent {
                 keyboardType="phone-pad"
                 returnKeyType="next"
               />
+              {/* <Picker
+                selectedValue={this.state.language}
+                style={{ height: 50, width: 100 }}
+                onValueChange={(itemValue, itemIndex) =>
+                  this.setState({ language: itemValue })
+                }>
+                <Picker.Item label="Java" value="java" />
+                <Picker.Item label="JavaScript" value="js" />
+              </Picker> */}
               <Button label="Submit" onPress={this.handleSubmit} />
             </ScrollView>
           </View>
