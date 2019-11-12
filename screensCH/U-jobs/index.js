@@ -23,7 +23,7 @@ class Job extends PureComponent {
   };
 
   static navigationOptions = {
-    title: 'Assistance',
+    title: '协助',
     headerStyle: {
       backgroundColor: color.blue4,
     },
@@ -54,7 +54,7 @@ class Job extends PureComponent {
           />
         </View>
         <View style={style.titleContainer}>
-          <Text style={style.headerTitle}>Assistance</Text>
+          <Text style={style.headerTitle}>协助</Text>
         </View>
         <View style={style.dotContainer}>
           <Image
@@ -70,19 +70,19 @@ class Job extends PureComponent {
             visible={this.state.modalVisible}
           />
           <Jobbtn
-            btntext="Message Volunteer"
+            btntext="留言义工"
             onPress={this.handleMessageReq}
             icon="text"
           />
           <Jobbtn
-            btntext="Call Volunteer"
+            btntext="致电义工"
             onPress={() => {
               this.setModalVisible(true);
             }}
             icon="call"
           />
           <Jobbtn
-            btntext="Document Review"
+            btntext="文件审查"
             onPress={this.handleDocReq}
             icon="paper"
           />

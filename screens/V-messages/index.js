@@ -86,7 +86,7 @@ class Message extends PureComponent {
       )
     } else {
       return (
-        <Text style={style.unavail}>We are connecting you to a Volunteer now. One moment please.</Text>
+        <Text style={style.unavail}>Looks like you are set to "Unavailable." Please go back to your account and turn your availibilty on.</Text>
       )
     }
   }

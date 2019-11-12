@@ -3,6 +3,8 @@ import style from './style';
 import Langbtn from '../../components/Langbtn.js';
 import { Ionicons } from '@expo/vector-icons';
 import color from '../../constants/Colors';
+import dotenv from 'dotenv';
+dotenv.config('../../.env');
 import {
   Image,
   Platform,
@@ -12,6 +14,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { doesSupportAsync } from 'expo/build/ScreenOrientation/ScreenOrientation';
+import { DH_NOT_SUITABLE_GENERATOR } from 'constants';
 
 class Lang1 extends PureComponent {
 
@@ -82,3 +86,4 @@ class Lang1 extends PureComponent {
 }
 
 export default Lang1;
+
