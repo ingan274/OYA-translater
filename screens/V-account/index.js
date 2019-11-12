@@ -21,8 +21,73 @@ export default class Account extends React.Component {
     documentValue: false,
     messageNotification: true,
     phoneNotification: false,
-    documentNotification: true,
+    documentNotification: false,
+
+    firstname: '',
+    lastname: '',
+    language1: '',
+    language2: '',
+    language3: ''
   };
+
+  componentDidMount = () => {
+    AppState.addEventListener('change', this.getNotificationM);
+    AppState.addEventListener('change', this.getNotificationP);
+    AppState.addEventListener('change', this.getNotificationD);
+
+    // GET USER INFORMATION
+    fetch('Heroku link will go here', {
+      method: 'GET'
+    }).then((response) => {
+      let firstname = response.firstname;
+      let lastname = response.lastname;
+      let language1 = response.language1;
+      let language2 = response.language2;
+      let language3 = response.language3;
+      this.setState({
+        firstname: firstname,
+        lastname: lastname,
+        language1: language1,
+        language2: language2,
+        language3: language3,
+      });
+    })
+      .catch(err => console.warn(err))
+  }
+
+  getNotificationM = () => {
+    fetch('Heroku link will go here', {
+      method: 'GET'
+    }).then((response) => {
+      this.setState({
+        messageNotification: true
+      });
+    })
+      .catch(err => console.warn(err))
+  }
+
+  getNotificationP = () => {
+    fetch('Heroku link will go here', {
+      method: 'GET'
+    }).then((response) => {
+      this.setState({
+        phoneNotification: true
+      });
+    })
+      .catch(err => console.warn(err))
+  }
+
+
+  getNotificationD = () => {
+    fetch('Heroku link will go here', {
+      method: 'GET'
+    }).then((response) => {
+      this.setState({
+        documentNotification: true
+      });
+    })
+      .catch(err => console.warn(err))
+  }
 
   toggleMessage = value => {
     this.setState({ messageValue: value });
@@ -96,10 +161,10 @@ export default class Account extends React.Component {
             style={style.image}
           />
           <NameLang
-            name="Isabel Ngan"
-            language1="English"
-            language2="Chinese"
-            language3="Spanish"
+            name={`${this.state.firstname} ${this.state.lastname} `}
+            language1={this.state.language1}
+            language2={this.state.language2}
+            language3={this.state.language3}
           />
         </View>
 
@@ -233,6 +298,7 @@ export default class Account extends React.Component {
   handleMenu = () => {
     this.props.navigation.openDrawer();
   };
+
 
   handleMessage = () => {
     const {

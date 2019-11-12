@@ -27,6 +27,14 @@ class Job extends PureComponent {
     },
   };
 
+  componentDidMount = () => {
+    // GETTING RID OF TOKEN
+    fetch('Heroku link will go here', {
+      method: 'POST'
+    })
+      .catch(err => console.warn(err))
+  }
+
   setModalVisible(visible) {
     this.setState({ modalVisible: visible });
   }

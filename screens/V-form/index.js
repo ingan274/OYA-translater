@@ -1,10 +1,10 @@
 import style from './style';
 import React, { PureComponent } from 'react';
-import { Ionicons } from '@expo/vector-icons';
 import color from '../../constants/Colors';
 import imageLogo from "../../assets/images/dots.png";
 import Button from "../../components/V-form/formbutton";
 import Forminput from "../../components/V-form/forminput";
+import PickerBox from 'react-native-picker-box';
 import {
   Image,
   Platform,
@@ -13,7 +13,8 @@ import {
   Text,
   TouchableWithoutFeedback, Keyboard,
   View,
-  Select
+  Select,
+  Picker
 } from 'react-native';
 
 class VForm extends PureComponent {
@@ -44,8 +45,6 @@ class VForm extends PureComponent {
     },
 
     error: false,
-    LanguageOptions: ["English", "Chinese", "Farsi", "French", "Spanish"],
-    LanguageProf: ["Basic Knowledge", "Conversant", "Proficient", "Fluent", "Native Language / Native Speaker"],
   }
 
   handleInputChange = event => {
@@ -62,10 +61,29 @@ class VForm extends PureComponent {
   };
 
   handleSubmit = () => {
-    const {
-      navigation: { navigate },
-    } = this.props;
-    navigate('Account');
+    const user = this.state.newUser;
+    if (user.firstname && user.lastname && user.email && user.phonenumber && user.language1 && user.language2) {
+      fetch('Heroku link will go here', {
+        method: 'POST',
+        body: user
+      })
+        .then(() => {
+          const {
+            navigation: { navigate },
+          } = this.props;
+          navigate('Account');
+        })
+        .catch(err => console.warn(err))
+    } else {
+      this.setState({error: true})
+    }
+    
+  };
+
+  showError = () => {
+    if (this.state.error) {
+      return <Text style={style.error}>Please make sure you fill out all inputs with an asterisk (*)</Text>
+    }
   };
 
   // should there be an error message?
@@ -76,9 +94,10 @@ class VForm extends PureComponent {
         <View style={style.container}>
           <Text style={style.title}>Volunteer Form</Text>
           <Image source={imageLogo} style={style.logo} />
+          {this.showError()}
           <View style={style.form} onSubmit={this.handleSubmit}>
             <ScrollView>
-              <Text style={style.formLabel}>First Name:</Text>
+              <Text style={style.formLabel}>*First Name:</Text>
               <Forminput
                 name="firstname"
                 value={this.state.newUser.firstname}
@@ -86,7 +105,7 @@ class VForm extends PureComponent {
                 placeholder="Enter first name"
                 returnKeyType="next"
               />
-              <Text style={style.formLabel}>Last Name:</Text>
+              <Text style={style.formLabel}>*Last Name:</Text>
               <Forminput
                 name="lastname"
                 value={this.state.newUser.lastname}
@@ -94,7 +113,7 @@ class VForm extends PureComponent {
                 placeholder="Enter last name"
                 returnKeyType="next"
               />
-              <Text style={style.formLabel}>Email:</Text>
+              <Text style={style.formLabel}>*Email:</Text>
               <Forminput
                 value={this.state.newUser.email}
                 onChangeText={this.handleInputChange}
@@ -104,7 +123,7 @@ class VForm extends PureComponent {
                 keyboardType="email-address"
                 returnKeyType="next"
               />
-              <Text style={style.formLabel}>Phone Number:</Text>
+              <Text style={style.formLabel}>*Phone Number:</Text>
               <Forminput
                 value={this.state.newUser.phonenumber}
                 onChangeText={this.handleInputChange}
@@ -114,23 +133,74 @@ class VForm extends PureComponent {
                 keyboardType="phone-pad"
                 returnKeyType="next"
               />
-              {/* <Picker
-                selectedValue={this.state.language}
-                style={{ height: 50, width: 100 }}
-                onValueChange={(itemValue, itemIndex) =>
-                  this.setState({ language: itemValue })
-                }>
-                <Picker.Item label="Java" value="java" />
-                <Picker.Item label="JavaScript" value="js" />
-              </Picker> */}
+              <Text style={style.formLabel}>*Language 1:</Text>
+              <Forminput
+                value={this.state.newUser.language1}
+                onChangeText={this.handleInputChange}
+                placeholder="Language"
+                name="language1"
+                autoCorrect={true}
+                returnKeyType="next"
+              />
+
+              <Text style={style.formLabel}>*Proficiency:</Text>
+              <Forminput
+                value={this.state.newUser.proficiency1}
+                onChangeText={this.handleInputChange}
+                placeholder="Proficiency"
+                name="proficiency1"
+                autoCorrect={true}
+                returnKeyType="next"
+              />
+
+              <Text style={style.formLabel}>*Language 2:</Text>
+              <Forminput
+                value={this.state.newUser.language2}
+                onChangeText={this.handleInputChange}
+                placeholder="Language"
+                name="language2"
+                autoCorrect={true}
+                returnKeyType="next"
+              />
+
+              <Text style={style.formLabel}>*Proficiency:</Text>
+              <Forminput
+                value={this.state.newUser.proficiency2}
+                onChangeText={this.handleInputChange}
+                placeholder="Proficiency"
+                name="proficiency2"
+                autoCorrect={true}
+                returnKeyType="next"
+
+              />  
+              
+              <Text style={style.formLabel}>Language 3:</Text>
+              <Forminput
+                value={this.state.newUser.language3}
+                onChangeText={this.handleInputChange}
+                placeholder="Language"
+                name="language3"
+                autoCorrect={true}
+                returnKeyType="next"
+              />
+
+              <Text style={style.formLabel}>Proficiency:</Text>
+              <Forminput
+                value={this.state.newUser.proficiency3}
+                onChangeText={this.handleInputChange}
+                placeholder="Proficiency"
+                name="proficiency3"
+                autoCorrect={true}
+                returnKeyType="done"
+              />
+
               <Button label="Submit" onPress={this.handleSubmit} />
             </ScrollView>
           </View>
         </View>
-      </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback >
     );
   }
-
 
 }
 

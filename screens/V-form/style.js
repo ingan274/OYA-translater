@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     marginTop: 50,
   }, 
   formLabel: {
-    fontSize: 13,
+    fontSize: 18,
   },
   SU: {
     alignSelf: "center",
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     color: color.softRed,
     fontSize: 15,
     marginTop: 15,
-  }
+  },
 });
 
 export default styles;
