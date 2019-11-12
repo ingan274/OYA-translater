@@ -99,12 +99,12 @@ class Job extends PureComponent {
   };
 
   handleMessageReq = () => {
-    const language;
+    let language;
     // get language based on token/userid
     fetch('Heroku link will go here', {
       method: 'GET'
-    }).then((language) => {
-      language = language
+    }).then((languageRES) => {
+      language = languageRES
     })
       .catch(err => console.warn(err))
 

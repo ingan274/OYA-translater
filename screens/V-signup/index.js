@@ -16,7 +16,7 @@ class SignUp extends PureComponent {
     password: "",
     passwordC: "",
     passerror: false,
-    emailerror: true,
+    emailerror: false,
   };
 
 
@@ -117,7 +117,7 @@ class SignUp extends PureComponent {
               onPress={this.handleLogIn} // navigation
               style={style.SU}
             >
-              <Text>Switch to LogIn</Text>
+              <Text>Log In</Text>
             </TouchableOpacity>
           </View>
         </View>

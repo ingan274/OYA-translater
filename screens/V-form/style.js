@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   form: {
     flex: 1,
     justifyContent: "center",
-    width: "80%"
+    width: "85%",
   }, 
   title: {
     fontSize: 20,

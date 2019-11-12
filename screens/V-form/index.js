@@ -47,22 +47,33 @@ class VForm extends PureComponent {
     error: false,
   }
 
-  handleInputChange = event => {
-    let { name, value } = event.target;
-    this.setState(
-      prevState => ({
-        newUser: {
-          ...prevState.newUser,
-          [name]: value
-        }
-      }),
-      () => console.log(this.state.newUser)
-    );
-  };
-
   handleSubmit = () => {
-    const user = this.state.newUser;
-    if (user.firstname && user.lastname && user.email && user.phonenumber && user.language1 && user.language2) {
+    const firstname = this.state.firstname;
+    const lastname = this.state.lastname;
+    const email = this.state.email;
+    const phonenumber = this.state.phonenumber;
+    const language1 = this.state.language1;
+    const language2 = this.state.language2;
+    const language3 = this.state.language3;
+    const proficiency1 = this.state.proficiency1;
+    const proficiency2 = this.state.proficiency2;
+    const proficiency3 = this.state.proficiency3;
+
+    const user = {
+      firstname:firstname,
+      lastname: lastname,
+      email: email,
+      phonenumber: phonenumber,
+      language1: language1,
+      language2: language2,
+      language3: language3,
+      proficiency1: proficiency1,
+      proficiency2: proficiency2,
+      proficiency3: proficiency3,
+    }
+    
+    if (firstname && lastname && email && phonenumber && language1 && language2) {
+      // console.log(user)
       fetch('Heroku link will go here', {
         method: 'POST',
         body: user
@@ -100,23 +111,23 @@ class VForm extends PureComponent {
               <Text style={style.formLabel}>*First Name:</Text>
               <Forminput
                 name="firstname"
-                value={this.state.newUser.firstname}
-                onChangeText={this.handleInputChange}
+                value={this.state.firstname}
+                onChangeText={(event) => this.setState({firstname: event})}
                 placeholder="Enter first name"
                 returnKeyType="next"
               />
               <Text style={style.formLabel}>*Last Name:</Text>
               <Forminput
                 name="lastname"
-                value={this.state.newUser.lastname}
-                onChangeText={this.handleInputChange}
+                value={this.state.lastname}
+                onChangeText={(event) => this.setState({lastname: event})}
                 placeholder="Enter last name"
                 returnKeyType="next"
               />
               <Text style={style.formLabel}>*Email:</Text>
               <Forminput
-                value={this.state.newUser.email}
-                onChangeText={this.handleInputChange}
+                value={this.state.email}
+                onChangeText={(event) => this.setState({email: event})}
                 placeholder="Input email"
                 name="email"
                 autoCorrect={false}
@@ -125,8 +136,8 @@ class VForm extends PureComponent {
               />
               <Text style={style.formLabel}>*Phone Number:</Text>
               <Forminput
-                value={this.state.newUser.phonenumber}
-                onChangeText={this.handleInputChange}
+                value={this.state.phonenumber}
+                onChangeText={(event) => this.setState({phonenumber: event})}
                 placeholder="Phone number"
                 name="phonenumber"
                 autoCorrect={false}
@@ -135,8 +146,8 @@ class VForm extends PureComponent {
               />
               <Text style={style.formLabel}>*Language 1:</Text>
               <Forminput
-                value={this.state.newUser.language1}
-                onChangeText={this.handleInputChange}
+                value={this.state.language1}
+                onChangeText={(event) => this.setState({language1: event})}
                 placeholder="Language"
                 name="language1"
                 autoCorrect={true}
@@ -145,8 +156,8 @@ class VForm extends PureComponent {
 
               <Text style={style.formLabel}>*Proficiency:</Text>
               <Forminput
-                value={this.state.newUser.proficiency1}
-                onChangeText={this.handleInputChange}
+                value={this.state.proficiency1}
+                onChangeText={(event) => this.setState({proficiency1: event})}
                 placeholder="Proficiency"
                 name="proficiency1"
                 autoCorrect={true}
@@ -155,8 +166,8 @@ class VForm extends PureComponent {
 
               <Text style={style.formLabel}>*Language 2:</Text>
               <Forminput
-                value={this.state.newUser.language2}
-                onChangeText={this.handleInputChange}
+                value={this.state.language2}
+                onChangeText={(event) => this.setState({language2: event})}
                 placeholder="Language"
                 name="language2"
                 autoCorrect={true}
@@ -165,8 +176,8 @@ class VForm extends PureComponent {
 
               <Text style={style.formLabel}>*Proficiency:</Text>
               <Forminput
-                value={this.state.newUser.proficiency2}
-                onChangeText={this.handleInputChange}
+                value={this.state.proficiency2}
+                onChangeText={(event) => this.setState({proficiency2: event})}
                 placeholder="Proficiency"
                 name="proficiency2"
                 autoCorrect={true}
@@ -176,8 +187,8 @@ class VForm extends PureComponent {
               
               <Text style={style.formLabel}>Language 3:</Text>
               <Forminput
-                value={this.state.newUser.language3}
-                onChangeText={this.handleInputChange}
+                value={this.state.language3}
+                onChangeText={(event) => this.setState({language3: event})}
                 placeholder="Language"
                 name="language3"
                 autoCorrect={true}
@@ -186,8 +197,8 @@ class VForm extends PureComponent {
 
               <Text style={style.formLabel}>Proficiency:</Text>
               <Forminput
-                value={this.state.newUser.proficiency3}
-                onChangeText={this.handleInputChange}
+                value={this.state.proficiency3}
+                onChangeText={(event) => this.setState({proficiency3: event})}
                 placeholder="Proficiency"
                 name="proficiency3"
                 autoCorrect={true}

@@ -1,4 +1,4 @@
-// import React from 'react';
+import React from 'react';
 // import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
 // import Lang1 from '../screens/lang1';
@@ -18,20 +18,18 @@
 //   )
 // )
 
-import React from 'react';
-import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { createStackNavigator, createAppContainer, createSwitchNavigator } from 'react-navigation';
+import Upload from '../screens/upload';
+import Chat from '../screens/messages';
+import Jobs from '../screens/U-jobs';
 
-import Form from '../screens/V-form';
-import Account from './5acct-settings';
+const AssistanceStack = createSwitchNavigator({
+  Upload: {screen: Upload},
+  Chat: {screen: Chat},
+  Jobs: {screen: Jobs},
+},
+{
+  initialRouteName: 'Chat',
+});
 
-export default createAppContainer(
-  createSwitchNavigator(
-    {
-      Form: { screen: Form },
-      Account: { screen: Account }
-    },
-    {
-      initialRouteName: 'Form',
-    },
-  )
-)
+export default createAppContainer(AssistanceStack);

@@ -17,14 +17,14 @@ class Job extends PureComponent {
   };
 
   static navigationOptions = {
-    title: 'Assistance',
-    headerStyle: {
-      backgroundColor: color.blue4,
-    },
-    headerTintColor: color.white,
-    headerTitleStyle: {
-      fontWeight: 'bold',
-    },
+    drawerLabel: 'Logout',
+    drawerIcon: ({ tintColor }) => (
+      <Ionicons
+        name={Platform.OS === 'ios' ? 'ios-log-out' : 'md-log-out'}
+        size={30}
+        color={color.blue2}
+      />
+    ),
   };
 
   componentDidMount = () => {

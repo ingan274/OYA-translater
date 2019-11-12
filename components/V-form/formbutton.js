@@ -22,6 +22,8 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         borderWidth: StyleSheet.hairlineWidth,
         borderColor: Colors.blue4,
+        marginBottom: 250,
+        marginTop: 30,
     },
     text: {
         color: Colors.white,
