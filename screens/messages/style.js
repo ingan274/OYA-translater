@@ -9,10 +9,7 @@ const styles = StyleSheet.create({
     backgroundColor: color.blue1,
   },
   Textcontainer: {
-    flex: 0.8,
-    justifyContent: "center",
-    alignItems: "center"
-    // backgroundColor: color.blue1,
+    backgroundColor: color.white,
   },
   header: {
     flexDirection: 'row',
