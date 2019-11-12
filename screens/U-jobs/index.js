@@ -41,8 +41,8 @@ class Job extends PureComponent {
 
     return (
       <View style={style.container}>
-         <Image style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }} source={require('../../assets/images/language.jpeg')}/>   
-        
+        <Image style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }} source={require('../../assets/images/language.jpeg')} />
+
         <View style={style.header}>
           <Ionicons
             name={
@@ -99,10 +99,30 @@ class Job extends PureComponent {
   };
 
   handleMessageReq = () => {
-    const {
-      navigation: { navigate },
-    } = this.props;
-    navigate('Chat');
+    const language;
+    // get language based on token/userid
+    fetch('Heroku link will go here', {
+      method: 'GET'
+    }).then((language) => {
+      language = language
+    })
+      .catch(err => console.warn(err))
+
+      // send the backend to match user with person in chat
+    fetch('Heroku link will go here', {
+      method: 'PUT',
+      body: { 
+        language: language,
+        job: message
+         }
+    }).then(() => {
+      const {
+        navigation: { navigate },
+      } = this.props;
+      navigate('Chat');
+    })
+      .catch(err => console.warn(err))
+
   };
 
   handleDocReq = () => {

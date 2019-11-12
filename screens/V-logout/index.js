@@ -28,7 +28,7 @@ class Job extends PureComponent {
   };
 
   componentDidMount = () => {
-    // GETTING RID OF TOKEN
+    // GETTING RID OF TOKEN to log them out
     fetch('Heroku link will go here', {
       method: 'POST'
     })

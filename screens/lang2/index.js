@@ -46,11 +46,11 @@ class Lang1 extends PureComponent {
         </View>
         <Text style={style.subhead}>What language do you need translated?</Text>
         <ScrollView>
-          <Langbtn btntext="English" onPress={this.handleTransLanguage} />
-          <Langbtn btntext="Spanish" onPress={this.handleTransLanguage} />
-          <Langbtn btntext="Chinese" onPress={this.handleTransLanguage} />
-          <Langbtn btntext="French" onPress={this.handleTransLanguage} />
-          <Langbtn btntext="Farsi" onPress={this.handleTransLanguage} />
+          <Langbtn btntext="English" value="English" onPress={this.handleTransLanguage("English")} />
+          <Langbtn btntext="Spanish" value="Spanish" onPress={this.handleTransLanguage("Spanish")} />
+          <Langbtn btntext="Chinese"  value="Chinese"onPress={this.handleTransLanguage("Chinese")} />
+          <Langbtn btntext="French" value="French" onPress={this.handleTransLanguage("French")} />
+          <Langbtn btntext="Farsi"  value="Farsi" onPress={this.handleTransLanguage("Farsi")} />
         </ScrollView>
       </View>
     );
@@ -70,12 +70,19 @@ class Lang1 extends PureComponent {
     navigate('Home');
   };
 
-  handleTransLanguage = () => {
-    const {
-      navigation: { navigate },
-    } = this.props;
-    navigate('Jobs');
-  };
+  handleTransLanguage = (language) => {
+     // get language based on token/userid
+     fetch('Heroku link will go here', {
+      method: 'POST',
+      data: {userlanguage: language}
+    }).then(() => {
+      const {
+        navigation: { navigate },
+      } = this.props;
+      navigate('Jobs');
+    })
+      .catch(err => console.warn(err))
+  }
 }
 
 export default Lang1;
