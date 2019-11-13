@@ -1,7 +1,7 @@
 import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
-import LogIn from '../screens/V-login';
+import LogIn from '../../screensCH/V-login';
 import Account from './5acct-settings';
 
 export default createAppContainer(

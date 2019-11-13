@@ -75,8 +75,7 @@ class SignUp extends PureComponent {
 
   showError = () => {
     if (this.state.passerror) {
-      return <Text style={style.error}>
-      请确保您的密码匹配。请再试一次。</Text>
+      return <Text style={style.error}>请确保您的密码匹配。请再试一次。</Text>
     } else if (this.state.emailerror) {
       return <Text style={style.error}>哎呀。看起来该电子邮件已被使用。请选择另一封电子邮件。</Text>
     }
@@ -87,14 +86,14 @@ class SignUp extends PureComponent {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={style.container}>
           <Image source={imageLogo} style={style.logo} />
-          <Text style={style.title}>{strings.SIGNUP}</Text>
+          <Text style={style.title}>{strings.CHSIGNUP}</Text>
           <View style={style.form}>
             {this.showError()}
             <Form
               value={this.state.email}
               onChangeText={this.handleEmailChange}
               onSubmitEditing={this.handleEmailSubmitPress}
-              placeholder={strings.EMAIL_PLACEHOLDER}
+              placeholder={strings.CHEMAIL_PLACEHOLDER}
               autoCorrect={false}
               keyboardType="email-address"
               returnKeyType="next"
@@ -102,18 +101,18 @@ class SignUp extends PureComponent {
             <Form
               value={this.state.password}
               onChangeText={this.handlePasswordChange}
-              placeholder={strings.PASSWORD_PLACEHOLDER}
+              placeholder={strings.CHPASSWORD_PLACEHOLDER}
               secureTextEntry={true}
               returnKeyType="next"
             />
             <Form
               value={this.state.password}
               onChangeText={this.handlePasswordConfirmChange}
-              placeholder={strings.PASSWORD_CONFIRM_PLACEHOLDER}
+              placeholder={strings.CHPASSWORD_CONFIRM_PLACEHOLDER}
               secureTextEntry={true}
               returnKeyType="done"
             />
-            <Button label={strings.SIGNUP} onPress={this.handleSignUpPress} />
+            <Button label={strings.CHSIGNUP} onPress={this.handleSignUpPress} />
             <TouchableOpacity
               onPress={this.handleLogIn} // navigation
               style={style.SU}

@@ -44,7 +44,7 @@ class Lang1 extends PureComponent {
             onPress={this.handleAccount}
           />
         </View>
-        <Text style={style.subhead}>What language do you need translated?</Text>
+        <Text style={style.subhead}>¿Qué idioma necesitas traducir?</Text>
         <ScrollView>
           <Langbtn btntext="Inglés" value="English" onPress={this.handleTransLanguage("English")} />
           <Langbtn btntext="Español" value="Spanish" onPress={this.handleTransLanguage("Spanish")} />

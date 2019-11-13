@@ -1,7 +1,7 @@
 import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
-import SignUp from '../screens/V-signup';
+import SignUp from '../../screensSP/V-signup';
 import Form from './5form-acct';
 
 export default createAppContainer(
