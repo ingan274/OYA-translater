@@ -1,27 +1,17 @@
 import style from './style';
 import React, { PureComponent } from 'react';
-import { Ionicons } from '@expo/vector-icons';
-import { Image, View, Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from "react-native";
+import { Image, View, Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Platform } from "react-native";
 import Button from "../../components/login-signup/loginbtn";
 import Form from "../../components/login-signup/loginFrom";
 import imageLogo from "../../assets/images/logo.png";
 import strings from "../../components/login-signup/strings";
+import { Ionicons } from '@expo/vector-icons';
 
 class LoginScreen extends PureComponent {
-
-  constructor(props) {
-    super(props);
-
-    state = {
-      email: '',
-      password: '',
-      error: false,
-    }
-    this.handleEmailChange = this.handleEmailChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    this.handleLoginPress = this.handleLoginPress.bind(this);
-    this.handleFormSubmit = this.handleFormSubmit.bind(this);
-    this.showError = this.showError.bind(this);
+  state = {
+    email: '',
+    password: '',
+    error: false,
   }
 
   handleEmailChange = (email) => {
@@ -41,13 +31,22 @@ class LoginScreen extends PureComponent {
       password: pass
     }
 
-    console.info(login)
-    // add ajax call .then the navigation
-    // const {
-    //   navigation: { navigate },
-    // } = this.props;
-    // navigate('Account');
-    // MAKE SURE CHANEL CAN PASS BACK A TRUE OR FASLE TO TRIGGER ERROR
+    fetch('Heroku link will go here', {
+      method: 'POST',
+      body: login
+    })
+      .then((response) => {
+        if (response) {
+          const {
+            navigation: { navigate },
+          } = this.props;
+          navigate('Account');
+        } else {
+          this.setState({ error: true });
+        }
+
+      })
+      .catch(err => console.warn(err))
   };
 
   showError = () => {
@@ -63,6 +62,14 @@ class LoginScreen extends PureComponent {
       navigation: { navigate },
     } = this.props;
     navigate('SignUp');
+  };
+
+  handleBack = () => {
+
+    const {
+      navigation: { navigate },
+    } = this.props;
+    navigate('Language');
   };
 
   render() {
@@ -83,7 +90,6 @@ class LoginScreen extends PureComponent {
               returnKeyType="next"
             />
             <Form
-              ref={this.passwordInputRef}
               value={this.state.password}
               onChangeText={this.handlePasswordChange}
               placeholder={strings.PASSWORD_PLACEHOLDER}
@@ -95,15 +101,19 @@ class LoginScreen extends PureComponent {
               onPress={this.handleSignUp} // navigation
               style={style.SU}
             >
-              <Text>Switch to Sign Up</Text>
+              <Text>Sign Up</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={this.handleBack} // navigation
+              style={style.SU}
+            >
+              <Text>Back to Language Selection</Text>
             </TouchableOpacity>
           </View>
         </View>
       </TouchableWithoutFeedback>
-    );
+    )
   }
-
-}
-
+};
 
 export default LoginScreen;

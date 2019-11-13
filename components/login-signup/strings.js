@@ -3,7 +3,7 @@ const strings = {
     EMAIL_PLACEHOLDER: "Email",
     PASSWORD_PLACEHOLDER: "Password",
     SIGNUP: "Sign Up",
-    PASSWORD_CONFIRM_PLACEHOLDER: "Password Confirmation"
+    PASSWORD_CONFIRM_PLACEHOLDER: "Confirm Password"
 };
 
 export default strings;

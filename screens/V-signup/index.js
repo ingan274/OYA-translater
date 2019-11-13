@@ -10,23 +10,15 @@ import strings from "../../components/login-signup/strings";
 
 
 class SignUp extends PureComponent {
-  constructor(props) {
-    super(props);
 
-    state = {
-      email: "",
-      password: "",
-      passwordC: "",
-      passerror: false,
-      usererror: false,
-    };
+  state = {
+    email: "",
+    password: "",
+    passwordC: "",
+    passerror: false,
+    emailerror: false,
+  };
 
-    this.handleEmailChange = this.handleEmailChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    this.handlePasswordConfirmChange = this.handlePasswordConfirmChange.bind(this);
-    this.handleSignUpPress = this.handleSignUpPress.bind(this);
-    this.showError = this.showError.bind(this);
-  }
 
   handleEmailChange = (email) => {
     this.setState({ email: email });
@@ -45,29 +37,32 @@ class SignUp extends PureComponent {
     let pass = this.state.password;
     let passC = this.state.passwordC;
 
-    // ajax call to GET all usernames and compare to username implemented
-
-    // ajax call to PUT new user un
-
-    if (passC === pass) {
-      const newUser = {
-        username: user,
-        password: pass
-      }
-      // post call .then
-      const {
-        navigation: { navigate },
-      } = this.props;
-      navigate('Form');
+    const newUser = {
+      username: user,
+      password: pass
     }
+
     // passwords don't match
-    else if (pass !== passC) {
+    if (pass !== passC) {
       this.setState({ passerror: true });
+    } else {
+      fetch('Heroku link will go here', {
+        method: 'POST',
+        body: newUser
+      })
+        .then((response) => {
+          if (response) {
+            const {
+              navigation: { navigate },
+            } = this.props;
+            navigate('Form');
+          } else {
+            this.setState({ emailerror: true });
+          }
+          
+        })
+        .catch(err => console.warn(err))
     }
-    // checking if username is unique
-    // else if () {
-
-    // }
   };
 
 
@@ -81,8 +76,8 @@ class SignUp extends PureComponent {
   showError = () => {
     if (this.state.passerror) {
       return <Text style={style.error}>Please make sure your passwords match. Please try again.</Text>
-    } else if (this.state.usererror) {
-      return <Text style={style.error}>Please choose another username. Looks like that one has been taken</Text>
+    } else if (this.state.emailerror) {
+      return <Text style={style.error}>Oops. Looks like that email has already been used. Please choose another email.</Text>
     }
   };
 
@@ -122,7 +117,7 @@ class SignUp extends PureComponent {
               onPress={this.handleLogIn} // navigation
               style={style.SU}
             >
-              <Text>Switch to LogIn</Text>
+              <Text>Log In</Text>
             </TouchableOpacity>
           </View>
         </View>

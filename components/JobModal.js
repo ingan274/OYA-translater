@@ -56,7 +56,7 @@ function JobModal(props) {
 
 const styles = StyleSheet.create({
   modal: {
-    paddingHorizontal: 30
+    paddingHorizontal: 30,
   },
   exit: {
     marginTop: 10

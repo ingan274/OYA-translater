@@ -1,13 +1,19 @@
-import { createBrowserApp } from '@react-navigation/web';
-import { createSwitchNavigator } from 'react-navigation';
+import React from 'react';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
-import MainTabNavigator from './MainTabNavigator';
+import Lang1 from '../screens/lang1';
+import Lang2 from './2lang2-job_Vlogin';
+import About from '../screens/about';
 
-const switchNavigator = createSwitchNavigator({
-  // You could add another route here for authentication.
-  // Read more at https://reactnavigation.org/docs/en/auth-flow.html
-  Main: MainTabNavigator,
-});
-switchNavigator.path = '';
-
-export default createBrowserApp(switchNavigator, { history: 'hash' });
+export default createAppContainer(
+  createSwitchNavigator(
+    {
+      Home: { screen: Lang1 },
+      Language: { screen: Lang2 },
+      About: { screen: About }
+    },
+    {
+      initialRouteName: 'Home',
+    },
+  )
+)
