@@ -51,7 +51,7 @@ class LoginScreen extends PureComponent {
 
   showError = () => {
     if (this.state.error) {
-      return <Text style={style.error}>Oops! Looks like your email or password did not match. Please try again.</Text>
+      return <Text style={style.error}>糟糕！看来您的电子邮件或密码不匹配。请再试一次</Text>
     }
   };
 
@@ -77,14 +77,14 @@ class LoginScreen extends PureComponent {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={style.container}>
           <Image source={imageLogo} style={style.logo} />
-          <Text style={style.title}>{strings.LOGIN}</Text>
+          <Text style={style.title}>{strings.CHLOGIN}</Text>
           <View style={style.form}>
             {this.showError()}
             <Form
               value={this.state.email}
               onChangeText={this.handleEmailChange}
               onSubmitEditing={this.handleEmailSubmitPress}
-              placeholder={strings.EMAIL_PLACEHOLDER}
+              placeholder={strings.CHEMAIL_PLACEHOLDER}
               autoCorrect={false}
               keyboardType="email-address"
               returnKeyType="next"
@@ -92,11 +92,11 @@ class LoginScreen extends PureComponent {
             <Form
               value={this.state.password}
               onChangeText={this.handlePasswordChange}
-              placeholder={strings.PASSWORD_PLACEHOLDER}
+              placeholder={strings.CHPASSWORD_PLACEHOLDER}
               secureTextEntry={true}
               returnKeyType="done"
             />
-            <Button label={strings.LOGIN} onPress={this.handleLoginPress} />
+            <Button label={strings.CHLOGIN} onPress={this.handleLoginPress} />
             <TouchableOpacity
               onPress={this.handleSignUp} // navigation
               style={style.SU}

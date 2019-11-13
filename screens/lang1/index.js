@@ -3,8 +3,6 @@ import style from './style';
 import Langbtn from '../../components/Langbtn.js';
 import { Ionicons } from '@expo/vector-icons';
 import color from '../../constants/Colors';
-import dotenv from 'dotenv';
-dotenv.config('../../.env');
 import {
   Image,
   Platform,
@@ -14,8 +12,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { doesSupportAsync } from 'expo/build/ScreenOrientation/ScreenOrientation';
-import { DH_NOT_SUITABLE_GENERATOR } from 'constants';
 
 class Lang1 extends PureComponent {
 
@@ -62,9 +58,9 @@ class Lang1 extends PureComponent {
           speakers
         </Text>
         <ScrollView>
-          <Langbtn btntext="English" onPress={this.handleLanguage} />
-          <Langbtn btntext="Español" onPress={this.handleLanguage} />
-          <Langbtn btntext="中文" onPress={this.handleLanguage} />
+          <Langbtn btntext="English" onPress={this.handleLanguageE} />
+          <Langbtn btntext="Español" onPress={this.handleLanguageSP} />
+          <Langbtn btntext="中文" onPress={this.handleLanguageCH} />
         </ScrollView>
       </View>
     );
@@ -77,11 +73,25 @@ class Lang1 extends PureComponent {
     navigate('About');
   };
 
-  handleLanguage = () => {
+  handleLanguageE = () => {
     const {
       navigation: { navigate },
     } = this.props;
-    navigate('Language');
+    navigate('English');
+  };
+
+  handleLanguageSP = () => {
+    const {
+      navigation: { navigate },
+    } = this.props;
+    navigate('Spanish');
+  };
+
+  handleLanguageCH = () => {
+    const {
+      navigation: { navigate },
+    } = this.props;
+    navigate('Chinese');
   };
 }
 

@@ -1,8 +1,8 @@
 import { createDrawerNavigator, createAppContainer } from 'react-navigation';
 import Account from './6vaccount-jobs';
-import About from '../screens/V-about';
-import Settings from '../screens/V-settings';
-import Logout from '../screens/V-logout'
+import About from '../../screensCH/V-about';
+import Settings from '../../screensCH/V-settings';
+import Logout from '../../screensCH/V-logout'
 
 const AccountNavDrawer = createDrawerNavigator({
   Account: {screen: Account},

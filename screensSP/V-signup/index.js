@@ -86,14 +86,14 @@ class SignUp extends PureComponent {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={style.container}>
           <Image source={imageLogo} style={style.logo} />
-          <Text style={style.title}>{strings.SIGNUP}</Text>
+          <Text style={style.title}>{strings.SPSIGNUP}</Text>
           <View style={style.form}>
             {this.showError()}
             <Form
               value={this.state.email}
               onChangeText={this.handleEmailChange}
               onSubmitEditing={this.handleEmailSubmitPress}
-              placeholder={strings.EMAIL_PLACEHOLDER}
+              placeholder={strings.SPEMAIL_PLACEHOLDER}
               autoCorrect={false}
               keyboardType="email-address"
               returnKeyType="next"
@@ -101,18 +101,18 @@ class SignUp extends PureComponent {
             <Form
               value={this.state.password}
               onChangeText={this.handlePasswordChange}
-              placeholder={strings.PASSWORD_PLACEHOLDER}
+              placeholder={strings.SPPASSWORD_PLACEHOLDER}
               secureTextEntry={true}
               returnKeyType="next"
             />
             <Form
               value={this.state.password}
               onChangeText={this.handlePasswordConfirmChange}
-              placeholder={strings.PASSWORD_CONFIRM_PLACEHOLDER}
+              placeholder={strings.SPPASSWORD_CONFIRM_PLACEHOLDER}
               secureTextEntry={true}
               returnKeyType="done"
             />
-            <Button label={strings.SIGNUP} onPress={this.handleSignUpPress} />
+            <Button label={strings.SPSIGNUP} onPress={this.handleSignUpPress} />
             <TouchableOpacity
               onPress={this.handleLogIn} // navigation
               style={style.SU}

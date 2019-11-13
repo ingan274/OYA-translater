@@ -77,14 +77,14 @@ class LoginScreen extends PureComponent {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={style.container}>
           <Image source={imageLogo} style={style.logo} />
-          <Text style={style.title}>{strings.LOGIN}</Text>
+          <Text style={style.title}>{strings.SPLOGIN}</Text>
           <View style={style.form}>
             {this.showError()}
             <Form
               value={this.state.email}
               onChangeText={this.handleEmailChange}
               onSubmitEditing={this.handleEmailSubmitPress}
-              placeholder={strings.EMAIL_PLACEHOLDER}
+              placeholder={strings.SPEMAIL_PLACEHOLDER}
               autoCorrect={false}
               keyboardType="email-address"
               returnKeyType="next"
@@ -92,11 +92,11 @@ class LoginScreen extends PureComponent {
             <Form
               value={this.state.password}
               onChangeText={this.handlePasswordChange}
-              placeholder={strings.PASSWORD_PLACEHOLDER}
+              placeholder={strings.SPPASSWORD_PLACEHOLDER}
               secureTextEntry={true}
               returnKeyType="done"
             />
-            <Button label={strings.LOGIN} onPress={this.handleLoginPress} />
+            <Button label={strings.SPLOGIN} onPress={this.handleLoginPress} />
             <TouchableOpacity
               onPress={this.handleSignUp} // navigation
               style={style.SU}
