@@ -11,9 +11,28 @@ import {
   Text,
   TouchableOpacity,
   View,
+  AppState,
+  AsyncStorage
 } from 'react-native';
 
 class Lang1 extends PureComponent {
+  state = {
+    appState: AppState.currentState
+  }
+
+  componentDidMount = () => {
+    AppState.addEventListener('change', this.deleteDB);
+  }
+
+  deleteDB = async () => {
+    // INSERT CODE TO DELETE DATABASE
+    try {
+      await AsyncStorage.removeItem('native', 'lanugage', 'socket');
+    } catch (error) {
+      // Error retrieving data
+      console.log(error.message);
+    }
+  }
 
   static navigationOptions = {
     drawerLabel: 'Log Out',
@@ -58,9 +77,9 @@ class Lang1 extends PureComponent {
           speakers
         </Text>
         <ScrollView>
-          <Langbtn btntext="English" onPress={this.handleLanguageE("English")} />
-          <Langbtn btntext="Español" onPress={this.handleLanguageSP("English")} />
-          <Langbtn btntext="中文" onPress={this.handleLanguageCH("English")} />
+          <Langbtn btntext="English" onPress={() => this.handleLanguage("English")} />
+          <Langbtn btntext="Español" onPress={() => this.handleLanguage("Spanish")} />
+          <Langbtn btntext="中文" onPress={() => this.handleLanguage("Chinese")} />
         </ScrollView>
       </View>
     );
@@ -73,43 +92,39 @@ class Lang1 extends PureComponent {
     navigate('About');
   };
 
-  handleLanguageE = (language) => {
-    fetch('Heroku link will go here', {
-      method: 'POST',
-      data: { native: language }
-    }).then(() => {
+  handleLanguage = (language) => {
+    // save language (NATIVE) in local storage
+    this.handleLOCALSTORAGE(language);
+    // nav
+    if (language === "English") {
       const {
         navigation: { navigate },
       } = this.props;
-      navigate('English');
-    })
-      .catch(err => console.warn(err))
+      navigate("English");
+    } else if (language === "Spanish") {
+      const {
+        navigation: { navigate },
+      } = this.props;
+      navigate("Spanish");
+    } else if (language === "Chinese") {
+      const {
+        navigation: { navigate },
+      } = this.props
+      navigate("Chinese");
+    }
+    
+
   }
 
-  handleLanguageSP = (language) => {
-    fetch('Heroku link will go here', {
-      method: 'POST',
-      data: { native: language }
-    }).then(() => {
-      const {
-        navigation: { navigate },
-      } = this.props;
-      navigate('Spanish');
-    })
-      .catch(err => console.warn(err))
-  };
-
-  handleLanguageCH = (language) => {
-    fetch('Heroku link will go here', {
-      method: 'POST',
-      data: { native: language }
-    }).then(() => {
-      const {
-        navigation: { navigate },
-      } = this.props;
-      navigate('Chinese');
-    })
-      .catch(err => console.warn(err))
+  handleLOCALSTORAGE = async (language) => {
+    console.log("native", language)
+    // save language (NATIVE) in local storage
+    try {
+      await AsyncStorage.setItem('native', language);
+    } catch (error) {
+      // Error retrieving data
+      console.log(error.message);
+    }
   }
 }
 

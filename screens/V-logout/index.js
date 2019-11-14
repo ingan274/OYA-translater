@@ -8,7 +8,8 @@ import {
   Image,
   Platform,
   Text,
-  View
+  View,
+  AsyncStorage
 } from 'react-native';
 
 class Job extends PureComponent {
@@ -28,38 +29,41 @@ class Job extends PureComponent {
   };
 
   componentDidMount = () => {
-    // GETTING RID OF TOKEN to log them out
-    fetch('https://oyabackend.herokuapp.com/logout', {
-      method: 'POST'
-    })
-      .catch(err => console.warn(err))
+    // GETTING RID OF INFO IN LOCAL STORAGE
+    this.removeVData()
   }
 
-  setModalVisible(visible) {
-    this.setState({ modalVisible: visible });
+  removeVData = async () => {
+    try {
+      await AsyncStorage.removeItem('firstname', 'lastname', 'language1', 'language2', 'language3');
+      console.log("removal of volunteer info success")
+    } catch (error) {
+      // Error retrieving data
+      console.log(error.message);
+    }
   }
 
   render() {
 
     return (
-       <View style={style.container}>
-        <Image style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }} source={require('../../assets/images/logoutback.jpeg')}/>
-            <View style={style.textContainer}>
-            <Text style={style.headerTitle}>You Have Successfully Logged Out</Text>
-            </View>
-          <View style={style.ButtonContainer}>
-            <Btn
-              btntext="Back to Home"
-              onPress={this.handleHome}
-              icon="home"
-            />
-            <Btn
-              btntext="Go to Login"
-              onPress={this.handleLogin}
-              icon="log-in"
-            />
-          </View>
+      <View style={style.container}>
+        <Image style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }} source={require('../../assets/images/logoutback.jpeg')} />
+        <View style={style.textContainer}>
+          <Text style={style.headerTitle}>You Have Successfully Logged Out</Text>
         </View>
+        <View style={style.ButtonContainer}>
+          <Btn
+            btntext="Back to Home"
+            onPress={this.handleHome}
+            icon="home"
+          />
+          <Btn
+            btntext="Go to Login"
+            onPress={this.handleLogin}
+            icon="log-in"
+          />
+        </View>
+      </View>
     );
   }
 

@@ -22,7 +22,8 @@ class Message extends PureComponent {
     super(props);
     this.state = {
       messages: [],
-      userId: null
+      userId: null,
+      Vsocket: ''
     };
 
     this.determineUser = this.determineUser.bind(this);
@@ -33,6 +34,21 @@ class Message extends PureComponent {
     this.socket = SocketIOClient('http://localhost:3000');
     this.socket.on('message', this.onReceivedMessage);
     this.determineUser();
+  }
+
+  componentDidMount() {
+    this.handleLOCALSTORAGE()
+  }
+
+  handleLOCALSTORAGE = async () => {
+    // GET SOCKET ID AND SET THE STATE in local storage
+    try {
+      let socket = await AsyncStorage.getItem('Vsocket'|| 'none');
+      this.setState({Vsocket: socket})
+    } catch (error) {
+      // Error retrieving data
+      console.log(error.message);
+    }
   }
 
   /**
@@ -86,7 +102,7 @@ class Message extends PureComponent {
       )
     } else {
       return (
-        <Text style={style.unavail}>Looks like you are set to "Unavailable." Please go back to your account and turn your availibilty on.</Text>
+        <Text style={style.unavail}>We are connecting you to a Volunteer now. One moment please.</Text>
       )
     }
   }
@@ -128,7 +144,7 @@ class Message extends PureComponent {
     const {
       navigation: { navigate },
     } = this.props;
-    navigate('Jobs');
+    navigate('Account');
   };
 }
 

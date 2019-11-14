@@ -46,12 +46,14 @@ class SignUp extends PureComponent {
     if (pass !== passC) {
       this.setState({ passerror: true });
     } else {
+      //post call 
       fetch('https://oyabackend.herokuapp.com/register', {
         method: 'POST',
         body: newUser
       })
         .then((response) => {
           if (response) {
+            // NAVIGATE
             const {
               navigation: { navigate },
             } = this.props;
@@ -62,6 +64,7 @@ class SignUp extends PureComponent {
           
         })
         .catch(err => console.warn(err))
+
     }
   };
 

@@ -8,7 +8,8 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
-  AppState
+  AppState,
+  AsyncStorage
 } from 'react-native';
 import colors from '../../constants/Colors';
 import NameLang from '../../components/accntLangSet';
@@ -28,25 +29,46 @@ export default class Account extends React.Component {
 
   componentDidMount = () => {
 
-    // GET USER INFORMATION
-    fetch('https://oyabackend.herokuapp.com/me', {
-      method: 'GET'
-    }).then((response) => {
-      let firstname = response.firstname;
-      let lastname = response.lastname;
-      let language1 = response.language1;
-      let language2 = response.language2;
-      let language3 = response.language3;
-      this.setState({
-        firstname: firstname,
-        lastname: lastname,
-        language1: language1,
-        language2: language2,
-        language3: language3,
-      });
-    })
-      .catch(err => console.warn(err))
+    // GET USER INFORMATION FROM LOCAL STORAGE
+    this.handleLocalStorageGet()
   }
+
+  handleLocalStorageGet = async () => {
+    let firstname = '';
+    let lastname = '';
+    let language1 = '';
+    let language2 = '';
+    let language3 = '';
+    
+    try {
+      firstname = await AsyncStorage.getItem('firstname') || '';
+      lastname = await AsyncStorage.getItem('lastname') || '';
+      language1 = await AsyncStorage.getItem('language1') || '';
+      language2 = await AsyncStorage.getItem('language2') || '';
+      language3 = await AsyncStorage.getItem('language3') || '';
+    } catch (error) {
+      // Error retrieving data
+      console.log(error.message);
+    }
+    
+    this.setState({
+      firstname: firstname,
+      lastname: lastname,
+      language1: language1,
+      language2: language2,
+      language3: language3,
+    });
+
+    console.log({
+      'firstname': firstname,
+      'lastname': lastname,
+      'language1': language1,
+      'language2': language2,
+      'language3': language3,
+    })
+
+  }
+
   toggleNotification = value => {
     this.setState({ notification: value });
   };
@@ -181,13 +203,4 @@ export default class Account extends React.Component {
   handleMenu = () => {
     this.props.navigation.openDrawer();
   };
-
-
-  handleMessage = () => {
-    const {
-      navigation: { navigate },
-    } = this.props;
-    navigate('Chat');
-  };
-
 }

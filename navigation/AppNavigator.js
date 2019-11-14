@@ -11,9 +11,9 @@ export default createAppContainer(
   createSwitchNavigator(
     {
       Home: { screen: Lang1 },
+      English: { screen: English },
       Chinese: { screen: Chinese },
       Spanish: { screen: Spanish },
-      English: { screen: English },
       About: { screen: About }
     },
     {
@@ -21,3 +21,4 @@ export default createAppContainer(
     },
   )
 )
+

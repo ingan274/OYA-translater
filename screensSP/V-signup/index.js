@@ -52,6 +52,9 @@ class SignUp extends PureComponent {
       })
         .then((response) => {
           if (response) {
+            // SAVE INFO TO LOCAL STORAGE
+
+            //NAVIGATE
             const {
               navigation: { navigate },
             } = this.props;

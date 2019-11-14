@@ -10,6 +10,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  AsyncStorage
 } from 'react-native';
 
 class Lang1 extends PureComponent {
@@ -46,11 +47,11 @@ class Lang1 extends PureComponent {
         </View>
         <Text style={style.subhead}>¿Qué idioma necesitas traducir?</Text>
         <ScrollView>
-          <Langbtn btntext="Inglés" value="English" onPress={this.handleTransLanguage("English")} />
-          <Langbtn btntext="Español" value="Spanish" onPress={this.handleTransLanguage("Spanish")} />
-          <Langbtn btntext="Chino"  value="Chinese"onPress={this.handleTransLanguage("Chinese")} />
-          <Langbtn btntext="Francés" value="French" onPress={this.handleTransLanguage("French")} />
-          <Langbtn btntext="Farsi"  value="Farsi" onPress={this.handleTransLanguage("Farsi")} />
+          <Langbtn btntext="Inglés" value="English" onPress={() => this.handleTransLanguage("English")} />
+          <Langbtn btntext="Español" value="Spanish" onPress={() => this.handleTransLanguage("Spanish")} />
+          <Langbtn btntext="Chino"  value="Chinese"onPress={() => this.handleTransLanguage("Chinese")} />
+          <Langbtn btntext="Francés" value="French" onPress={() => this.handleTransLanguage("French")} />
+          <Langbtn btntext="Farsi"  value="Farsi" onPress={() => this.handleTransLanguage("Farsi")} />
         </ScrollView>
       </View>
     );
@@ -71,17 +72,25 @@ class Lang1 extends PureComponent {
   };
 
   handleTransLanguage = (language) => {
-     // get language based on token/userid
-     fetch('Heroku link will go here', {
-      method: 'POST',
-      data: {userlanguage: language}
-    }).then(() => {
-      const {
-        navigation: { navigate },
-      } = this.props;
-      navigate('Jobs');
-    })
-      .catch(err => console.warn(err))
+    // HANDLE SAVE TO STORAGE
+    this.handleLOCALSTORAGE(language)
+    // NAV
+    const {
+      navigation: { navigate },
+    } = this.props;
+    navigate("Jobs");
+
+  }
+
+  handleLOCALSTORAGE = async (language) => {
+    console.log("language", language)
+    // save language (NATIVE) in local storage
+    try {
+      await AsyncStorage.setItem('language', language);
+    } catch (error) {
+      // Error retrieving data
+      console.log(error.message);
+    }
   }
 }
 

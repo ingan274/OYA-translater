@@ -10,6 +10,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  AsyncStorage
 } from 'react-native';
 
 class Lang1 extends PureComponent {
@@ -46,11 +47,11 @@ class Lang1 extends PureComponent {
         </View>
         <Text style={style.subhead}>您需要翻译什么语言?</Text>
         <ScrollView>
-          <Langbtn btntext="英语" value="English" onPress={this.handleTransLanguage("English")} />
-          <Langbtn btntext="西班牙文" value="Spanish" onPress={this.handleTransLanguage("Spanish")} />
-          <Langbtn btntext="中文"  value="Chinese"onPress={this.handleTransLanguage("Chinese")} />
-          <Langbtn btntext="法语" value="French" onPress={this.handleTransLanguage("French")} />
-          <Langbtn btntext="波斯语"  value="Farsi" onPress={this.handleTransLanguage("Farsi")} />
+          <Langbtn btntext="英语" value="English" onPress={() => this.handleTransLanguage("English")} />
+          <Langbtn btntext="西班牙文" value="Spanish" onPress={() => this.handleTransLanguage("Spanish")} />
+          <Langbtn btntext="中文"  value="Chinese"onPress={() => this.handleTransLanguage("Chinese")} />
+          <Langbtn btntext="法语" value="French" onPress={() => this.handleTransLanguage("French")} />
+          <Langbtn btntext="波斯语"  value="Farsi" onPress={() => this.handleTransLanguage("Farsi")} />
         </ScrollView>
       </View>
     );
@@ -71,17 +72,25 @@ class Lang1 extends PureComponent {
   };
 
   handleTransLanguage = (language) => {
-     // get language based on token/userid
-     fetch('Heroku link will go here', {
-      method: 'POST',
-      data: {userlanguage: language}
-    }).then(() => {
-      const {
-        navigation: { navigate },
-      } = this.props;
-      navigate('Jobs');
-    })
-      .catch(err => console.warn(err))
+    // HANDLE SAVE TO STORAGE
+    this.handleLOCALSTORAGE(language)
+    // NAV
+    const {
+      navigation: { navigate },
+    } = this.props;
+    navigate("Jobs");
+
+  }
+
+  handleLOCALSTORAGE = async (language) => {
+    console.log("language", language)
+    // save language (NATIVE) in local storage
+    try {
+      await AsyncStorage.setItem('language', language);
+    } catch (error) {
+      // Error retrieving data
+      console.log(error.message);
+    }
   }
 }
 

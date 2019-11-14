@@ -37,6 +37,9 @@ class LoginScreen extends PureComponent {
     })
       .then((response) => {
         if (response) {
+          // SAVE INFO IN STORAGE 
+
+          // NAVIGATE
           const {
             navigation: { navigate },
           } = this.props;
