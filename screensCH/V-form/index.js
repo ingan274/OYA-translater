@@ -31,7 +31,6 @@ class VForm extends PureComponent {
   };
 
   state = {
-    newUser: {
       firstname: '',
       lastname: '',
       email: '',
@@ -42,7 +41,6 @@ class VForm extends PureComponent {
       proficiency1: '',
       proficiency2: '',
       proficiency3: '',
-    },
 
     error: false,
   }

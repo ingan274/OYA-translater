@@ -37,23 +37,23 @@ export default class Account extends React.Component {
     AppState.addEventListener('change', this.getNotificationD);
 
     // GET USER INFORMATION
-    // fetch('Heroku link will go here', {
-    //   method: 'GET'
-    // }).then((response) => {
-    //   let firstname = response.firstname;
-    //   let lastname = response.lastname;
-    //   let language1 = response.language1;
-    //   let language2 = response.language2;
-    //   let language3 = response.language3;
-    //   this.setState({
-    //     firstname: firstname,
-    //     lastname: lastname,
-    //     language1: language1,
-    //     language2: language2,
-    //     language3: language3,
-    //   });
-    // })
-    //   .catch(err => console.warn(err))
+    fetch('https://oyabackend.herokuapp.com/me', {
+      method: 'GET'
+    }).then((response) => {
+      let firstname = response.firstname;
+      let lastname = response.lastname;
+      let language1 = response.language1;
+      let language2 = response.language2;
+      let language3 = response.language3;
+      this.setState({
+        firstname: firstname,
+        lastname: lastname,
+        language1: language1,
+        language2: language2,
+        language3: language3,
+      });
+    })
+      .catch(err => console.warn(err))
   }
 
   getNotificationM = () => {

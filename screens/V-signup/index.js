@@ -46,7 +46,7 @@ class SignUp extends PureComponent {
     if (pass !== passC) {
       this.setState({ passerror: true });
     } else {
-      fetch('Heroku link will go here', {
+      fetch('https://oyabackend.herokuapp.com/register', {
         method: 'POST',
         body: newUser
       })
