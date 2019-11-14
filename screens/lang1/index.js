@@ -25,12 +25,14 @@ class Lang1 extends PureComponent {
   }
 
   deleteDB = async () => {
-    // INSERT CODE TO DELETE DATABASE
-    try {
-      await AsyncStorage.removeItem('native', 'lanugage', 'socket');
-    } catch (error) {
-      // Error retrieving data
-      console.log(error.message);
+    if (this.state.appState.match(/inactive/)) {
+      // INSERT CODE TO DELETE DATABASE
+      try {
+        await AsyncStorage.removeItem('native', 'lanugage', 'socket');
+      } catch (error) {
+        // Error retrieving data
+        console.log(error.message);
+      }
     }
   }
 
@@ -112,7 +114,7 @@ class Lang1 extends PureComponent {
       } = this.props
       navigate("Chinese");
     }
-    
+
 
   }
 
