@@ -74,7 +74,7 @@ class Lang1 extends PureComponent {
      // get language based on token/userid
      fetch('Heroku link will go here', {
       method: 'POST',
-      data: {userlanguage: language}
+      data: {language: language}
     }).then(() => {
       const {
         navigation: { navigate },

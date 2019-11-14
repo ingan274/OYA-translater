@@ -27,7 +27,7 @@ class LoginScreen extends PureComponent {
     let pass = this.state.password;
 
     const login = {
-      username: user,
+      email: user,
       password: pass
     }
 
