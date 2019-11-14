@@ -59,7 +59,7 @@ export default class Account extends React.Component {
       // Error retrieving data
       console.log(error.message);
     }
-    
+
     this.setState({
       firstname: firstname,
       lastname: lastname,
@@ -78,6 +78,18 @@ export default class Account extends React.Component {
 
   }
 
+  removeListener = (res) => {
+    let stopListener;
+    if (res === "M") {
+      stopListener = this.getNotificationM;
+    } else if (res === "P") {
+      stopListener = this.getNotificationP;
+    } else if (res === "D") {
+      stopListener = this.getNotificationD;
+    }
+    AppState.removeEventListener('change', stopListener);
+  }
+
   getNotificationM = () => {
     fetch('Heroku link will go here', {
       method: 'GET'
@@ -87,6 +99,11 @@ export default class Account extends React.Component {
       });
     })
       .catch(err => console.warn(err))
+
+    if (this.state.appState.match(/inactive/)) {
+      // REMOVE LISTENER
+      this.removeListener("M")
+    }
   }
 
   getNotificationP = () => {
@@ -98,6 +115,11 @@ export default class Account extends React.Component {
       });
     })
       .catch(err => console.warn(err))
+
+    if (this.state.appState.match(/inactive/)) {
+      // REMOVE LISTENER
+      this.removeListener("P")
+    }
   }
 
 
@@ -110,6 +132,11 @@ export default class Account extends React.Component {
       });
     })
       .catch(err => console.warn(err))
+
+    if (this.state.appState.match(/inactive/)) {
+      // REMOVE LISTENER
+      this.removeListener("D")
+    }
   }
 
   toggleMessage = value => {
@@ -119,13 +146,13 @@ export default class Account extends React.Component {
       method: 'PUT',
       body: { massageAvail: value }
     })
-    .then((res) => {
-      if (res) {
+      .then((res) => {
+        if (res) {
 
-        let socket = res.socket
-        this.saveSocket(socket)
-      }
-    })
+          let socket = res.socket
+          this.saveSocket(socket)
+        }
+      })
       .catch(err => console.warn(err))
   };
 
@@ -136,7 +163,7 @@ export default class Account extends React.Component {
       // Error retrieving data
       console.log(error.message);
     }
-  } 
+  }
 
   togglePhone = value => {
     this.setState({ phoneValue: value });

@@ -77,15 +77,32 @@ export default class Account extends React.Component {
 
   }
 
+  removeListener = (res) => {
+    let stopListener;
+    if (res === "M") {
+      stopListener = this.getNotificationM;
+    } else if (res === "P") {
+      stopListener = this.getNotificationP;
+    } else if (res === "D") {
+      stopListener = this.getNotificationD;
+    }
+    AppState.removeEventListener('change', stopListener);
+  }
+
   getNotificationM = () => {
     fetch('Heroku link will go here', {
       method: 'GET'
     }).then((response) => {
       this.setState({
-        messageNotification: true
+        messageNotification: response
       });
     })
       .catch(err => console.warn(err))
+
+    if (this.state.appState.match(/inactive/)) {
+      // REMOVE LISTENER
+      this.removeListener("M")
+    }
   }
 
   getNotificationP = () => {
@@ -93,10 +110,15 @@ export default class Account extends React.Component {
       method: 'GET'
     }).then((response) => {
       this.setState({
-        phoneNotification: true
+        phoneNotification: response
       });
     })
       .catch(err => console.warn(err))
+
+    if (this.state.appState.match(/inactive/)) {
+      // REMOVE LISTENER
+      this.removeListener("P")
+    }
   }
 
 
@@ -105,10 +127,15 @@ export default class Account extends React.Component {
       method: 'GET'
     }).then((response) => {
       this.setState({
-        documentNotification: true
+        documentNotification: response
       });
     })
       .catch(err => console.warn(err))
+
+    if (this.state.appState.match(/inactive/)) {
+      // REMOVE LISTENER
+      this.removeListener("D")
+    }
   }
 
   toggleMessage = value => {
