@@ -29,7 +29,7 @@ class Job extends PureComponent {
 
   componentDidMount = () => {
     // GETTING RID OF TOKEN to log them out
-    fetch('Heroku link will go here', {
+    fetch('https://oyabackend.herokuapp.com/logout', {
       method: 'POST'
     })
       .catch(err => console.warn(err))

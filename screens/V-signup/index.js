@@ -33,12 +33,12 @@ class SignUp extends PureComponent {
   };
 
   handleSignUpPress = () => {
-    let user = this.state.email;
+    let email = this.state.email;
     let pass = this.state.password;
     let passC = this.state.passwordC;
 
     const newUser = {
-      username: user,
+      email: email,
       password: pass
     }
 
@@ -46,7 +46,7 @@ class SignUp extends PureComponent {
     if (pass !== passC) {
       this.setState({ passerror: true });
     } else {
-      fetch('Heroku link will go here', {
+      fetch('https://oyabackend.herokuapp.com/register', {
         method: 'POST',
         body: newUser
       })

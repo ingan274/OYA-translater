@@ -27,11 +27,11 @@ class LoginScreen extends PureComponent {
     let pass = this.state.password;
 
     const login = {
-      username: user,
+      email: user,
       password: pass
     }
 
-    fetch('Heroku link will go here', {
+    fetch('https://oyabackend.herokuapp.com/login', {
       method: 'POST',
       body: login
     })

@@ -23,15 +23,15 @@ class LoginScreen extends PureComponent {
   };
 
   handleLoginPress = (event) => {
-    let user = this.state.email;
+    let email = this.state.email;
     let pass = this.state.password;
 
     const login = {
-      username: user,
+      email: email,
       password: pass
     }
 
-    fetch('Heroku link will go here', {
+    fetch('https://oyabackend.herokuapp.com/login', {
       method: 'POST',
       body: login
     })
