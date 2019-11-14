@@ -95,7 +95,7 @@ export default class Account extends React.Component {
     // put call
     fetch('Heroku link will go here', {
       method: 'PUT',
-      body: { massage: value }
+      body: { massageAvail: value }
     })
       .catch(err => console.warn(err))
   };
@@ -105,7 +105,7 @@ export default class Account extends React.Component {
     // put call
     fetch('Heroku link will go here', {
       method: 'PUT',
-      body: { phone: value }
+      body: { phoneAvail: value }
     })
       .catch(err => console.warn(err))
   };
@@ -115,7 +115,7 @@ export default class Account extends React.Component {
     // put call
     fetch('Heroku link will go here', {
       method: 'PUT',
-      body: { document: value }
+      body: { documentAvail: value }
     })
       .catch(err => console.warn(err))
   };
