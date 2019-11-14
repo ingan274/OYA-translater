@@ -15,6 +15,7 @@ import {
   Modal,
   TouchableHighlight,
   Alert,
+  AsyncStorage
 } from 'react-native';
 
 class Job extends PureComponent {
@@ -98,24 +99,41 @@ class Job extends PureComponent {
     navigate('Language');
   };
 
-  handleMessageReq = () => {
+  handleMessageReq = async () => {
+    let native;
     let language;
-    // get language based on token/userid
-    fetch('Heroku link will go here', {
-      method: 'GET'
-    }).then((languageRES) => {
-      language = languageRES
-    })
-      .catch(err => console.warn(err))
+    // get languages BASED ON LOCAL STORAGE
+    try {
+      native = await AsyncStorage.getItem('native') || 'none';
+      language = await AsyncStorage.getItem('language') || 'none';
+      console.log("native:", native, "language:",language)
+      return native, language;
+     
+    } catch (error) {
+      // Error retrieving data
+      console.log(error.message);
+    }
 
-      // send the backend to match user with person in chat
+    // send the backend to match user with person in chat
     fetch('Heroku link will go here', {
-      method: 'PUT',
-      body: { 
+      method: 'POST',
+      body: {
+        native: native,
         language: language,
         job: "message"
-         }
-    }).then(() => {
+      }
+    }).then(async (res) => {
+      // store socket info in local
+      let socket = res.socket
+      
+      try {
+        await AsyncStorage.setItem('socket', socket);
+        console.log("socket", socket)
+      } catch (error) {
+        // Error retrieving data
+        console.log(error.message);
+      }
+
       const {
         navigation: { navigate },
       } = this.props;

@@ -8,7 +8,8 @@ import {
   Image,
   Platform,
   Text,
-  View
+  View,
+  AsyncStorage
 } from 'react-native';
 
 class Job extends PureComponent {
@@ -17,7 +18,7 @@ class Job extends PureComponent {
   };
 
   static navigationOptions = {
-    drawerLabel: 'Logout',
+    drawerLabel: 'Cerrar sesión',
     drawerIcon: ({ tintColor }) => (
       <Ionicons
         name={Platform.OS === 'ios' ? 'ios-log-out' : 'md-log-out'}
@@ -28,15 +29,18 @@ class Job extends PureComponent {
   };
 
   componentDidMount = () => {
-    // GETTING RID OF TOKEN to log them out
-    fetch('https://oyabackend.herokuapp.com/logout', {
-      method: 'POST'
-    })
-      .catch(err => console.warn(err))
+    // GETTING RID OF INFO IN LOCAL STORAGE
+    this.removeVData()
   }
 
-  setModalVisible(visible) {
-    this.setState({ modalVisible: visible });
+  removeVData = async () => {
+    try {
+      await AsyncStorage.removeItem('firstname', 'lastname', 'language1', 'language2', 'language3');
+      console.log("removal of volunteer info success")
+    } catch (error) {
+      // Error retrieving data
+      console.log(error.message);
+    }
   }
 
   render() {

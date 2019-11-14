@@ -3,8 +3,8 @@
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "expoServerNgrokUrl": "https://hf-g7k.anonymous.oya-translater.exp.direct",
+  "packagerNgrokUrl": "https://packager.hf-g7k.anonymous.oya-translater.exp.direct",
+  "ngrokPid": 24226,
   "webpackServerPort": null
 }

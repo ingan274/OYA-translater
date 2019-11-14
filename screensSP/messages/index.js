@@ -22,7 +22,8 @@ class Message extends PureComponent {
     super(props);
     this.state = {
       messages: [],
-      userId: null
+      userId: null,
+      socket: ''
     };
 
     this.determineUser = this.determineUser.bind(this);
@@ -33,6 +34,21 @@ class Message extends PureComponent {
     this.socket = SocketIOClient('http://localhost:3000');
     this.socket.on('message', this.onReceivedMessage);
     this.determineUser();
+  }
+
+  componentDidMount() {
+    this.handleLOCALSTORAGE()
+  }
+
+  handleLOCALSTORAGE = async () => {
+    // GET SOCKET ID AND SET THE STATE in local storage
+    try {
+      let socket = await AsyncStorage.getItem('socket'|| 'none');
+      this.setState({socket: socket})
+    } catch (error) {
+      // Error retrieving data
+      console.log(error.message);
+    }
   }
 
   /**

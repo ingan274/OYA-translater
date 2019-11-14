@@ -14,7 +14,7 @@ import {
   TouchableWithoutFeedback, Keyboard,
   View,
   Select,
-  Picker
+  AsyncStorage
 } from 'react-native';
 
 class VForm extends PureComponent {
@@ -40,7 +40,7 @@ class VForm extends PureComponent {
     language3: '',
     proficiency1: '',
     proficiency2: '',
-    proficiency3: '', 
+    proficiency3: '',
 
     error: false,
   }
@@ -77,6 +77,9 @@ class VForm extends PureComponent {
         body: user
       })
         .then(() => {
+          // SAVE IN LOCAL STORAGE
+          this.handleLocalStorage(firstname, lastname, language1, language2, language3)
+          //NAVIGATE
           const {
             navigation: { navigate },
           } = this.props;
@@ -89,13 +92,30 @@ class VForm extends PureComponent {
 
   };
 
+  handleLocalStorage = async (firstname, lastname, language1, language2, language3) => {
+    try {
+      await AsyncStorage.setItem('firstname', firstname);
+      console.log('firstname', firstname);
+      await AsyncStorage.setItem('lastname', lastname);
+      console.log('lastname', lastname);
+      await AsyncStorage.setItem('language1', language1);
+      console.log('language1', language1);
+      await AsyncStorage.setItem('language2', language2);
+      console.log('language2', language2);
+      await AsyncStorage.setItem('language3', language3);
+      console.log('language3', language3);
+    } catch (error) {
+      // Error retrieving data
+      console.log(error.message);
+    }
+  }
+
   showError = () => {
     if (this.state.error) {
       return <Text style={style.error}>Please make sure you fill out all inputs with an asterisk (*)</Text>
     }
   };
 
-  // should there be an error message?
   render() {
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>

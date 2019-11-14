@@ -8,7 +8,8 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
-  AppState
+  AppState,
+  AsyncStorage
 } from 'react-native';
 import colors from '../../constants/Colors';
 import NameLang from '../../components/accntLang';
@@ -33,27 +34,47 @@ export default class Account extends React.Component {
 
   componentDidMount = () => {
     AppState.addEventListener('change', this.getNotificationM);
-    AppState.addEventListener('change', this.getNotificationP);
-    AppState.addEventListener('change', this.getNotificationD);
+    // AppState.addEventListener('change', this.getNotificationP);
+    // AppState.addEventListener('change', this.getNotificationD);
 
-    // GET USER INFORMATION
-    fetch('https://oyabackend.herokuapp.com/me', {
-      method: 'GET'
-    }).then((response) => {
-      let firstname = response.firstname;
-      let lastname = response.lastname;
-      let language1 = response.language1;
-      let language2 = response.language2;
-      let language3 = response.language3;
-      this.setState({
-        firstname: firstname,
-        lastname: lastname,
-        language1: language1,
-        language2: language2,
-        language3: language3,
-      });
+     // GET USER INFORMATION FROM LOCAL STORAGE
+     this.handleLocalStorageGet()
+  }
+
+  handleLocalStorageGet = async () => {
+    let firstname = '';
+    let lastname = '';
+    let language1 = '';
+    let language2 = '';
+    let language3 = '';
+
+    try {
+      firstname = await AsyncStorage.getItem('firstname') || '';
+      lastname = await AsyncStorage.getItem('lastname') || '';
+      language1 = await AsyncStorage.getItem('language1') || '';
+      language2 = await AsyncStorage.getItem('language2') || '';
+      language3 = await AsyncStorage.getItem('language3') || '';
+    } catch (error) {
+      // Error retrieving data
+      console.log(error.message);
+    }
+    
+    this.setState({
+      firstname: firstname,
+      lastname: lastname,
+      language1: language1,
+      language2: language2,
+      language3: language3,
+    });
+
+    console.log({
+      'firstname ': firstname,
+      'lastname': lastname,
+      'language1': language1,
+      'language2': language2,
+      'language3': language3,
     })
-      .catch(err => console.warn(err))
+
   }
 
   getNotificationM = () => {
@@ -97,8 +118,24 @@ export default class Account extends React.Component {
       method: 'PUT',
       body: { massageAvail: value }
     })
+    .then((res) => {
+      if (res) {
+
+        let socket = res.socket
+        this.saveSocket(socket)
+      }
+    })
       .catch(err => console.warn(err))
   };
+
+  saveSocket = async (socket) => {
+    try {
+      await AsyncStorage.setItem('Vsocket', socket);
+    } catch (error) {
+      // Error retrieving data
+      console.log(error.message);
+    }
+  } 
 
   togglePhone = value => {
     this.setState({ phoneValue: value });
@@ -121,7 +158,7 @@ export default class Account extends React.Component {
   };
 
   static navigationOptions = {
-    drawerLabel: 'Account',
+    drawerLabel: '帐户',
     drawerIcon: ({ tintColor }) => (
       <Ionicons
         name={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
@@ -136,7 +173,6 @@ export default class Account extends React.Component {
     this.state.messageValue ? console.log('message is ON') : console.log('message is OFF')
     this.state.phoneValue ? console.log('phone is ON') : console.log('phone is OFF')
     this.state.documentValue ? console.log('doc is ON') : console.log('doc is OFF')
-
   };
 
 

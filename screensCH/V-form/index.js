@@ -14,13 +14,13 @@ import {
   TouchableWithoutFeedback, Keyboard,
   View,
   Select,
-  Picker
+  AsyncStorage
 } from 'react-native';
 
 class VForm extends PureComponent {
 
   static navigationOptions = {
-    title: 'Volunteer Form',
+    title: '义工表格',
     headerStyle: {
       backgroundColor: color.blue4,
     },
@@ -31,16 +31,16 @@ class VForm extends PureComponent {
   };
 
   state = {
-      firstname: '',
-      lastname: '',
-      email: '',
-      phonenumber: '',
-      language1: '',
-      language2: '',
-      language3: '',
-      proficiency1: '',
-      proficiency2: '',
-      proficiency3: '',
+    firstname: '',
+    lastname: '',
+    email: '',
+    phonenumber: '',
+    language1: '',
+    language2: '',
+    language3: '',
+    proficiency1: '',
+    proficiency2: '',
+    proficiency3: '',
 
     error: false,
   }
@@ -77,6 +77,9 @@ class VForm extends PureComponent {
         body: user
       })
         .then(() => {
+          // SAVE IN LOCAL STORAGE
+          this.handleLocalStorage(firstname, lastname, language1, language2, language3)
+          //NAVIGATE
           const {
             navigation: { navigate },
           } = this.props;
@@ -86,12 +89,29 @@ class VForm extends PureComponent {
     } else {
       this.setState({ error: true })
     }
-
   };
 
+  handleLocalStorage = async (firstname, lastname, language1, language2, language3) => {
+    try {
+      await AsyncStorage.setItem('firstname', firstname);
+      console.log('firstname', firstname);
+      await AsyncStorage.setItem('lastname', lastname);
+      console.log('lastname', lastname);
+      await AsyncStorage.setItem('language1', language1);
+      console.log('language1', language1);
+      await AsyncStorage.setItem('language2', language2);
+      console.log('language2', language2);
+      await AsyncStorage.setItem('language3', language3);
+      console.log('language3', language3);
+    } catch (error) {
+      // Error retrieving data
+      console.log(error.message);
+    }
+  }
+  
   showError = () => {
     if (this.state.error) {
-      return <Text style={style.error}>Please make sure you fill out all inputs with an asterisk (*)</Text>
+      return <Text style={style.error}>请确保您用星号填写所有输入 (*)</Text>
     }
   };
 
@@ -101,8 +121,7 @@ class VForm extends PureComponent {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
 
         <View style={style.container}>
-          <Text style={style.title}>
-            义工表格</Text>
+          <Text style={style.title}>义工表格</Text>
           <Image source={imageLogo} style={style.logo} />
           {this.showError()}
           <View style={style.form} onSubmit={this.handleSubmit}>
@@ -123,8 +142,7 @@ class VForm extends PureComponent {
                 placeholder="Enter last name"
                 returnKeyType="next"
               />
-              <Text style={style.formLabel}>*
-电子邮件:</Text>
+              <Text style={style.formLabel}>*电子邮件:</Text>
               <Forminput
                 value={this.state.email}
                 onChangeText={(event) => this.setState({ email: event })}

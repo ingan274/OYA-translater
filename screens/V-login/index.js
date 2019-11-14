@@ -1,11 +1,10 @@
 import style from './style';
 import React, { PureComponent } from 'react';
-import { Image, View, Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Platform } from "react-native";
+import { Image, View, Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Platform, AsyncStorage } from "react-native";
 import Button from "../../components/login-signup/loginbtn";
 import Form from "../../components/login-signup/loginFrom";
 import imageLogo from "../../assets/images/logo.png";
 import strings from "../../components/login-signup/strings";
-import { Ionicons } from '@expo/vector-icons';
 
 class LoginScreen extends PureComponent {
   state = {
@@ -37,10 +36,22 @@ class LoginScreen extends PureComponent {
     })
       .then((response) => {
         if (response) {
+          // SAVE RESPONSE IN LOCAL STORAGE
+          const firstname = response.firstname;
+          const lastname = response.lastname;
+          const language1 = response.language1;
+          const language2 = response.language2;
+          const language3 = response.language3;
+
+          this.handleLocalStorage(firstname, lastname, language1, language2, language3)
+
+          //NAVIGATE
           const {
             navigation: { navigate },
           } = this.props;
           navigate('Account');
+
+
         } else {
           this.setState({ error: true });
         }
@@ -48,6 +59,24 @@ class LoginScreen extends PureComponent {
       })
       .catch(err => console.warn(err))
   };
+
+  handleLocalStorage = async (firstname, lastname, language1, language2, language3) => {
+    try {
+      await AsyncStorage.setItem('firstname', firstname);
+      console.log('firstname', firstname);
+      await AsyncStorage.setItem('lastname', lastname);
+      console.log('lastname', lastname);
+      await AsyncStorage.setItem('language1', language1);
+      console.log('language1', language1);
+      await AsyncStorage.setItem('language2', language2);
+      console.log('language2', language2);
+      await AsyncStorage.setItem('language3', language3);
+      console.log('language3', language3);
+    } catch (error) {
+      // Error retrieving data
+      console.log(error.message);
+    }
+  }
 
   showError = () => {
     if (this.state.error) {

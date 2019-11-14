@@ -14,13 +14,13 @@ import {
   TouchableWithoutFeedback, Keyboard,
   View,
   Select,
-  Picker
+  AsyncStorage
 } from 'react-native';
 
 class VForm extends PureComponent {
 
   static navigationOptions = {
-    title: 'Volunteer Form',
+    title: 'Formulario de voluntariado',
     headerStyle: {
       backgroundColor: color.blue4,
     },
@@ -31,16 +31,16 @@ class VForm extends PureComponent {
   };
 
   state = {
-      firstname: '',
-      lastname: '',
-      email: '',
-      phonenumber: '',
-      language1: '',
-      language2: '',
-      language3: '',
-      proficiency1: '',
-      proficiency2: '',
-      proficiency3: '',
+    firstname: '',
+    lastname: '',
+    email: '',
+    phonenumber: '',
+    language1: '',
+    language2: '',
+    language3: '',
+    proficiency1: '',
+    proficiency2: '',
+    proficiency3: '',
 
     error: false,
   }
@@ -58,7 +58,7 @@ class VForm extends PureComponent {
     const proficiency3 = this.state.proficiency3;
 
     const user = {
-      firstname:firstname,
+      firstname: firstname,
       lastname: lastname,
       email: email,
       phonenumber: phonenumber,
@@ -69,7 +69,7 @@ class VForm extends PureComponent {
       proficiency2: proficiency2,
       proficiency3: proficiency3,
     }
-    
+
     if (firstname && lastname && email && phonenumber && language1 && language2) {
       // console.log(user)
       fetch('Heroku link will go here', {
@@ -77,6 +77,9 @@ class VForm extends PureComponent {
         body: user
       })
         .then(() => {
+          // SAVE IN LOCAL STORAGE
+          this.handleLocalStorage(firstname, lastname, language1, language2, language3)
+          //NAVIGATE
           const {
             navigation: { navigate },
           } = this.props;
@@ -84,10 +87,28 @@ class VForm extends PureComponent {
         })
         .catch(err => console.warn(err))
     } else {
-      this.setState({error: true})
+      this.setState({ error: true })
     }
-    
   };
+
+  handleLocalStorage = async (firstname, lastname, language1, language2, language3) => {
+    try {
+      await AsyncStorage.setItem('firstname', firstname);
+      console.log('firstname', firstname);
+      await AsyncStorage.setItem('lastname', lastname);
+      console.log('lastname', lastname);
+      await AsyncStorage.setItem('language1', language1);
+      console.log('language1', language1);
+      await AsyncStorage.setItem('language2', language2);
+      console.log('language2', language2);
+      await AsyncStorage.setItem('language3', language3);
+      console.log('language3', language3);
+    } catch (error) {
+      // Error retrieving data
+      console.log(error.message);
+    }
+  }
+
 
   showError = () => {
     if (this.state.error) {
@@ -95,7 +116,6 @@ class VForm extends PureComponent {
     }
   };
 
-  // should there be an error message?
   render() {
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -110,7 +130,7 @@ class VForm extends PureComponent {
               <Forminput
                 name="firstname"
                 value={this.state.firstname}
-                onChangeText={(event) => this.setState({firstname: event})}
+                onChangeText={(event) => this.setState({ firstname: event })}
                 placeholder="Enter first name"
                 returnKeyType="next"
               />
@@ -118,14 +138,14 @@ class VForm extends PureComponent {
               <Forminput
                 name="lastname"
                 value={this.state.lastname}
-                onChangeText={(event) => this.setState({lastname: event})}
+                onChangeText={(event) => this.setState({ lastname: event })}
                 placeholder="Enter last name"
                 returnKeyType="next"
               />
               <Text style={style.formLabel}>*Email:</Text>
               <Forminput
                 value={this.state.email}
-                onChangeText={(event) => this.setState({email: event})}
+                onChangeText={(event) => this.setState({ email: event })}
                 placeholder="Input email"
                 name="email"
                 autoCorrect={false}
@@ -135,7 +155,7 @@ class VForm extends PureComponent {
               <Text style={style.formLabel}>*Número de teléfono:</Text>
               <Forminput
                 value={this.state.phonenumber}
-                onChangeText={(event) => this.setState({phonenumber: event})}
+                onChangeText={(event) => this.setState({ phonenumber: event })}
                 placeholder="Phone number"
                 name="phonenumber"
                 autoCorrect={false}
@@ -145,7 +165,7 @@ class VForm extends PureComponent {
               <Text style={style.formLabel}>*Idioma 1:</Text>
               <Forminput
                 value={this.state.language1}
-                onChangeText={(event) => this.setState({language1: event})}
+                onChangeText={(event) => this.setState({ language1: event })}
                 placeholder="Language"
                 name="language1"
                 autoCorrect={true}
@@ -155,7 +175,7 @@ class VForm extends PureComponent {
               <Text style={style.formLabel}>*Dominio del idioma:</Text>
               <Forminput
                 value={this.state.proficiency1}
-                onChangeText={(event) => this.setState({proficiency1: event})}
+                onChangeText={(event) => this.setState({ proficiency1: event })}
                 placeholder="Proficiency"
                 name="proficiency1"
                 autoCorrect={true}
@@ -165,7 +185,7 @@ class VForm extends PureComponent {
               <Text style={style.formLabel}>*Idioma 2:</Text>
               <Forminput
                 value={this.state.language2}
-                onChangeText={(event) => this.setState({language2: event})}
+                onChangeText={(event) => this.setState({ language2: event })}
                 placeholder="Language"
                 name="language2"
                 autoCorrect={true}
@@ -175,18 +195,18 @@ class VForm extends PureComponent {
               <Text style={style.formLabel}>*Dominio del idioma:</Text>
               <Forminput
                 value={this.state.proficiency2}
-                onChangeText={(event) => this.setState({proficiency2: event})}
+                onChangeText={(event) => this.setState({ proficiency2: event })}
                 placeholder="Proficiency"
                 name="proficiency2"
                 autoCorrect={true}
                 returnKeyType="next"
 
-              />  
-              
+              />
+
               <Text style={style.formLabel}>Idioma 3:</Text>
               <Forminput
                 value={this.state.language3}
-                onChangeText={(event) => this.setState({language3: event})}
+                onChangeText={(event) => this.setState({ language3: event })}
                 placeholder="Language"
                 name="language3"
                 autoCorrect={true}
@@ -196,7 +216,7 @@ class VForm extends PureComponent {
               <Text style={style.formLabel}>Dominio del idioma:</Text>
               <Forminput
                 value={this.state.proficiency3}
-                onChangeText={(event) => this.setState({proficiency3: event})}
+                onChangeText={(event) => this.setState({ proficiency3: event })}
                 placeholder="Proficiency"
                 name="proficiency3"
                 autoCorrect={true}

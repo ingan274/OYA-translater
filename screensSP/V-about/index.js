@@ -6,7 +6,7 @@ import colors from '../../constants/Colors';
 
 class Aboutscreen extends PureComponent {
   static navigationOptions = {
-    drawerLabel: 'About OYA',
+    drawerLabel: 'Sobre OYA',
     drawerIcon: ({ tintColor }) => (
       <Ionicons
         name={Platform.OS === 'ios' ? 'ios-information-circle-outline' : 'md-information-circle-outline'}
