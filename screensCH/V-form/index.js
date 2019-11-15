@@ -57,11 +57,14 @@ class VForm extends PureComponent {
     const proficiency2 = this.state.proficiency2;
     const proficiency3 = this.state.proficiency3;
 
-    const user = {
+    const userInfo = {
       firstname: firstname,
       lastname: lastname,
       email: email,
       phonenumber: phonenumber,
+    }
+
+    const userLang = {
       language1: language1,
       language2: language2,
       language3: language3,
@@ -72,9 +75,13 @@ class VForm extends PureComponent {
 
     if (firstname && lastname && email && phonenumber && language1 && language2) {
       // console.log(user)
-      fetch('Heroku link will go here', {
+      fetch('Heroku link will go here TO MYSQL', {
         method: 'POST',
-        body: user
+        body: userInfo
+      })
+      fetch('Heroku link will go here TO MONGO', {
+        method: 'POST',
+        body: userLang
       })
         .then(() => {
           // SAVE IN LOCAL STORAGE
@@ -89,7 +96,9 @@ class VForm extends PureComponent {
     } else {
       this.setState({ error: true })
     }
+
   };
+
 
   handleLocalStorage = async (firstname, lastname, language1, language2, language3) => {
     try {
