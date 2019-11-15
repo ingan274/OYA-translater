@@ -50,20 +50,34 @@ class SignUp extends PureComponent {
         method: 'POST',
         body: newUser
       })
-        .then((response) => {
-          if (response) {
-            const {
-              navigation: { navigate },
-            } = this.props;
-            navigate('Form');
-          } else {
-            this.setState({ emailerror: true });
-          }
-          
-        })
-        .catch(err => console.warn(err))
-    }
-  };
+      .then((response) => {
+        if (response) {
+          let mysqlID = response.mysqlID
+          this.saveID(mysqlID)
+
+          // NAVIGATE
+          const {
+            navigation: { navigate },
+          } = this.props;
+          navigate('Form');
+        } else {
+          this.setState({ emailerror: true });
+        }
+        
+      })
+      .catch(err => console.warn(err))
+
+  }
+};
+
+saveID = async (id) => {
+  try {
+    await AsyncStorage.setItem('mysqlID', id);
+  } catch (error) {
+    // Error retrieving data
+    console.log(error.message);
+  }
+}
 
 
   handleLogIn = () => {

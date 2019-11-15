@@ -36,12 +36,17 @@ class LoginScreen extends PureComponent {
     })
       .then((response) => {
         if (response) {
-          // SAVE RESPONSE IN LOCAL STORAGE
-          const firstname = response.firstname;
-          const lastname = response.lastname;
-          const language1 = response.language1;
-          const language2 = response.language2;
-          const language3 = response.language3;
+          let id = response.mysqlID;
+
+          fetch(`HerokuURL/${id}`, {
+            method: 'GET',
+          }).then(async (res) => {
+            // SAVE RESPONSE IN LOCAL STORAGE
+          const firstname = res.firstname;
+          const lastname = res.lastname;
+          const language1 = res.language1;
+          const language2 = res.language2;
+          const language3 = res.language3;
 
           this.handleLocalStorage(firstname, lastname, language1, language2, language3)
 
@@ -50,7 +55,8 @@ class LoginScreen extends PureComponent {
             navigation: { navigate },
           } = this.props;
           navigate('Account');
-
+          })
+            .catch(err => console.warn(err))
 
         } else {
           this.setState({ error: true });

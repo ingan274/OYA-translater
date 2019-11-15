@@ -1,7 +1,7 @@
 import style from './style';
 import React, { PureComponent } from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { Image, View, Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from "react-native";
+import { Image, View, Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard, AsyncStorage } from "react-native";
 import Button from "../../components/login-signup/loginbtn";
 import Form from "../../components/login-signup/loginFrom";
 import imageLogo from "../../assets/images/logo.png";
@@ -53,6 +53,9 @@ class SignUp extends PureComponent {
       })
         .then((response) => {
           if (response) {
+            let mysqlID = response.mysqlID
+            this.saveID(mysqlID)
+
             // NAVIGATE
             const {
               navigation: { navigate },
@@ -67,6 +70,15 @@ class SignUp extends PureComponent {
 
     }
   };
+
+  saveID = async (id) => {
+    try {
+      await AsyncStorage.setItem('mysqlID', id);
+    } catch (error) {
+      // Error retrieving data
+      console.log(error.message);
+    }
+  }
 
 
   handleLogIn = () => {

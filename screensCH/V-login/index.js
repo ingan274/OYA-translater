@@ -37,13 +37,28 @@ class LoginScreen extends PureComponent {
     })
       .then((response) => {
         if (response) {
-          //store object in local storage
+          let id = response.mysqlID;
 
-          //navigate
+          fetch(`HerokuURL/${id}`, {
+            method: 'GET',
+          }).then(async (res) => {
+            // SAVE RESPONSE IN LOCAL STORAGE
+          const firstname = res.firstname;
+          const lastname = res.lastname;
+          const language1 = res.language1;
+          const language2 = res.language2;
+          const language3 = res.language3;
+
+          this.handleLocalStorage(firstname, lastname, language1, language2, language3)
+
+          //NAVIGATE
           const {
             navigation: { navigate },
           } = this.props;
           navigate('Account');
+          })
+            .catch(err => console.warn(err))
+
         } else {
           this.setState({ error: true });
         }
@@ -51,6 +66,24 @@ class LoginScreen extends PureComponent {
       })
       .catch(err => console.warn(err))
   };
+
+  handleLocalStorage = async (firstname, lastname, language1, language2, language3) => {
+    try {
+      await AsyncStorage.setItem('firstname', firstname);
+      console.log('firstname', firstname);
+      await AsyncStorage.setItem('lastname', lastname);
+      console.log('lastname', lastname);
+      await AsyncStorage.setItem('language1', language1);
+      console.log('language1', language1);
+      await AsyncStorage.setItem('language2', language2);
+      console.log('language2', language2);
+      await AsyncStorage.setItem('language3', language3);
+      console.log('language3', language3);
+    } catch (error) {
+      // Error retrieving data
+      console.log(error.message);
+    }
+  }
 
   showError = () => {
     if (this.state.error) {

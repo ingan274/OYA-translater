@@ -95,7 +95,7 @@ export default class Account extends React.Component {
       method: 'GET'
     }).then((response) => {
       this.setState({
-        messageNotification: response
+        messageNotification: response.appavail
       });
     })
       .catch(err => console.warn(err))
