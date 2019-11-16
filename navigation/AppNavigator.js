@@ -14,7 +14,8 @@ export default createAppContainer(
       English: { screen: English },
       Chinese: { screen: Chinese },
       Spanish: { screen: Spanish },
-      About: { screen: About }
+      About: { screen: About },
+      Chat: { screen: Chat }
     },
     {
       initialRouteName: 'Home',

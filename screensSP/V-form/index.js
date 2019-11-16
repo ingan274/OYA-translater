@@ -4,7 +4,6 @@ import color from '../../constants/Colors';
 import imageLogo from "../../assets/images/dots.png";
 import Button from "../../components/V-form/formbutton";
 import Forminput from "../../components/V-form/forminput";
-import PickerBox from 'react-native-picker-box';
 import {
   Image,
   Platform,
