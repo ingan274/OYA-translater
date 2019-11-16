@@ -111,15 +111,14 @@ class VForm extends PureComponent {
 
   };
 
-  getID = async () => {
-      try {
-        userId = await AsyncStorage.getItem('mysqlID') || 'none';
-      } catch (error) {
-        // Error retrieving data
-        console.log(error.message);
-      }
 
-      this.setState({mysqlID: userId})
+  getID = async () => {
+    try {
+      let userId = await AsyncStorage.getItem('mysqlID') || 'none';
+      this.setState({ mysqlID: userId })
+    } catch (error) {
+      // Error retrieving data
+      console.log(error.message);
     }
   }
 
@@ -140,7 +139,7 @@ class VForm extends PureComponent {
       console.log(error.message);
     }
   }
-  
+
   showError = () => {
     if (this.state.error) {
       return <Text style={style.error}>请确保您用星号填写所有输入 (*)</Text>

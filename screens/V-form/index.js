@@ -89,8 +89,9 @@ class VForm extends PureComponent {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userInfo})
-      })
+        body: JSON.stringify({ userInfo })
+      });
+
       fetch('https://oyabackend.herokuapp.com/volunteer', {
         method: 'POST',
         headers: {
@@ -116,14 +117,12 @@ class VForm extends PureComponent {
   };
 
   getID = async () => {
-      try {
-        userId = await AsyncStorage.getItem('mysqlID') || 'none';
-      } catch (error) {
-        // Error retrieving data
-        console.log(error.message);
-      }
-
-      this.setState({mysqlID = userId})
+    try {
+      let userId = await AsyncStorage.getItem('mysqlID') || 'none';
+      this.setState({ mysqlID: userId })
+    } catch (error) {
+      // Error retrieving data
+      console.log(error.message);
     }
   }
 
@@ -265,7 +264,7 @@ class VForm extends PureComponent {
       </TouchableWithoutFeedback >
     );
   }
-
 }
+
 
 export default VForm;
