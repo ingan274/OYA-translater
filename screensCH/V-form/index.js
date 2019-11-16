@@ -83,7 +83,7 @@ class VForm extends PureComponent {
 
     if (firstname && lastname && email && phonenumber && language1 && language2) {
       // console.log(user)
-      fetch('Heroku link will go here TO MYSQL', {
+      fetch('https://oyabackend.herokuapp.com/form', {
         method: 'POST',
         body: userInfo
       })
