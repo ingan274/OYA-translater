@@ -25,6 +25,7 @@ export default class Account extends React.Component {
     phoneNotification: false,
     documentNotification: false,
 
+    mysqlID: '',
     firstname: '',
     lastname: '',
     language1: '',
@@ -38,9 +39,24 @@ export default class Account extends React.Component {
     // AppState.addEventListener('change', this.getNotificationD);
 
     // GET USER INFORMATION FROM LOCAL STORAGE
-    this.handleLocalStorageGet()
+    this.handleLocalStorageGet();
+
+    // get id and udpate
+    this.getID()
 
   }
+
+  getID = async () => {
+    try {
+      userId = await AsyncStorage.getItem('mysqlID') || 'none';
+    } catch (error) {
+      // Error retrieving data
+      console.log(error.message);
+    }
+
+    this.setState({ mysqlID = userId })
+  }
+
 
   handleLocalStorageGet = async () => {
     let firstname = '';
@@ -137,14 +153,17 @@ export default class Account extends React.Component {
       // REMOVE LISTENER
       this.removeListener("D")
     }
-  }
+  };
 
   toggleMessage = value => {
     this.setState({ messageValue: value });
     // put call
     fetch('Heroku link will go here', {
       method: 'PUT',
-      body: { massageAvail: value }
+      body: {
+        mysqlID: this.state.mysqlID,
+        massageAvail: value
+      }
     })
       .then((res) => {
         if (res) {
@@ -163,7 +182,7 @@ export default class Account extends React.Component {
       // Error retrieving data
       console.log(error.message);
     }
-  }
+  };
 
   togglePhone = value => {
     this.setState({ phoneValue: value });

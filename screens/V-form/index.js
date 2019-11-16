@@ -31,6 +31,7 @@ class VForm extends PureComponent {
   };
 
   state = {
+    mysqlID: '',
     firstname: '',
     lastname: '',
     email: '',
@@ -45,7 +46,12 @@ class VForm extends PureComponent {
     error: false,
   }
 
+  componentDidMount = () => {
+    this.getID()
+  }
+
   handleSubmit = () => {
+    const mysqlID = this.state.mysqlID;
     const firstname = this.state.firstname;
     const lastname = this.state.lastname;
     const email = this.state.email;
@@ -58,6 +64,7 @@ class VForm extends PureComponent {
     const proficiency3 = this.state.proficiency3;
 
     const userInfo = {
+      mysqlID: mysqlID,
       firstname: firstname,
       lastname: lastname,
       email: email,
@@ -65,6 +72,7 @@ class VForm extends PureComponent {
     }
 
     const userLang = {
+      mysqlID: mysqlID,
       language1: language1,
       language2: language2,
       language3: language3,
@@ -98,6 +106,18 @@ class VForm extends PureComponent {
     }
 
   };
+
+  getID = async () => {
+      try {
+        userId = await AsyncStorage.getItem('mysqlID') || 'none';
+      } catch (error) {
+        // Error retrieving data
+        console.log(error.message);
+      }
+
+      this.setState({mysqlID = userId})
+    }
+  }
 
   handleLocalStorage = async (firstname, lastname, language1, language2, language3) => {
     try {
