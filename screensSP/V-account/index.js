@@ -106,8 +106,13 @@ export default class Account extends React.Component {
 
   getNotificationM = () => {
     fetch(`https://oyabackend.herokuapp.com/volunteer/notification/${this.state.mysqlID}`, {
-      method: 'GET'
-    }).then((response) => {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    }) .then((res) => res.json())
+    .then((response) => {
       this.setState({
         messageNotification: response.chatavail
       });

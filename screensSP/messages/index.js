@@ -23,7 +23,8 @@ class Message extends PureComponent {
     this.state = {
       messages: [],
       userId: null,
-      socket: ''
+      socket: '',
+      roomNum: '',
     };
 
     this.determineUser = this.determineUser.bind(this);

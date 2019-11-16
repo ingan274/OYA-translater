@@ -106,14 +106,20 @@ export default class Account extends React.Component {
     AppState.removeEventListener('change', stopListener);
   }
 
+ 
   getNotificationM = () => {
     fetch(`https://oyabackend.herokuapp.com/volunteer/notification/${this.state.mysqlID}`, {
-      method: 'GET'
-    }).then((response) => {
-      this.setState({
-        messageNotification: response.chatavail
-      });
-    })
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    }).then((res) => res.json())
+      .then((response) => {
+        this.setState({
+          messageNotification: response.chatavail
+        });
+      })
       .catch(err => console.warn(err))
 
     if (this.state.appState.match(/inactive/)) {
@@ -122,14 +128,20 @@ export default class Account extends React.Component {
     }
   }
 
+
   getNotificationP = () => {
     fetch('Heroku link will go here', {
-      method: 'GET'
-    }).then((response) => {
-      this.setState({
-        phoneNotification: response
-      });
-    })
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    }).then((res) => res.json())
+      .then((response) => {
+        this.setState({
+          phoneNotification: response
+        });
+      })
       .catch(err => console.warn(err))
 
     if (this.state.appState.match(/inactive/)) {
@@ -153,17 +165,21 @@ export default class Account extends React.Component {
       // REMOVE LISTENER
       this.removeListener("D")
     }
-  };
+  }
 
   toggleMessage = value => {
     this.setState({ messageValue: value });
     // put call
     fetch('https://oyabackend.herokuapp.com/volunteer/', {
       method: 'PUT',
-      body: {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
         mysqlID: this.state.mysqlID,
         massageAvail: value
-      }
+      })
     })
       .then((res) => {
         if (res) {

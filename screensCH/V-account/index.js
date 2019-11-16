@@ -52,7 +52,7 @@ export default class Account extends React.Component {
       console.log(error.message);
     }
 
-    this.setState({ mysqlID:userId })
+    this.setState({ mysqlID: userId })
   }
 
   handleLocalStorageGet = async () => {
@@ -105,12 +105,17 @@ export default class Account extends React.Component {
 
   getNotificationM = () => {
     fetch(`https://oyabackend.herokuapp.com/volunteer/notification/${this.state.mysqlID}`, {
-      method: 'GET'
-    }).then((response) => {
-      this.setState({
-        messageNotification: response.chatavail
-      });
-    })
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    }).then((res) => res.json())
+      .then((response) => {
+        this.setState({
+          messageNotification: response.chatavail
+        });
+      })
       .catch(err => console.warn(err))
 
     if (this.state.appState.match(/inactive/)) {
@@ -119,14 +124,20 @@ export default class Account extends React.Component {
     }
   }
 
+
   getNotificationP = () => {
     fetch('Heroku link will go here', {
-      method: 'GET'
-    }).then((response) => {
-      this.setState({
-        phoneNotification: response
-      });
-    })
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    }).then((res) => res.json())
+      .then((response) => {
+        this.setState({
+          phoneNotification: response
+        });
+      })
       .catch(err => console.warn(err))
 
     if (this.state.appState.match(/inactive/)) {
@@ -157,10 +168,14 @@ export default class Account extends React.Component {
     // put call
     fetch('https://oyabackend.herokuapp.com/volunteer/', {
       method: 'PUT',
-      body: {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
         mysqlID: this.state.mysqlID,
         massageAvail: value
-      }
+      })
     })
       .then((res) => {
         if (res) {

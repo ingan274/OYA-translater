@@ -89,8 +89,12 @@ class VForm extends PureComponent {
       })
       fetch('https://oyabackend.herokuapp.com/volunteer', {
         method: 'POST',
-        body: userLang
-      })
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userLang })
+      }).then((res) => res.json())
         .then(() => {
           // SAVE IN LOCAL STORAGE
           this.handleLocalStorage(firstname, lastname, language1, language2, language3)
@@ -115,7 +119,7 @@ class VForm extends PureComponent {
         console.log(error.message);
       }
 
-      this.setState({mysqlID = userId})
+      this.setState({mysqlID: userId})
     }
   }
 

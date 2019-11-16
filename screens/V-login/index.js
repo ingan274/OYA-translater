@@ -32,15 +32,24 @@ class LoginScreen extends PureComponent {
 
     fetch('https://oyabackend.herokuapp.com/login', {
       method: 'POST',
-      body: login
-    })
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({login})
+    }).then((res) => res.json())
       .then((response) => {
         if (response) {
           let id = response.mysqlID;
 
           fetch(`https://oyabackend.herokuapp.com/volunteer/${id}`, {
             method: 'GET',
-          }).then(async (res) => {
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+          }) .then((res) => res.json())
+          .then(async (res) => {
             // SAVE RESPONSE IN LOCAL STORAGE
           const firstname = res.firstname;
           const lastname = res.lastname;

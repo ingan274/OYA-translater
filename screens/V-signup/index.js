@@ -29,10 +29,10 @@ class SignUp extends PureComponent {
   };
 
   handlePasswordConfirmChange = (password) => {
-    this.setState({ password: password });
+    this.setState({ passwordC: password });
   };
 
-  handleSignUpPress = () => {
+  handleSignUpPress = async () => {
     let email = this.state.email;
     let pass = this.state.password;
     let passC = this.state.passwordC;
@@ -49,8 +49,13 @@ class SignUp extends PureComponent {
       //post call 
       fetch('https://oyabackend.herokuapp.com/register', {
         method: 'POST',
-        body: newUser
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ newUser })
       })
+        .then((res) => res.json())
         .then((response) => {
           if (response) {
             let mysqlID = response.mysqlID
@@ -64,7 +69,7 @@ class SignUp extends PureComponent {
           } else {
             this.setState({ emailerror: true });
           }
-          
+
         })
         .catch(err => console.warn(err))
 
