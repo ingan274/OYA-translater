@@ -8,13 +8,13 @@ import strings from "../../components/login-signup/strings";
 
 class LoginScreen extends PureComponent {
   state = {
-    email: '',
+    user: '',
     password: '',
     error: false,
   }
 
-  handleEmailChange = (email) => {
-    this.setState({ email: email });
+  handleUserChange = (user) => {
+    this.setState({ user: user });
   };
 
   handlePasswordChange = (password) => {
@@ -22,11 +22,11 @@ class LoginScreen extends PureComponent {
   };
 
   handleLoginPress = (event) => {
-    let email = this.state.email;
+    let user = this.state.user;
     let pass = this.state.password;
 
     const login = {
-      email: email,
+      username: user,
       password: pass
     }
 
@@ -95,7 +95,7 @@ class LoginScreen extends PureComponent {
 
   showError = () => {
     if (this.state.error) {
-      return <Text style={style.error}>Oops! Looks like your email or password did not match. Please try again.</Text>
+      return <Text style={style.error}>Oops! Looks like your username or password did not match. Please try again.</Text>
     }
   };
 
@@ -125,10 +125,9 @@ class LoginScreen extends PureComponent {
           <View style={style.form}>
             {this.showError()}
             <Form
-              value={this.state.email}
-              onChangeText={this.handleEmailChange}
-              onSubmitEditing={this.handleEmailSubmitPress}
-              placeholder={strings.EMAIL_PLACEHOLDER}
+              value={this.state.user}
+              onChangeText={this.handleUserChange}
+              placeholder={strings.USER_PLACEHOLDER}
               autoCorrect={false}
               keyboardType="email-address"
               returnKeyType="next"

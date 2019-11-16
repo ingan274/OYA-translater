@@ -9,13 +9,13 @@ import { Ionicons } from '@expo/vector-icons';
 
 class LoginScreen extends PureComponent {
   state = {
-    email: '',
+    user: '',
     password: '',
     error: false,
   }
 
-  handleEmailChange = (email) => {
-    this.setState({ email: email });
+  handleUserChange = (user) => {
+    this.setState({ user: user });
   };
 
   handlePasswordChange = (password) => {
@@ -23,11 +23,11 @@ class LoginScreen extends PureComponent {
   };
 
   handleLoginPress = (event) => {
-    let user = this.state.email;
+    let user = this.state.user;
     let pass = this.state.password;
 
     const login = {
-      email: user,
+      username: user,
       password: pass
     }
 
@@ -93,10 +93,9 @@ class LoginScreen extends PureComponent {
       console.log(error.message);
     }
   }
-
   showError = () => {
     if (this.state.error) {
-      return <Text style={style.error}>糟糕！看来您的电子邮件或密码不匹配。请再试一次</Text>
+      return <Text style={style.error}>糟糕！您的用户名或密码不匹配。请再试一次。</Text>
     }
   };
 
@@ -126,10 +125,10 @@ class LoginScreen extends PureComponent {
           <View style={style.form}>
             {this.showError()}
             <Form
-              value={this.state.email}
-              onChangeText={this.handleEmailChange}
-              onSubmitEditing={this.handleEmailSubmitPress}
-              placeholder={strings.CHEMAIL_PLACEHOLDER}
+              value={this.state.user}
+              onChangeText={this.handleUserChange}
+              onSubmitEditing={this.handleUserSubmitPress}
+              placeholder={strings.CHUSER_PLACEHOLDER}
               autoCorrect={false}
               keyboardType="email-address"
               returnKeyType="next"

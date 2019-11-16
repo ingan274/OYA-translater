@@ -1,21 +1,20 @@
 import style from './style';
 import React, { PureComponent } from 'react';
-import { Image, View, Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Platform } from "react-native";
+import { Image, View, Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Platform, AsyncStorage } from "react-native";
 import Button from "../../components/login-signup/loginbtn";
 import Form from "../../components/login-signup/loginFrom";
 import imageLogo from "../../assets/images/logo.png";
 import strings from "../../components/login-signup/strings";
-import { Ionicons } from '@expo/vector-icons';
 
 class LoginScreen extends PureComponent {
   state = {
-    email: '',
+    user: '',
     password: '',
     error: false,
   }
 
-  handleEmailChange = (email) => {
-    this.setState({ email: email });
+  handleUserChange = (user) => {
+    this.setState({ user: user });
   };
 
   handlePasswordChange = (password) => {
@@ -23,11 +22,11 @@ class LoginScreen extends PureComponent {
   };
 
   handleLoginPress = (event) => {
-    let email = this.state.email;
+    let user = this.state.user;
     let pass = this.state.password;
 
     const login = {
-      email: email,
+      username: user,
       password: pass
     }
 
@@ -94,9 +93,10 @@ class LoginScreen extends PureComponent {
     }
   }
 
+
   showError = () => {
     if (this.state.error) {
-      return <Text style={style.error}>¡Uy! Parece que su correo electrónico o contraseña no coinciden. Inténtalo de nuevo.</Text>
+      return <Text style={style.error}>¡Uy! Parece que su nombre de usuario o contraseña no coinciden. Inténtalo de nuevo.</Text>
     }
   };
 
@@ -126,10 +126,9 @@ class LoginScreen extends PureComponent {
           <View style={style.form}>
             {this.showError()}
             <Form
-              value={this.state.email}
-              onChangeText={this.handleEmailChange}
-              onSubmitEditing={this.handleEmailSubmitPress}
-              placeholder={strings.SPEMAIL_PLACEHOLDER}
+              value={this.state.user}
+              onChangeText={this.handleUserChange}
+              placeholder={strings.SPUSER_PLACEHOLDER}
               autoCorrect={false}
               keyboardType="email-address"
               returnKeyType="next"

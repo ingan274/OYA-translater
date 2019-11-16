@@ -1,20 +1,20 @@
 const strings = {
-    LOGIN: "Log In",
-    EMAIL_PLACEHOLDER: "Email",
+    LOGIN: "Volunteer Log In",
+    USER_PLACEHOLDER: "Username",
     PASSWORD_PLACEHOLDER: "Password",
-    SIGNUP: "Sign Up",
+    SIGNUP: "Volunteer Sign Up",
     PASSWORD_CONFIRM_PLACEHOLDER: "Confirm Password",
 
-    SPLOGIN: "Iniciar sesión",
-    SPEMAIL_PLACEHOLDER: "Email",
+    SPLOGIN: "Inicio de sesión voluntario",
+    SPUSER_PLACEHOLDER: "nombre de usuario",
     SPPASSWORD_PLACEHOLDER: "Contraseña",
-    SPSIGNUP: "Regístrate",
+    SPSIGNUP: "Registro voluntario",
     SPPASSWORD_CONFIRM_PLACEHOLDER: "Confirmar contraseña",
 
-    CHLOGIN: "登录",
-    CHEMAIL_PLACEHOLDER: "电子邮件",
+    CHLOGIN: "义工登入",
+    CHUSER_PLACEHOLDER: "用户名",
     CHPASSWORD_PLACEHOLDER: "密码",
-    CHSIGNUP: "注册",
+    CHSIGNUP: "志愿者报名",
     CHPASSWORD_CONFIRM_PLACEHOLDER: "确认密码",
 };
 
