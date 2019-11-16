@@ -16,10 +16,12 @@ import {
 } from 'react-native';
 
 const USER_ID = '@userId';
+const socket = io('/roomNum');
 
 class Message extends PureComponent {
   constructor(props) {
     super(props);
+
     this.state = {
       messages: [],
       userId: null,
@@ -37,14 +39,27 @@ class Message extends PureComponent {
   }
 
   componentDidMount() {
-    this.handleLOCALSTORAGE()
+    this.handleLOCALSTORAGE();
+    this.takeVolunteer()
+  }
+
+  takeVolunteer = () => {
+    etch('https://oyabackend.herokuapp.com/avail/chat', {
+      method: 'PUT',
+      body: {
+        room: this.state.socket
+      }
+    }).then(
+      console.log("connected with volunteer")
+    )
+      .catch(err => console.warn(err))
   }
 
   handleLOCALSTORAGE = async () => {
     // GET SOCKET ID AND SET THE STATE in local storage
     try {
-      let socket = await AsyncStorage.getItem('socket'|| 'none');
-      this.setState({socket: socket})
+      let socket = await AsyncStorage.getItem('socket' || 'none');
+      this.setState({ socket: socket })
     } catch (error) {
       // Error retrieving data
       console.log(error.message);
@@ -95,10 +110,10 @@ class Message extends PureComponent {
     if (this.state.userId) {
       return (
         <GiftedChat
-            messages={this.state.messages}
-            onSend={this.onSend}
-            user={user}
-          />
+          messages={this.state.messages}
+          onSend={this.onSend}
+          user={user}
+        />
       )
     } else {
       return (
@@ -123,7 +138,7 @@ class Message extends PureComponent {
           />
         </View>
         <View style={style.Textcontainer}>
-         {this.chatLoad()}
+          {this.chatLoad()}
         </View>
       </View>
 

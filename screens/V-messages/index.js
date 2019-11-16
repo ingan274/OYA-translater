@@ -51,6 +51,14 @@ class Message extends PureComponent {
     }
   }
 
+  breakConnection = () => {
+    fetch('https://oyabackend.herokuapp.com/stop/chat', {
+      method: 'PUT'
+    }).then((res) => {
+     console.log("connection is broken") 
+    })
+      .catch(err => console.warn(err))
+  }
   /**
    * When a user joins the chatroom, check if they are an existing user.
    * If they aren't, then ask the server for a userId.
@@ -102,7 +110,7 @@ class Message extends PureComponent {
       )
     } else {
       return (
-        <Text style={style.unavail}>We are connecting you to a Volunteer now. One moment please.</Text>
+        <Text style={style.unavail}>Please go back and set messages as available with the toggle.</Text>
       )
     }
   }
@@ -121,6 +129,17 @@ class Message extends PureComponent {
             style={style.back}
             onPress={this.handleBackPress}
           />
+          <TouchableOpacity style={style.finishchat} onPress={this.breakConnection}>
+          <Text style={style.finishchattext} >Finish Conversation </Text>
+          <Ionicons
+            name={
+              Platform.OS === 'ios' ? 'ios-exit' : 'md-exit'
+            }
+            size={30}
+            style={style.back}
+            onPress={this.handleBackPress}
+          />
+          </TouchableOpacity>
         </View>
         <View style={style.Textcontainer}>
          {this.chatLoad()}

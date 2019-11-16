@@ -52,7 +52,7 @@ export default class Account extends React.Component {
       console.log(error.message);
     }
 
-    this.setState({ mysqlID = userId })
+    this.setState({ mysqlID:userId })
   }
 
   handleLocalStorageGet = async () => {
@@ -104,11 +104,11 @@ export default class Account extends React.Component {
   }
 
   getNotificationM = () => {
-    fetch('Heroku link will go here', {
+    fetch(`https://oyabackend.herokuapp.com/volunteer/notification/${this.state.mysqlID}`, {
       method: 'GET'
     }).then((response) => {
       this.setState({
-        messageNotification: response
+        messageNotification: response.chatavail
       });
     })
       .catch(err => console.warn(err))
@@ -155,7 +155,7 @@ export default class Account extends React.Component {
   toggleMessage = value => {
     this.setState({ messageValue: value });
     // put call
-    fetch('Heroku link will go here', {
+    fetch('https://oyabackend.herokuapp.com/volunteer/', {
       method: 'PUT',
       body: {
         mysqlID: this.state.mysqlID,

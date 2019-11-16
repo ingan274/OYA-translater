@@ -39,7 +39,7 @@ class LoginScreen extends PureComponent {
         if (response) {
           let id = response.mysqlID;
 
-          fetch(`HerokuURL/${id}`, {
+          fetch(`https://oyabackend.herokuapp.com/volunteer/${id}`, {
             method: 'GET',
           }).then(async (res) => {
             // SAVE RESPONSE IN LOCAL STORAGE

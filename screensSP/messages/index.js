@@ -37,7 +37,20 @@ class Message extends PureComponent {
   }
 
   componentDidMount() {
-    this.handleLOCALSTORAGE()
+    this.handleLOCALSTORAGE();
+    this.takeVolunteer()
+  }
+
+  takeVolunteer = () => {
+    etch('https://oyabackend.herokuapp.com/avail/chat', {
+      method: 'PUT',
+      body: {
+        room: this.state.socket
+      }
+    }).then(
+      console.log("connected with volunteer")
+    )
+      .catch(err => console.warn(err))
   }
 
   handleLOCALSTORAGE = async () => {

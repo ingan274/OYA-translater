@@ -115,7 +115,7 @@ class Job extends PureComponent {
     }
 
     // send the backend to match user with person in chat
-    fetch('Heroku link will go here', {
+    fetch('https://oyabackend.herokuapp.com/match', {
       method: 'POST',
       body: {
         native: native,
