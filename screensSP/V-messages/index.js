@@ -23,7 +23,8 @@ class Message extends PureComponent {
     this.state = {
       messages: [],
       userId: null,
-      Vsocket: ''
+      socket: '',
+      roomNum: '',
     };
 
     this.determineUser = this.determineUser.bind(this);
@@ -49,6 +50,16 @@ class Message extends PureComponent {
       // Error retrieving data
       console.log(error.message);
     }
+  }
+
+
+  breakConnection = () => {
+    fetch('https://oyabackend.herokuapp.com/stop/chat', {
+      method: 'PUT'
+    }).then((res) => {
+     console.log("connection is broken") 
+    })
+      .catch(err => console.warn(err))
   }
 
   /**
@@ -102,7 +113,7 @@ class Message extends PureComponent {
       )
     } else {
       return (
-        <Text style={style.unavail}>We are connecting you to a Volunteer now. One moment please.</Text>
+        <Text style={style.unavail}>Regrese y configure los mensajes como disponibles con la palanca.</Text>
       )
     }
   }
@@ -113,7 +124,7 @@ class Message extends PureComponent {
     return (
       <View style={style.container}>
         <View style={style.header}>
-          <Ionicons
+        <Ionicons
             name={
               Platform.OS === 'ios' ? 'ios-arrow-dropleft' : 'md-arrow-dropleft'
             }
@@ -121,6 +132,17 @@ class Message extends PureComponent {
             style={style.back}
             onPress={this.handleBackPress}
           />
+          <TouchableOpacity style={style.finishchat} onPress={this.breakConnection}>
+          <Text style={style.finishchattext} >Terminar conversación </Text>
+          <Ionicons
+            name={
+              Platform.OS === 'ios' ? 'ios-exit' : 'md-exit'
+            }
+            size={30}
+            style={style.back}
+            onPress={this.handleBackPress}
+          />
+          </TouchableOpacity>
         </View>
         <View style={style.Textcontainer}>
          {this.chatLoad()}

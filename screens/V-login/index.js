@@ -32,16 +32,30 @@ class LoginScreen extends PureComponent {
 
     fetch('https://oyabackend.herokuapp.com/login', {
       method: 'POST',
-      body: login
-    })
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({login})
+    }).then((res) => res.json())
       .then((response) => {
         if (response) {
-          // SAVE RESPONSE IN LOCAL STORAGE
-          const firstname = response.firstname;
-          const lastname = response.lastname;
-          const language1 = response.language1;
-          const language2 = response.language2;
-          const language3 = response.language3;
+          let id = response.mysqlID;
+
+          fetch(`https://oyabackend.herokuapp.com/volunteer/${id}`, {
+            method: 'GET',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+          }) .then((res) => res.json())
+          .then(async (res) => {
+            // SAVE RESPONSE IN LOCAL STORAGE
+          const firstname = res.firstname;
+          const lastname = res.lastname;
+          const language1 = res.language1;
+          const language2 = res.language2;
+          const language3 = res.language3;
 
           this.handleLocalStorage(firstname, lastname, language1, language2, language3)
 
@@ -50,7 +64,8 @@ class LoginScreen extends PureComponent {
             navigation: { navigate },
           } = this.props;
           navigate('Account');
-
+          })
+            .catch(err => console.warn(err))
 
         } else {
           this.setState({ error: true });

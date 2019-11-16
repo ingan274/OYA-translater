@@ -20,7 +20,7 @@ import {
 class VForm extends PureComponent {
 
   static navigationOptions = {
-    title: 'Formulario de voluntariado',
+    title: 'Volunteer Form',
     headerStyle: {
       backgroundColor: color.blue4,
     },
@@ -31,6 +31,7 @@ class VForm extends PureComponent {
   };
 
   state = {
+    mysqlID: '',
     firstname: '',
     lastname: '',
     email: '',
@@ -45,7 +46,12 @@ class VForm extends PureComponent {
     error: false,
   }
 
+  componentDidMount = () => {
+    this.getID()
+  }
+
   handleSubmit = () => {
+    const mysqlID = this.state.mysqlID;
     const firstname = this.state.firstname;
     const lastname = this.state.lastname;
     const email = this.state.email;
@@ -57,11 +63,16 @@ class VForm extends PureComponent {
     const proficiency2 = this.state.proficiency2;
     const proficiency3 = this.state.proficiency3;
 
-    const user = {
+    const userInfo = {
+      mysqlID: mysqlID,
       firstname: firstname,
       lastname: lastname,
       email: email,
       phonenumber: phonenumber,
+    }
+
+    const userLang = {
+      mysqlID: mysqlID,
       language1: language1,
       language2: language2,
       language3: language3,
@@ -72,10 +83,18 @@ class VForm extends PureComponent {
 
     if (firstname && lastname && email && phonenumber && language1 && language2) {
       // console.log(user)
-      fetch('Heroku link will go here', {
+      fetch('Heroku link will go here TO MYSQL', {
         method: 'POST',
-        body: user
+        body: userInfo
       })
+      fetch('https://oyabackend.herokuapp.com/volunteer', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userLang })
+      }).then((res) => res.json())
         .then(() => {
           // SAVE IN LOCAL STORAGE
           this.handleLocalStorage(firstname, lastname, language1, language2, language3)
@@ -89,7 +108,18 @@ class VForm extends PureComponent {
     } else {
       this.setState({ error: true })
     }
+
   };
+  
+  getID = async () => {
+    try {
+      let userId = await AsyncStorage.getItem('mysqlID') || 'none';
+      this.setState({ mysqlID: userId })
+    } catch (error) {
+      // Error retrieving data
+      console.log(error.message);
+    }
+  }
 
   handleLocalStorage = async (firstname, lastname, language1, language2, language3) => {
     try {

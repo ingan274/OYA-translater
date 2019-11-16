@@ -29,7 +29,7 @@ class SignUp extends PureComponent {
   };
 
   handlePasswordConfirmChange = (password) => {
-    this.setState({ password: password });
+    this.setState({ passwordC: password });
   };
 
   handleSignUpPress = () => {
@@ -46,24 +46,45 @@ class SignUp extends PureComponent {
     if (pass !== passC) {
       this.setState({ passerror: true });
     } else {
-      fetch('https://oyabackend.herokuapp.com/register', {
-        method: 'POST',
-        body: newUser
+     //post call 
+     fetch('https://oyabackend.herokuapp.com/register', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ newUser })
+    })
+      .then((res) => res.json())
+      .then((response) => {
+        if (response) {
+          let mysqlID = response.mysqlID
+          this.saveID(mysqlID)
+
+          // NAVIGATE
+          const {
+            navigation: { navigate },
+          } = this.props;
+          navigate('Form');
+        } else {
+          this.setState({ emailerror: true });
+        }
+
       })
-        .then((response) => {
-          if (response) {
-            const {
-              navigation: { navigate },
-            } = this.props;
-            navigate('Form');
-          } else {
-            this.setState({ emailerror: true });
-          }
-          
-        })
-        .catch(err => console.warn(err))
-    }
-  };
+      .catch(err => console.warn(err))
+
+
+  }
+};
+
+saveID = async (id) => {
+  try {
+    await AsyncStorage.setItem('mysqlID', id);
+  } catch (error) {
+    // Error retrieving data
+    console.log(error.message);
+  }
+}
 
 
   handleLogIn = () => {

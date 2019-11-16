@@ -25,6 +25,7 @@ export default class Account extends React.Component {
     phoneNotification: false,
     documentNotification: false,
 
+    mysqlID: '',
     firstname: '',
     lastname: '',
     language1: '',
@@ -38,9 +39,24 @@ export default class Account extends React.Component {
     // AppState.addEventListener('change', this.getNotificationD);
 
     // GET USER INFORMATION FROM LOCAL STORAGE
-    this.handleLocalStorageGet()
+    this.handleLocalStorageGet();
+
+    // get id and udpate
+    this.getID()
 
   }
+
+  getID = async () => {
+    try {
+      userId = await AsyncStorage.getItem('mysqlID') || 'none';
+    } catch (error) {
+      // Error retrieving data
+      console.log(error.message);
+    }
+
+    this.setState({ mysqlID: userId })
+  }
+
 
   handleLocalStorageGet = async () => {
     let firstname = '';
@@ -90,14 +106,20 @@ export default class Account extends React.Component {
     AppState.removeEventListener('change', stopListener);
   }
 
+ 
   getNotificationM = () => {
-    fetch('Heroku link will go here', {
-      method: 'GET'
-    }).then((response) => {
-      this.setState({
-        messageNotification: response
-      });
-    })
+    fetch(`https://oyabackend.herokuapp.com/volunteer/notification/${this.state.mysqlID}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    }).then((res) => res.json())
+      .then((response) => {
+        this.setState({
+          messageNotification: response.chatavail
+        });
+      })
       .catch(err => console.warn(err))
 
     if (this.state.appState.match(/inactive/)) {
@@ -106,14 +128,20 @@ export default class Account extends React.Component {
     }
   }
 
+
   getNotificationP = () => {
     fetch('Heroku link will go here', {
-      method: 'GET'
-    }).then((response) => {
-      this.setState({
-        phoneNotification: response
-      });
-    })
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    }).then((res) => res.json())
+      .then((response) => {
+        this.setState({
+          phoneNotification: response
+        });
+      })
       .catch(err => console.warn(err))
 
     if (this.state.appState.match(/inactive/)) {
@@ -142,9 +170,16 @@ export default class Account extends React.Component {
   toggleMessage = value => {
     this.setState({ messageValue: value });
     // put call
-    fetch('Heroku link will go here', {
+    fetch('https://oyabackend.herokuapp.com/volunteer/', {
       method: 'PUT',
-      body: { massageAvail: value }
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        mysqlID: this.state.mysqlID,
+        massageAvail: value
+      })
     })
       .then((res) => {
         if (res) {
@@ -163,7 +198,7 @@ export default class Account extends React.Component {
       // Error retrieving data
       console.log(error.message);
     }
-  }
+  };
 
   togglePhone = value => {
     this.setState({ phoneValue: value });

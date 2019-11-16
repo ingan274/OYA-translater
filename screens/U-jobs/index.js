@@ -115,14 +115,18 @@ class Job extends PureComponent {
     }
 
     // send the backend to match user with person in chat
-    fetch('Heroku link will go here', {
+    fetch('https://oyabackend.herokuapp.com/match', {
       method: 'POST',
-      body: {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
         native: native,
         language: language,
         job: "message"
-      }
-    }).then(async (res) => {
+      })
+    }).then((res) => res.json()) .then(async (res) => {
       // store socket info in local
       let socket = res.socket
       

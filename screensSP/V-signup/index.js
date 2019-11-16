@@ -29,7 +29,7 @@ class SignUp extends PureComponent {
   };
 
   handlePasswordConfirmChange = (password) => {
-    this.setState({ password: password });
+    this.setState({ passwordC: password });
   };
 
   handleSignUpPress = () => {
@@ -48,26 +48,41 @@ class SignUp extends PureComponent {
     } else {
       fetch('https://oyabackend.herokuapp.com/register', {
         method: 'POST',
-        body: newUser
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ newUser })
       })
-        .then((response) => {
-          if (response) {
-            // SAVE INFO TO LOCAL STORAGE
+      .then((res) => res.json())
+      .then((response) => {
+        if (response) {
+          let mysqlID = response.mysqlID
+          this.saveID(mysqlID)
 
-            //NAVIGATE
-            const {
-              navigation: { navigate },
-            } = this.props;
-            navigate('Form');
-          } else {
-            this.setState({ emailerror: true });
-          }
-          
-        })
-        .catch(err => console.warn(err))
-    }
-  };
+          // NAVIGATE
+          const {
+            navigation: { navigate },
+          } = this.props;
+          navigate('Form');
+        } else {
+          this.setState({ emailerror: true });
+        }
+        
+      })
+      .catch(err => console.warn(err))
 
+  }
+};
+
+saveID = async (id) => {
+  try {
+    await AsyncStorage.setItem('mysqlID', id);
+  } catch (error) {
+    // Error retrieving data
+    console.log(error.message);
+  }
+}
 
   handleLogIn = () => {
     const {

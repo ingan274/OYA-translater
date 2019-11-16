@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
     alignItems: 'center',
     marginTop: 55,
+    justifyContent: "space-between",
   },
   back: {
     color: color.white,
@@ -26,6 +27,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingVertical: 30,
     paddingHorizontal: 30,
+  }, 
+  finishchat: {
+    flexDirection: 'row',
+  },
+  finishchattext: {
+    marginTop: 5,
+    marginHorizontal: 5,
+    color: 'white',
   }
 });
 
