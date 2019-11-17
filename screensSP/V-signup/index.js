@@ -1,7 +1,7 @@
 import style from './style';
 import React, { PureComponent } from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { Image, View, Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from "react-native";
+import { Image, View, Text, TouchableOpacity, TouchableWithoutFeedback, Keyboard, AsyncStorage } from "react-native";
 import Button from "../../components/login-signup/loginbtn";
 import Form from "../../components/login-signup/loginFrom";
 import imageLogo from "../../assets/images/logo.png";
@@ -12,16 +12,16 @@ import strings from "../../components/login-signup/strings";
 class SignUp extends PureComponent {
 
   state = {
-    email: "",
+    username: "",
     password: "",
     passwordC: "",
     passerror: false,
-    emailerror: false,
+    usererror: false,
   };
 
 
-  handleEmailChange = (email) => {
-    this.setState({ email: email });
+  handleUserChange = (user) => {
+    this.setState({ user: user });
   };
 
   handlePasswordChange = (password) => {
@@ -32,13 +32,13 @@ class SignUp extends PureComponent {
     this.setState({ passwordC: password });
   };
 
-  handleSignUpPress = () => {
-    let email = this.state.email;
+  handleSignUpPress = async () => {
+    let username = this.state.user;
     let pass = this.state.password;
     let passC = this.state.passwordC;
 
     const newUser = {
-      email: email,
+      username: username,
       password: pass
     }
 
@@ -46,6 +46,7 @@ class SignUp extends PureComponent {
     if (pass !== passC) {
       this.setState({ passerror: true });
     } else {
+      //post call 
       fetch('https://oyabackend.herokuapp.com/register', {
         method: 'POST',
         headers: {
@@ -54,35 +55,36 @@ class SignUp extends PureComponent {
         },
         body: JSON.stringify({ newUser })
       })
-      .then((res) => res.json())
-      .then((response) => {
-        if (response) {
-          let mysqlID = response.mysqlID
-          this.saveID(mysqlID)
+        .then((res) => res.json())
+        .then((response) => {
+          if (response) {
+            let mysqlID = response.mysqlID
+            this.saveID(mysqlID)
 
-          // NAVIGATE
-          const {
-            navigation: { navigate },
-          } = this.props;
-          navigate('Form');
-        } else {
-          this.setState({ emailerror: true });
-        }
-        
-      })
-      .catch(err => console.warn(err))
+            // NAVIGATE
+            const {
+              navigation: { navigate },
+            } = this.props;
+            navigate('Form');
+          } else {
+            this.setState({ emailerror: true });
+          }
 
+        })
+        .catch(err => console.warn(err))
+
+    }
+  };
+
+  saveID = async (id) => {
+    try {
+      await AsyncStorage.setItem('mysqlID', id);
+    } catch (error) {
+      // Error retrieving data
+      console.log(error.message);
+    }
   }
-};
 
-saveID = async (id) => {
-  try {
-    await AsyncStorage.setItem('mysqlID', id);
-  } catch (error) {
-    // Error retrieving data
-    console.log(error.message);
-  }
-}
 
   handleLogIn = () => {
     const {
@@ -95,7 +97,7 @@ saveID = async (id) => {
     if (this.state.passerror) {
       return <Text style={style.error}>Por favor, asegúrese de que sus contraseñas coinciden. Inténtalo de nuevo.</Text>
     } else if (this.state.emailerror) {
-      return <Text style={style.error}>Ups. Parece que ese correo electrónico ya se ha utilizado. Por favor, elija otro correo electrónico.</Text>
+      return <Text style={style.error}>Ups. Parece que ese nombre de usuario ya se ha utilizado. Por favor, elija otro correo electrónico.</Text>
     }
   };
 
@@ -108,10 +110,9 @@ saveID = async (id) => {
           <View style={style.form}>
             {this.showError()}
             <Form
-              value={this.state.email}
-              onChangeText={this.handleEmailChange}
-              onSubmitEditing={this.handleEmailSubmitPress}
-              placeholder={strings.SPEMAIL_PLACEHOLDER}
+              value={this.state.user}
+              onChangeText={this.handleUserChange}
+              placeholder={strings.SPUSER_PLACEHOLDER}
               autoCorrect={false}
               keyboardType="email-address"
               returnKeyType="next"

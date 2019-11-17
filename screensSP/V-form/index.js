@@ -4,7 +4,6 @@ import color from '../../constants/Colors';
 import imageLogo from "../../assets/images/dots.png";
 import Button from "../../components/V-form/formbutton";
 import Forminput from "../../components/V-form/forminput";
-import PickerBox from 'react-native-picker-box';
 import {
   Image,
   Platform,
@@ -83,7 +82,7 @@ class VForm extends PureComponent {
 
     if (firstname && lastname && email && phonenumber && language1 && language2) {
       // console.log(user)
-      fetch('Heroku link will go here TO MYSQL', {
+      fetch('https://oyabackend.herokuapp.com/form', {
         method: 'POST',
         body: userInfo
       })

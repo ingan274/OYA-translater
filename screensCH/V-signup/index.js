@@ -20,8 +20,8 @@ class SignUp extends PureComponent {
   };
 
 
-  handleEmailChange = (email) => {
-    this.setState({ email: email });
+  handleUserChange = (user) => {
+    this.setState({ user: user });
   };
 
   handlePasswordChange = (password) => {
@@ -33,12 +33,12 @@ class SignUp extends PureComponent {
   };
 
   handleSignUpPress = () => {
-    let email = this.state.email;
+    let username = this.state.user;
     let pass = this.state.password;
     let passC = this.state.passwordC;
 
     const newUser = {
-      email: email,
+      username: username,
       password: pass
     }
 
@@ -98,7 +98,7 @@ saveID = async (id) => {
     if (this.state.passerror) {
       return <Text style={style.error}>请确保您的密码匹配。请再试一次。</Text>
     } else if (this.state.emailerror) {
-      return <Text style={style.error}>哎呀。看起来该电子邮件已被使用。请选择另一封电子邮件。</Text>
+      return <Text style={style.error}>哎呀。看起来该用户名已被使用。请选择另一个用户名</Text>
     }
   };
 
@@ -111,10 +111,10 @@ saveID = async (id) => {
           <View style={style.form}>
             {this.showError()}
             <Form
-              value={this.state.email}
-              onChangeText={this.handleEmailChange}
-              onSubmitEditing={this.handleEmailSubmitPress}
-              placeholder={strings.CHEMAIL_PLACEHOLDER}
+              value={this.state.user}
+              onChangeText={this.handleUserChange}
+              onSubmitEditing={this.handleUserSubmitPress}
+              placeholder={strings.CHUSER_PLACEHOLDER}
               autoCorrect={false}
               keyboardType="email-address"
               returnKeyType="next"

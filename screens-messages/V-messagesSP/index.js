@@ -23,7 +23,7 @@ class Message extends PureComponent {
     this.state = {
       messages: [],
       userId: null,
-      socket: '',
+      Vsocket: '',
       roomNum: '',
     };
 
@@ -38,34 +38,28 @@ class Message extends PureComponent {
   }
 
   componentDidMount() {
-    this.handleLOCALSTORAGE();
-    this.takeVolunteer()
+    this.handleLOCALSTORAGE()
   }
-
-  takeVolunteer = () => {
-    etch('https://oyabackend.herokuapp.com/avail/chat', {
-      method: 'PUT',
-      body: {
-        room: this.state.socket
-      }
-    }).then(
-      console.log("connected with volunteer")
-    )
-      .catch(err => console.warn(err))
-  }
-
 
   handleLOCALSTORAGE = async () => {
     // GET SOCKET ID AND SET THE STATE in local storage
     try {
-      let socket = await AsyncStorage.getItem('socket'|| 'none');
-      this.setState({socket: socket})
+      let socket = await AsyncStorage.getItem('Vsocket'|| 'none');
+      this.setState({Vsocket: socket})
     } catch (error) {
       // Error retrieving data
       console.log(error.message);
     }
   }
 
+  breakConnection = () => {
+    fetch('https://oyabackend.herokuapp.com/stop/chat', {
+      method: 'PUT'
+    }).then((res) => {
+     console.log("connection is broken") 
+    })
+      .catch(err => console.warn(err))
+  }
   /**
    * When a user joins the chatroom, check if they are an existing user.
    * If they aren't, then ask the server for a userId.
@@ -117,7 +111,7 @@ class Message extends PureComponent {
       )
     } else {
       return (
-        <Text style={style.unavail}>We are connecting you to a Volunteer now. One moment please.</Text>
+        <Text style={style.unavail}>Regrese y configure los mensajes como disponibles con la palanca.</Text>
       )
     }
   }
@@ -136,6 +130,17 @@ class Message extends PureComponent {
             style={style.back}
             onPress={this.handleBackPress}
           />
+          <TouchableOpacity style={style.finishchat} onPress={this.breakConnection}>
+          <Text style={style.finishchattext} >Terminar conversación </Text>
+          <Ionicons
+            name={
+              Platform.OS === 'ios' ? 'ios-exit' : 'md-exit'
+            }
+            size={30}
+            style={style.back}
+            onPress={this.handleBackPress}
+          />
+          </TouchableOpacity>
         </View>
         <View style={style.Textcontainer}>
          {this.chatLoad()}
@@ -159,7 +164,7 @@ class Message extends PureComponent {
     const {
       navigation: { navigate },
     } = this.props;
-    navigate('Jobs');
+    navigate('Account');
   };
 }
 

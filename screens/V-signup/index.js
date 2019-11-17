@@ -12,16 +12,16 @@ import strings from "../../components/login-signup/strings";
 class SignUp extends PureComponent {
 
   state = {
-    email: "",
+    username: "",
     password: "",
     passwordC: "",
     passerror: false,
-    emailerror: false,
+    usererror: false,
   };
 
 
-  handleEmailChange = (email) => {
-    this.setState({ email: email });
+  handleUserChange = (user) => {
+    this.setState({ user: user });
   };
 
   handlePasswordChange = (password) => {
@@ -33,12 +33,12 @@ class SignUp extends PureComponent {
   };
 
   handleSignUpPress = async () => {
-    let email = this.state.email;
+    let username = this.state.user;
     let pass = this.state.password;
     let passC = this.state.passwordC;
 
     const newUser = {
-      email: email,
+      username: username,
       password: pass
     }
 
@@ -97,7 +97,7 @@ class SignUp extends PureComponent {
     if (this.state.passerror) {
       return <Text style={style.error}>Please make sure your passwords match. Please try again.</Text>
     } else if (this.state.emailerror) {
-      return <Text style={style.error}>Oops. Looks like that email has already been used. Please choose another email.</Text>
+      return <Text style={style.error}>Oops. Looks like that username has already been used. Please choose another username.</Text>
     }
   };
 
@@ -110,10 +110,10 @@ class SignUp extends PureComponent {
           <View style={style.form}>
             {this.showError()}
             <Form
-              value={this.state.email}
-              onChangeText={this.handleEmailChange}
-              onSubmitEditing={this.handleEmailSubmitPress}
-              placeholder={strings.EMAIL_PLACEHOLDER}
+              value={this.state.user}
+              onChangeText={this.handleUserChange}
+              onSubmitEditing={this.handleUserSubmitPress}
+              placeholder={strings.USER_PLACEHOLDER}
               autoCorrect={false}
               keyboardType="email-address"
               returnKeyType="next"

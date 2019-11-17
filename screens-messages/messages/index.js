@@ -44,6 +44,7 @@ class Message extends PureComponent {
     this.takeVolunteer()
   }
 
+  // makes volunteer unavailable to get connected with someone else
   takeVolunteer = () => {
     etch('https://oyabackend.herokuapp.com/avail/chat', {
       method: 'PUT',

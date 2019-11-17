@@ -23,7 +23,7 @@ class Message extends PureComponent {
     this.state = {
       messages: [],
       userId: null,
-      socket: '',
+      Vsocket: '',
       roomNum: '',
     };
 
@@ -122,7 +122,7 @@ class Message extends PureComponent {
     return (
       <View style={style.container}>
         <View style={style.header}>
-        <Ionicons
+          <Ionicons
             name={
               Platform.OS === 'ios' ? 'ios-arrow-dropleft' : 'md-arrow-dropleft'
             }
