@@ -5,18 +5,12 @@ import color from '../../constants/Colors';
 import SocketIOClient from 'socket.io-client';
 import { GiftedChat } from 'react-native-gifted-chat';
 import {
-  Image,
   Platform,
-  ScrollView,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
   AsyncStorage
 } from 'react-native';
-
-const USER_ID = '@userId';
-const socket = io('/roomNum');
 
 class Message extends PureComponent {
   constructor(props) {
