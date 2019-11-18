@@ -37,7 +37,7 @@ class LoginScreen extends PureComponent {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({login})
+      body: JSON.stringify({ login })
     }).then((res) => res.json())
       .then((response) => {
         if (response) {
@@ -49,23 +49,25 @@ class LoginScreen extends PureComponent {
               Accept: 'application/json',
               'Content-Type': 'application/json',
             },
-          }) .then((res) => res.json())
-          .then(async (res) => {
-            // SAVE RESPONSE IN LOCAL STORAGE
-          const firstname = res.firstname;
-          const lastname = res.lastname;
-          const language1 = res.language1;
-          const language2 = res.language2;
-          const language3 = res.language3;
+          }).then((res) => res.json())
+            .then(async (res) => {
+              // SAVE RESPONSE IN LOCAL STORAGE
+              const firstname = res.firstname;
+              const lastname = res.lastname;
+              const language1 = res.language1;
+              const language2 = res.language2;
+              const language3 = res.language3;
+              const language3 = res.language3;
+              const socket = res.roomNum;
 
-          this.handleLocalStorage(firstname, lastname, language1, language2, language3)
+              this.handleLocalStorage(firstname, lastname, language1, language2, language3, socket)
 
-          //NAVIGATE
-          const {
-            navigation: { navigate },
-          } = this.props;
-          navigate('Account');
-          })
+              //NAVIGATE
+              const {
+                navigation: { navigate },
+              } = this.props;
+              navigate('Account');
+            })
             .catch(err => console.warn(err))
 
         } else {
@@ -76,7 +78,7 @@ class LoginScreen extends PureComponent {
       .catch(err => console.warn(err))
   };
 
-  handleLocalStorage = async (firstname, lastname, language1, language2, language3) => {
+  handleLocalStorage = async (firstname, lastname, language1, language2, language3, roomNum) => {
     try {
       await AsyncStorage.setItem('firstname', firstname);
       console.log('firstname', firstname);
@@ -88,11 +90,14 @@ class LoginScreen extends PureComponent {
       console.log('language2', language2);
       await AsyncStorage.setItem('language3', language3);
       console.log('language3', language3);
+      await AsyncStorage.setItem('socket', roomNum);
+      console.log('socket', roomNum);
     } catch (error) {
       // Error retrieving data
       console.log(error.message);
     }
   }
+
   showError = () => {
     if (this.state.error) {
       return <Text style={style.error}>糟糕！您的用户名或密码不匹配。请再试一次。</Text>

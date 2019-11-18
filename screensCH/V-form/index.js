@@ -83,10 +83,17 @@ class VForm extends PureComponent {
 
     if (firstname && lastname && email && phonenumber && language1 && language2) {
       // console.log(user)
+      // to mysql
       fetch('https://oyabackend.herokuapp.com/form', {
         method: 'POST',
-        body: userInfo
-      })
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userInfo })
+      });
+
+      // to mongo
       fetch('https://oyabackend.herokuapp.com/volunteer', {
         method: 'POST',
         headers: {
@@ -95,9 +102,10 @@ class VForm extends PureComponent {
         },
         body: JSON.stringify({ userLang })
       }).then((res) => res.json())
-        .then(() => {
+        .then((res) => {
+          let socket = res.roomNum
           // SAVE IN LOCAL STORAGE
-          this.handleLocalStorage(firstname, lastname, language1, language2, language3)
+          this.handleLocalStorage(firstname, lastname, language1, language2, language3, socket)
           //NAVIGATE
           const {
             navigation: { navigate },
@@ -111,7 +119,6 @@ class VForm extends PureComponent {
 
   };
 
-
   getID = async () => {
     try {
       let userId = await AsyncStorage.getItem('mysqlID') || 'none';
@@ -122,7 +129,7 @@ class VForm extends PureComponent {
     }
   }
 
-  handleLocalStorage = async (firstname, lastname, language1, language2, language3) => {
+  handleLocalStorage = async (firstname, lastname, language1, language2, language3, roomNum) => {
     try {
       await AsyncStorage.setItem('firstname', firstname);
       console.log('firstname', firstname);
@@ -134,6 +141,8 @@ class VForm extends PureComponent {
       console.log('language2', language2);
       await AsyncStorage.setItem('language3', language3);
       console.log('language3', language3);
+      await AsyncStorage.setItem('socket', roomNum);
+      console.log('socket', roomNum);
     } catch (error) {
       // Error retrieving data
       console.log(error.message);
