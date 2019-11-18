@@ -12,6 +12,9 @@ import {
   AsyncStorage
 } from 'react-native';
 
+const socketIO = require("socket.io");
+const socket = io('/talk');
+
 class Message extends PureComponent {
   constructor(props) {
     super(props);
@@ -28,7 +31,7 @@ class Message extends PureComponent {
     this.onSend = this.onSend.bind(this);
     this._storeMessages = this._storeMessages.bind(this);
 
-    this.socket = SocketIOClient('http://localhost:3000');
+    this.io = socketIO(http);
     this.socket.on('message', this.onReceivedMessage);
     this.determineUser();
   }
