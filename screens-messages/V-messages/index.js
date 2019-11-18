@@ -32,7 +32,7 @@ class Message extends PureComponent {
     this.onSend = this.onSend.bind(this);
     this._storeMessages = this._storeMessages.bind(this);
 
-    this.socket = SocketIOClient('http://localhost:3000');
+    this.socket = SocketIOClient("https://oyabackend.herokuapp.com/socket/talk");
     this.socket.on('message', this.onReceivedMessage);
     this.determineUser();
   }

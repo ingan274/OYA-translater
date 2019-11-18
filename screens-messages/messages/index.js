@@ -19,7 +19,6 @@ class Message extends PureComponent {
     this.state = {
       messages: [],
       userId: null,
-      socket: '',
       roomNum: '',
     };
 
@@ -28,23 +27,27 @@ class Message extends PureComponent {
     this.onSend = this.onSend.bind(this);
     this._storeMessages = this._storeMessages.bind(this);
 
-    this.socket = SocketIOClient('http://localhost:3000');
+    this.socket = SocketIOClient("https://oyabackend.herokuapp.com/socket/talk");
     this.socket.on('message', this.onReceivedMessage);
     this.determineUser();
   }
 
   componentDidMount() {
-    this.handleLOCALSTORAGE();
-    this.takeVolunteer()
+    // this.handleLOCALSTORAGE();
+    // this.takeVolunteer()
   }
 
   // makes volunteer unavailable to get connected with someone else
   takeVolunteer = () => {
-    etch('https://oyabackend.herokuapp.com/avail/chat', {
+    fetch('https://oyabackend.herokuapp.com/avail/chat', {
       method: 'PUT',
-      body: {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
         room: this.state.socket
-      }
+      })
     }).then(
       console.log("connected with volunteer")
     )

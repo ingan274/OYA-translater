@@ -57,7 +57,6 @@ class LoginScreen extends PureComponent {
               const language1 = res.language1;
               const language2 = res.language2;
               const language3 = res.language3;
-              const language3 = res.language3;
               const socket = res.roomNum;
 
               this.handleLocalStorage(firstname, lastname, language1, language2, language3, socket)
