@@ -2,7 +2,7 @@ import style from './style';
 import React, { PureComponent } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import color from '../../constants/Colors';
-import SocketIOClient from 'socket.io-client';
+import SocketIOClient from 'socket.io';
 import { GiftedChat } from 'react-native-gifted-chat';
 import {
   Platform,
@@ -11,6 +11,9 @@ import {
   View,
   AsyncStorage
 } from 'react-native';
+
+const socketIO = require("socket.io");
+const socket = io('/socket/talk');
 
 class Message extends PureComponent {
   constructor(props) {
@@ -27,7 +30,8 @@ class Message extends PureComponent {
     this.onSend = this.onSend.bind(this);
     this._storeMessages = this._storeMessages.bind(this);
 
-    this.socket = SocketIOClient("https://oyabackend.herokuapp.com/socket/talk");
+    this.io = socketIO(http);
+
     this.socket.on('message', this.onReceivedMessage);
     this.determineUser();
   }
