@@ -2,7 +2,7 @@ import style from './style';
 import React, { PureComponent } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import color from '../../constants/Colors';
-import SocketIOClient from 'socket.io-client';
+import SocketIOClient from 'socket.io';
 import { GiftedChat } from 'react-native-gifted-chat';
 import {
   Platform,
@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 
 const socketIO = require("socket.io");
-const socket = io('/talk');
+const socket = io('/socket/talk');
 
 class Message extends PureComponent {
   constructor(props) {
@@ -22,7 +22,6 @@ class Message extends PureComponent {
     this.state = {
       messages: [],
       userId: null,
-      socket: '',
       roomNum: '',
     };
 
@@ -32,22 +31,27 @@ class Message extends PureComponent {
     this._storeMessages = this._storeMessages.bind(this);
 
     this.io = socketIO(http);
+
     this.socket.on('message', this.onReceivedMessage);
     this.determineUser();
   }
 
   componentDidMount() {
-    this.handleLOCALSTORAGE();
-    this.takeVolunteer()
+    // this.handleLOCALSTORAGE();
+    // this.takeVolunteer()
   }
 
   // makes volunteer unavailable to get connected with someone else
   takeVolunteer = () => {
-    etch('https://oyabackend.herokuapp.com/avail/chat', {
+    fetch('https://oyabackend.herokuapp.com/avail/chat', {
       method: 'PUT',
-      body: {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
         room: this.state.socket
-      }
+      })
     }).then(
       console.log("connected with volunteer")
     )

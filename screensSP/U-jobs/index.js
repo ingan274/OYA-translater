@@ -1,7 +1,7 @@
 import style from './style';
 import React, { PureComponent } from 'react';
 import Jobbtn from '../../components/Jobbtn';
-import JobModal from '../../components/JobModal';
+import JobModal from '../../components/JobModalSP';
 import { Ionicons } from '@expo/vector-icons';
 import color from '../../constants/Colors';
 import {

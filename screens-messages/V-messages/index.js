@@ -17,7 +17,7 @@ import {
 
 const USER_ID = '@userId';
 const socketIO = require("socket.io");
-const socket = io('/talk');
+const socket = io('/socket/talk');
 
 class Message extends PureComponent {
   constructor(props) {
@@ -36,6 +36,7 @@ class Message extends PureComponent {
 
     // this.socket = SocketIOClient('http://localhost:3000');
     this.io = socketIO(http);
+
     this.socket.on('message', this.onReceivedMessage);
     this.determineUser();
   }
