@@ -36,10 +36,12 @@ class LoginScreen extends PureComponent {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({login})
+      body: JSON.stringify({ login })
     }).then((res) => res.json())
       .then((response) => {
-        if (response) {
+        if (response.mysqlID === "none") {
+          this.setState({ error: true });
+        } else {
           let id = response.mysqlID;
 
           fetch(`https://oyabackend.herokuapp.com/volunteer/${id}`, {
@@ -48,30 +50,26 @@ class LoginScreen extends PureComponent {
               Accept: 'application/json',
               'Content-Type': 'application/json',
             },
-          }) .then((res) => res.json())
-          .then(async (res) => {
-            // SAVE RESPONSE IN LOCAL STORAGE
-          const firstname = res.firstname;
-          const lastname = res.lastname;
-          const language1 = res.language1;
-          const language2 = res.language2;
-          const language3 = res.language3;
-          const socket = res.roomNum;
+          }).then((res) => res.json())
+            .then(async (res) => {
+              // SAVE RESPONSE IN LOCAL STORAGE
+              const firstname = res.firstname;
+              const lastname = res.lastname;
+              const language1 = res.language1;
+              const language2 = res.language2;
+              const language3 = res.language3;
+              const socket = res.roomNum;
 
-          this.handleLocalStorage(firstname, lastname, language1, language2, language3, socket)
+              this.handleLocalStorage(firstname, lastname, language1, language2, language3, socket)
 
-          //NAVIGATE
-          const {
-            navigation: { navigate },
-          } = this.props;
-          navigate('Account');
-          })
+              //NAVIGATE
+              const {
+                navigation: { navigate },
+              } = this.props;
+              navigate('Account');
+            })
             .catch(err => console.warn(err))
-
-        } else {
-          this.setState({ error: true });
         }
-
       })
       .catch(err => console.warn(err))
   };
