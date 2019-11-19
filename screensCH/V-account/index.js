@@ -178,23 +178,11 @@ export default class Account extends React.Component {
       })
     })
       .then((res) => {
-        if (res) {
-
-          let socket = res.socket
-          this.saveSocket(socket)
-        }
+        console.log(res)
       })
       .catch(err => console.warn(err))
-  };
 
-  saveSocket = async (socket) => {
-    try {
-      await AsyncStorage.setItem('Vsocket', socket);
-    } catch (error) {
-      // Error retrieving data
-      console.log(error.message);
-    }
-  }
+  };
 
   togglePhone = value => {
     this.setState({ phoneValue: value });

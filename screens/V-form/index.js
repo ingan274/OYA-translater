@@ -120,7 +120,7 @@ class VForm extends PureComponent {
 
   getID = async () => {
     try {
-      let userId = await AsyncStorage.getItem('mysqlID') || 'none';
+      let userId = await AsyncStorage.getItem('mysqlID');
       this.setState({ mysqlID: userId })
     } catch (error) {
       // Error retrieving data

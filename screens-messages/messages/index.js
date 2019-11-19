@@ -1,5 +1,5 @@
 import React, { Platform, StyleSheet, Dimensions, AsyncStorage, View, Text, Navigator, PureComponent, Component, PropTypes } from 'react-native';
-import GiftedMessenger from '../../components/gifted-messenger';
+import { GiftedChat } from 'react-native-gifted-chat'
 import chat from '../chat';
 import { Ionicons } from '@expo/vector-icons';
 import style from "./style"
@@ -18,10 +18,10 @@ import io from 'socket.io-client';
 
 class ChatRoom extends PureComponent {
   constructor(props) {
-    super(props);
+    // super(props);
 
     // this server need to change in chat
-    const socketServer = 'http://' + chat.serverIP + ':4000';
+    const socketServer = `${chat.serverIP}/socket/talk`;
 
     const options = { transports: ['websocket'], forceNew: true };
     this.socket = io(socketServer, options);
@@ -36,7 +36,7 @@ class ChatRoom extends PureComponent {
   }
 
   componentDidMount() {
-    this._getChatRoom();
+    this.handleUser()
 
     // Socket events
     this.socket.on('connect', () => {
@@ -71,7 +71,7 @@ class ChatRoom extends PureComponent {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        match: this.state.match
+        socket: this.state.Vsocket
       })
     }).then(
       console.log("connected with volunteer")
@@ -82,12 +82,15 @@ class ChatRoom extends PureComponent {
   handleUser = async () => {
     try {
       let volunteer = await AsyncStorage.getItem('Volunteer');
+      let socket = await AsyncStorage.getItem('Vsocket' || 'socket');
 
       if (volunteer) {
         this.setState({ Volunteer: true })
+        this.setMySocket(socket);
       } else {
         this.setState({ User: true })
         this.takeVolunteer()
+        this.setMySocket(socket);
       }
     } catch (error) {
       // Error retrieving data
@@ -95,11 +98,10 @@ class ChatRoom extends PureComponent {
     }
   }
 
-  _getChatRoom = async () => {
+  setMySocket = async (socket) => {
     // GET SOCKET ID AND SET THE STATE in local storage
     try {
-      let socket = await AsyncStorage.getItem('socket' || 'Vsocket');
-      this.setState({ chatRoomId: socket })
+      this.setState({ socket: socket })
     } catch (error) {
       // Error retrieving data
       console.log(error.message);
