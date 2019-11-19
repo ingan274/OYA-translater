@@ -53,6 +53,16 @@ function handleLoadingError(error) {
   console.warn(error);
 }
 
+BackAndroid.addEventListener('hardwareBackPress', () => {
+  try {
+    Actions.pop();
+    return true;
+  } catch (err) {
+    //console.log("Cannot pop. Exiting the app...");
+    return false;
+  }
+});
+
 function handleFinishLoading(setLoadingComplete) {
   setLoadingComplete(true);
 }

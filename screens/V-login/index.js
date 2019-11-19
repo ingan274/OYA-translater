@@ -58,9 +58,8 @@ class LoginScreen extends PureComponent {
               const language1 = res.language1;
               const language2 = res.language2;
               const language3 = res.language3;
-              const socket = res.roomNum;
 
-              this.handleLocalStorage(firstname, lastname, language1, language2, language3, socket)
+              this.handleLocalStorage(firstname, lastname, language1, language2, language3)
 
               //NAVIGATE
               const {
@@ -74,7 +73,7 @@ class LoginScreen extends PureComponent {
       .catch(err => console.warn(err))
   };
 
-  handleLocalStorage = async (firstname, lastname, language1, language2, language3, roomNum) => {
+  handleLocalStorage = async (firstname, lastname, language1, language2, language3) => {
     try {
       await AsyncStorage.setItem('firstname', firstname);
       console.log('firstname', firstname);
@@ -86,8 +85,8 @@ class LoginScreen extends PureComponent {
       console.log('language2', language2);
       await AsyncStorage.setItem('language3', language3);
       console.log('language3', language3);
-      await AsyncStorage.setItem('socket', roomNum);
-      console.log('socket', roomNum);
+      // await AsyncStorage.setItem('match', match);
+      // console.log('match', match);
     } catch (error) {
       // Error retrieving data
       console.log(error.message);
