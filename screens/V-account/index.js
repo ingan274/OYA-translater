@@ -106,7 +106,7 @@ export default class Account extends React.Component {
     AppState.removeEventListener('change', stopListener);
   }
 
- 
+
   getNotificationM = () => {
     fetch(`https://oyabackend.herokuapp.com/volunteer/notification/${this.state.mysqlID}`, {
       method: 'GET',
@@ -182,13 +182,27 @@ export default class Account extends React.Component {
       })
     })
       .then((res) => {
-        if (res) {
-
-          let socket = res.socket
-          this.saveSocket(socket)
-        }
+        console.log(res)
       })
       .catch(err => console.warn(err))
+
+    if (value) {
+      fetch('https://oyabackend.herokuapp.com/socket/talk', {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      })
+        .then((res) => {
+          if (res) {
+
+            let socket = res.socket
+            this.saveSocket(socket)
+          }
+        })
+        .catch(err => console.warn(err))
+    }
   };
 
   saveSocket = async (socket) => {

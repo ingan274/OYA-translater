@@ -81,7 +81,7 @@ class ChatRoom extends PureComponent {
 
   handleUser = async () => {
     try {
-      let volunteer = await AsyncStorage.getItem('firstname');
+      let volunteer = await AsyncStorage.getItem('Volunteer');
 
       if (volunteer) {
         this.setState({ Volunteer: true })

@@ -106,9 +106,9 @@ class Job extends PureComponent {
     try {
       native = await AsyncStorage.getItem('native') || 'none';
       language = await AsyncStorage.getItem('language') || 'none';
-      console.log("native:", native, "language:",language)
+      console.log("native:", native, "language:", language)
       return native, language;
-     
+
     } catch (error) {
       // Error retrieving data
       console.log(error.message);
@@ -127,12 +127,35 @@ class Job extends PureComponent {
         job: "message"
       })
     }).then((res) => res.json()).then(async (res) => {
-      // store socket info in local
       let socket = res.socket
-      
+
+      try {
+        await AsyncStorage.setItem('Vsocket', socket);
+        console.log("Vsocket", socket)
+      } catch (error) {
+        // Error retrieving data
+        console.log(error.message);
+      }
+
+    })
+      .catch(err => console.warn(err))
+
+
+    fetch('https://oyabackend.herokuapp.com/socket/talk', {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    }).then((res) => res.json()).then(async (res) => {
+      // store socket info in local
+      console.log(res)
+      let socket = res
+
       try {
         await AsyncStorage.setItem('socket', socket);
         console.log("socket", socket)
+        await AsyncStorage.setItem('User', "true");
       } catch (error) {
         // Error retrieving data
         console.log(error.message);
