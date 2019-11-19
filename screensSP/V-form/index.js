@@ -101,9 +101,10 @@ class VForm extends PureComponent {
         },
         body: JSON.stringify({ userLang })
       }).then((res) => res.json())
+      let socket = res.socket
         .then((res) => {
           // SAVE IN LOCAL STORAGE
-          this.handleLocalStorage(firstname, lastname, language1, language2, language3)
+          this.handleLocalStorage(firstname, lastname, language1, language2, language3, socket)
           //NAVIGATE
           const {
             navigation: { navigate },
@@ -127,7 +128,7 @@ class VForm extends PureComponent {
     }
   }
 
-  handleLocalStorage = async (firstname, lastname, language1, language2, language3) => {
+  handleLocalStorage = async (firstname, lastname, language1, language2, language3, socket) => {
     try {
       await AsyncStorage.setItem('firstname', firstname);
       console.log('firstname', firstname);
@@ -139,12 +140,13 @@ class VForm extends PureComponent {
       console.log('language2', language2);
       await AsyncStorage.setItem('language3', language3);
       console.log('language3', language3);
+      await AsyncStorage.setItem('socket', socket);
+      console.log('socket', socket);
     } catch (error) {
       // Error retrieving data
       console.log(error.message);
     }
   }
-
 
   showError = () => {
     if (this.state.error) {

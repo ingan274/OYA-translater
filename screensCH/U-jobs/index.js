@@ -106,7 +106,7 @@ class Job extends PureComponent {
     try {
       native = await AsyncStorage.getItem('native') || 'none';
       language = await AsyncStorage.getItem('language') || 'none';
-      console.log("native:", native, "language:",language)
+      // console.log("native:", native, "language:",language)
       return native, language;
      
     } catch (error) {
@@ -114,36 +114,52 @@ class Job extends PureComponent {
       console.log(error.message);
     }
 
-    // send the backend to match user with person in chat
-    fetch('https://oyabackend.herokuapp.com/match', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        native: native,
-        language: language,
-        job: "message"
-      })
-    }).then((res) => res.json()) .then(async (res) => {
-      // store socket info in local
-      let socket = res.socket
-      
-      try {
-        await AsyncStorage.setItem('socket', socket);
-        console.log("socket", socket)
-      } catch (error) {
-        // Error retrieving data
-        console.log(error.message);
-      }
+     // [NEED CODE HERE] ADD LOGIC FOR SOCKET!!!!!
+     if (native === "English" && language === "Chinese") {
 
-      const {
-        navigation: { navigate },
-      } = this.props;
-      navigate('Chat');
-    })
-      .catch(err => console.warn(err))
+    } else if (native === "Chinese" && language === "English") {
+
+    } else if (native === "English" && language === "Spanish") {
+
+    } else if (native === "Spanish" && language === "English") {
+
+    } else if (native === "Chinese" && language === "Spanish") {
+
+    } else if (native === "Spanish" && language === "Chinese") {
+
+    } 
+
+
+    // // send the backend to match user with person in chat
+    // fetch('https://oyabackend.herokuapp.com/match', {
+    //   method: 'POST',
+    //   headers: {
+    //     Accept: 'application/json',
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({
+    //     native: native,
+    //     language: language,
+    //     job: "message"
+    //   })
+    // }).then((res) => res.json()) .then(async (res) => {
+    //   // store socket info in local
+    //   let socket = res.socket
+      
+    //   try {
+    //     await AsyncStorage.setItem('socket', socket);
+    //     console.log("socket", socket)
+    //   } catch (error) {
+    //     // Error retrieving data
+    //     console.log(error.message);
+    //   }
+
+    //   const {
+    //     navigation: { navigate },
+    //   } = this.props;
+    //   navigate('Chat');
+    // })
+    //   .catch(err => console.warn(err))
 
   };
 

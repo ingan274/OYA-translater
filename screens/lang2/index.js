@@ -50,8 +50,8 @@ class Lang1 extends PureComponent {
           <Langbtn btntext="English" value="English" onPress={() => this.handleTransLanguage("English")} />
           <Langbtn btntext="Spanish" value="Spanish" onPress={() => this.handleTransLanguage("Spanish")} />
           <Langbtn btntext="Chinese" value="Chinese" onPress={() => this.handleTransLanguage("Chinese")} />
-          <Langbtn btntext="French" value="French" onPress={() => this.handleTransLanguage("French")} />
-          <Langbtn btntext="Farsi" value="Farsi" onPress={() => this.handleTransLanguage("Farsi")} />
+          {/* <Langbtn btntext="French" value="French" onPress={() => this.handleTransLanguage("French")} />
+          <Langbtn btntext="Farsi" value="Farsi" onPress={() => this.handleTransLanguage("Farsi")} /> */}
         </ScrollView>
       </View>
     );
