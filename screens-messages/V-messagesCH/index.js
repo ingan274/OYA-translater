@@ -53,7 +53,7 @@ class Message extends PureComponent {
   }
 
   breakConnection = () => {
-    fetch('https://oyabackend.herokuapp.com/stop/chat', {
+    fetch(`${this.state.window}/stop/chat`, {
       method: 'PUT'
     }).then((res) => {
      console.log("connection is broken") 

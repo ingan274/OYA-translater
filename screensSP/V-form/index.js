@@ -84,7 +84,7 @@ class VForm extends PureComponent {
       // console.log(user)
       // to mysql
       fetch('https://oyabackend.herokuapp.com/form', {
-        method: 'POST',
+        method: 'PUT',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',

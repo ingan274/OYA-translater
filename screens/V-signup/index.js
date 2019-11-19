@@ -57,7 +57,9 @@ class SignUp extends PureComponent {
       })
         .then((res) => res.json())
         .then((response) => {
-          if (response) {
+          if (response.mysqlID === "none") {
+            this.setState({ emailerror: true });
+          } else {
             let mysqlID = response.mysqlID
             this.saveID(mysqlID)
 
@@ -66,8 +68,6 @@ class SignUp extends PureComponent {
               navigation: { navigate },
             } = this.props;
             navigate('Form');
-          } else {
-            this.setState({ emailerror: true });
           }
 
         })

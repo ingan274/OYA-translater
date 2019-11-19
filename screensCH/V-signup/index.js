@@ -43,48 +43,48 @@ class SignUp extends PureComponent {
     }
 
     // passwords don't match
+    // passwords don't match
     if (pass !== passC) {
       this.setState({ passerror: true });
     } else {
-     //post call 
-     fetch('https://oyabackend.herokuapp.com/register', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ newUser })
-    })
-      .then((res) => res.json())
-      .then((response) => {
-        if (response) {
-          let mysqlID = response.mysqlID
-          this.saveID(mysqlID)
-
-          // NAVIGATE
-          const {
-            navigation: { navigate },
-          } = this.props;
-          navigate('Form');
-        } else {
-          this.setState({ emailerror: true });
-        }
-
+      //post call 
+      fetch('https://oyabackend.herokuapp.com/register', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ newUser })
       })
-      .catch(err => console.warn(err))
+        .then((res) => res.json())
+        .then((response) => {
+          if (response.mysqlID === "none") {
+            this.setState({ emailerror: true });
+          } else {
+            let mysqlID = response.mysqlID
+            this.saveID(mysqlID)
 
+            // NAVIGATE
+            const {
+              navigation: { navigate },
+            } = this.props;
+            navigate('Form');
+          }
 
+        })
+        .catch(err => console.warn(err))
+
+    }
+  };
+
+  saveID = async (id) => {
+    try {
+      await AsyncStorage.setItem('mysqlID', id);
+    } catch (error) {
+      // Error retrieving data
+      console.log(error.message);
+    }
   }
-};
-
-saveID = async (id) => {
-  try {
-    await AsyncStorage.setItem('mysqlID', id);
-  } catch (error) {
-    // Error retrieving data
-    console.log(error.message);
-  }
-}
 
 
   handleLogIn = () => {

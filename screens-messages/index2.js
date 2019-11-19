@@ -33,9 +33,7 @@ class ChatRoom extends Component {
       allLoaded: false,
       chatRoomId: null,
       page: 0,
-      userID: null,
-      Volunteer: false,
-      User: false
+      userID: null
     };
   }
 
@@ -66,8 +64,8 @@ class ChatRoom extends Component {
       });
     });
 
-    this.handleLOCALSTORAGE();
-
+    // this.handleLOCALSTORAGE();
+    // this.takeVolunteer()
 
   }
 
@@ -88,30 +86,10 @@ class ChatRoom extends Component {
       .catch(err => console.warn(err))
   }
 
-  handleUser = async () => {
-    // GET SOCKET ID AND SET THE STATE in local storage
-    try {
-      let volunteer = await AsyncStorage.getItem('firstname');
-
-      if (volunteer) {
-        this.setState({ Volunteer: true })
-      } else {
-        this.setState({ User: true })
-        this.takeVolunteer()
-      }
-
-
-
-    } catch (error) {
-      // Error retrieving data
-      console.log(error.message);
-    }
-  }
-
   handleLOCALSTORAGE = async () => {
     // GET SOCKET ID AND SET THE STATE in local storage
     try {
-      let socket = await AsyncStorage.getItem('socket' || 'Vsocket');
+      let socket = await AsyncStorage.getItem('socket' || 'none');
       this.setState({ socket: socket })
     } catch (error) {
       // Error retrieving data
@@ -235,6 +213,17 @@ class ChatRoom extends Component {
             style={style.back}
             onPress={this.handleBackPress}
           />
+          <TouchableOpacity style={style.finishchat} onPress={this.breakConnection}>
+            <Text style={style.finishchattext} >Finish Conversation </Text>
+            <Ionicons
+              name={
+                Platform.OS === 'ios' ? 'ios-exit' : 'md-exit'
+              }
+              size={30}
+              style={style.back}
+              onPress={this.handleBackPress}
+            />
+          </TouchableOpacity>
         </View>
         <View style={style.Textcontainer}>
           <GiftedMessenger
@@ -260,19 +249,11 @@ class ChatRoom extends Component {
 
 
   handleBackPress = () => {
-    if (this.state.Volunteer) {
-      const {
-        navigation: { navigate },
-      } = this.props;
-      navigate('Acount');
-    } else if (this.state.User) {
-      const {
-        navigation: { navigate },
-      } = this.props;
-      navigate('Jobs');
-    }
-  }
-  
+    const {
+      navigation: { navigate },
+    } = this.props;
+    navigate('Jobs');
+  };
 }
 
 module.exports = ChatRoom;

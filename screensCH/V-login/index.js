@@ -40,7 +40,9 @@ class LoginScreen extends PureComponent {
       body: JSON.stringify({ login })
     }).then((res) => res.json())
       .then((response) => {
-        if (response) {
+        if (response.mysqlID === "none") {
+          this.setState({ error: true });
+        } else {
           let id = response.mysqlID;
 
           fetch(`https://oyabackend.herokuapp.com/volunteer/${id}`, {
@@ -68,11 +70,7 @@ class LoginScreen extends PureComponent {
               navigate('Account');
             })
             .catch(err => console.warn(err))
-
-        } else {
-          this.setState({ error: true });
         }
-
       })
       .catch(err => console.warn(err))
   };

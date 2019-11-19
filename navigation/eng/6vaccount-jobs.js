@@ -1,6 +1,6 @@
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
 import Upload from '../../screens/upload';
-import Chat from '../../screens-messages/V-messages';
+import Chat from '../../screens-messages/messages';
 import Account from '../../screens/V-account';
 
 const AssistanceStack = createSwitchNavigator({

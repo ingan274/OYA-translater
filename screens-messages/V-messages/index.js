@@ -2,7 +2,7 @@ import style from './style';
 import React, { PureComponent } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import color from '../../constants/Colors';
-// import SocketIOClient from 'socket.io-client';
+import SocketIOClient from 'socket.io-client';
 import { GiftedChat } from 'react-native-gifted-chat';
 import {
   Image,
@@ -16,8 +16,6 @@ import {
 } from 'react-native';
 
 const USER_ID = '@userId';
-const socketIO = require("socket.io");
-const socket = io('/socket/talk');
 
 class Message extends PureComponent {
   constructor(props) {
@@ -34,9 +32,7 @@ class Message extends PureComponent {
     this.onSend = this.onSend.bind(this);
     this._storeMessages = this._storeMessages.bind(this);
 
-    // this.socket = SocketIOClient('http://localhost:3000');
-    this.io = socketIO(http);
-
+    this.socket = SocketIOClient('http://localhost:3000');
     this.socket.on('message', this.onReceivedMessage);
     this.determineUser();
   }
@@ -57,7 +53,7 @@ class Message extends PureComponent {
   }
 
   breakConnection = () => {
-    fetch('https://oyabackend.herokuapp.com/stop/chat', {
+    fetch(`${this.state.window}/stop/chat`, {
       method: 'PUT'
     }).then((res) => {
      console.log("connection is broken") 
@@ -69,31 +65,31 @@ class Message extends PureComponent {
    * If they aren't, then ask the server for a userId.
    * Set the userId to the component's state.
    */
-  // determineUser() {
-  //   AsyncStorage.getItem(USER_ID)
-  //     .then((userId) => {
-  //       // If there isn't a stored userId, then fetch one from the server.
-  //       if (!userId) {
-  //         this.socket.emit('userJoined', null);
-  //         this.socket.on('userJoined', (userId) => {
-  //           AsyncStorage.setItem(USER_ID, userId);
-  //           this.setState({ userId });
-  //         });
-  //       } else {
-  //         this.socket.emit('userJoined', userId);
-  //         this.setState({ userId });
-  //       }
-  //     })
-  //     .catch((e) => alert(e));
-  // }
+  determineUser() {
+    AsyncStorage.getItem(USER_ID)
+      .then((userId) => {
+        // If there isn't a stored userId, then fetch one from the server.
+        if (!userId) {
+          this.socket.emit('userJoined', null);
+          this.socket.on('userJoined', (userId) => {
+            AsyncStorage.setItem(USER_ID, userId);
+            this.setState({ userId });
+          });
+        } else {
+          this.socket.emit('userJoined', userId);
+          this.setState({ userId });
+        }
+      })
+      .catch((e) => alert(e));
+  }
 
   // Event listeners
   /**
    * When the server sends a message to this.
    */
-  // onReceivedMessage(messages) {
-  //   this._storeMessages(messages);
-  // }
+  onReceivedMessage(messages) {
+    this._storeMessages(messages);
+  }
 
   /**
    * When a message is sent, send the message to the server
@@ -101,7 +97,7 @@ class Message extends PureComponent {
    */
   onSend(messages = []) {
     this.socket.emit('message', messages[0]);
-    // this._storeMessages(messages);
+    this._storeMessages(messages);
   }
 
   chatLoad = () => {
@@ -115,7 +111,7 @@ class Message extends PureComponent {
       )
     } else {
       return (
-        <Text style={style.unavail}>Please go back and set messages as available with the toggle.</Text>
+        <Text style={style.unavail}>请返回并使用该切换将消息设置为可用。</Text>
       )
     }
   }
@@ -135,7 +131,7 @@ class Message extends PureComponent {
             onPress={this.handleBackPress}
           />
           <TouchableOpacity style={style.finishchat} onPress={this.breakConnection}>
-          <Text style={style.finishchattext} >Finish Conversation </Text>
+          <Text style={style.finishchattext} >完成对话 </Text>
           <Ionicons
             name={
               Platform.OS === 'ios' ? 'ios-exit' : 'md-exit'
