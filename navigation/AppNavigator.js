@@ -1,6 +1,5 @@
 import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
-import startSocketIO from ...
 
 import Lang1 from '../screens/lang1';
 import Chinese from './chinese/2lang2-job_Vlogin';

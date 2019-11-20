@@ -17,4 +17,4 @@ exports.request = async (method, url, data) => {
   }
 };
 
-exports.serverIP = Platform.OS == "android" ? '10.0.2.2' : 'localhost';
+exports.serverIP = "https://oyabackend.herokuapp.com";

@@ -63,11 +63,12 @@ export default class Account extends React.Component {
     let language3 = '';
 
     try {
-      firstname = await AsyncStorage.getItem('firstname') || '';
-      lastname = await AsyncStorage.getItem('lastname') || '';
-      language1 = await AsyncStorage.getItem('language1') || '';
-      language2 = await AsyncStorage.getItem('language2') || '';
-      language3 = await AsyncStorage.getItem('language3') || '';
+      firstname = await AsyncStorage.getItem('firstname') ;
+      lastname = await AsyncStorage.getItem('lastname') ;
+      language1 = await AsyncStorage.getItem('language1') ;
+      language2 = await AsyncStorage.getItem('language2') ;
+      language3 = await AsyncStorage.getItem('language3') ;
+      socket = await AsyncStorage.getItem('socket') ;
     } catch (error) {
       // Error retrieving data
       console.log(error.message);
@@ -79,6 +80,7 @@ export default class Account extends React.Component {
       language1: language1,
       language2: language2,
       language3: language3,
+      socket: socket
     });
 
     console.log({
@@ -90,7 +92,7 @@ export default class Account extends React.Component {
     })
 
   }
-
+  
   removeListener = (res) => {
     let stopListener;
     if (res === "M") {
@@ -178,23 +180,11 @@ export default class Account extends React.Component {
       })
     })
       .then((res) => {
-        if (res) {
-
-          let socket = res.socket
-          this.saveSocket(socket)
-        }
+        console.log(res)
       })
       .catch(err => console.warn(err))
-  };
 
-  saveSocket = async (socket) => {
-    try {
-      await AsyncStorage.setItem('Vsocket', socket);
-    } catch (error) {
-      // Error retrieving data
-      console.log(error.message);
-    }
-  }
+  };
 
   togglePhone = value => {
     this.setState({ phoneValue: value });

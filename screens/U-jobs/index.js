@@ -104,46 +104,69 @@ class Job extends PureComponent {
     let language;
     // get languages BASED ON LOCAL STORAGE
     try {
-      native = await AsyncStorage.getItem('native') || 'none';
-      language = await AsyncStorage.getItem('language') || 'none';
-      console.log("native:", native, "language:",language)
+      native = await AsyncStorage.getItem('native');
+      language = await AsyncStorage.getItem('language');
+      // console.log("native:", native, "language:", language)
       return native, language;
-     
+
     } catch (error) {
       // Error retrieving data
       console.log(error.message);
     }
 
-    // send the backend to match user with person in chat
-    fetch('https://oyabackend.herokuapp.com/match', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        native: native,
-        language: language,
-        job: "message"
-      })
-    }).then((res) => res.json()).then(async (res) => {
-      // store socket info in local
-      let socket = res.socket
-      
-      try {
-        await AsyncStorage.setItem('socket', socket);
-        console.log("socket", socket)
-      } catch (error) {
-        // Error retrieving data
-        console.log(error.message);
-      }
+      // send the backend to match user with person in chat
+    //   fetch('https://oyabackend.herokuapp.com/match', {
+    //     method: 'POST',
+    //     headers: {
+    //       Accept: 'application/json',
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({
+    //       native: native,
+    //       language: language,
+    //       job: "message"
+    //     })
+    //   }).then((res) => res.json()).then(async (res) => {
+    //     let socket = res.socket
 
-      const {
-        navigation: { navigate },
-      } = this.props;
-      navigate('Chat');
-    })
-      .catch(err => console.warn(err))
+    //     try {
+    //       await AsyncStorage.setItem('Vsocket', socket);
+    //       console.log("Vsocket", socket)
+    //     } catch (error) {
+    //       // Error retrieving data
+    //       console.log(error.message);
+    //     }
+
+    //   })
+    //     .catch(err => console.warn(err))
+
+
+    // fetch('https://oyabackend.herokuapp.com/socket/talk', {
+    //   method: 'GET',
+    //   headers: {
+    //     Accept: 'application/json',
+    //     'Content-Type': 'application/json',
+    //   },
+    // }).then((res) => res.json()).then(async (res) => {
+    //   // store socket info in local
+    //   console.log(res)
+    //   let socket = res
+
+    //   try {
+    //     await AsyncStorage.setItem('socket', socket);
+    //     console.log("socket", socket)
+    //     await AsyncStorage.setItem('User', "true");
+    //   } catch (error) {
+    //     // Error retrieving data
+    //     console.log(error.message);
+    //   }
+
+    //   const {
+    //     navigation: { navigate },
+    //   } = this.props;
+    //   navigate('Chat');
+    // })
+    //   .catch(err => console.warn(err))
 
   };
 
