@@ -1,10 +1,10 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 888,
-  "expoServerNgrokUrl": "https://hf-g7k.anonymous.oya-translater.exp.direct",
-  "packagerNgrokUrl": "https://packager.hf-g7k.anonymous.oya-translater.exp.direct",
-  "ngrokPid": 898,
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
   "webpackServerPort": null
 }

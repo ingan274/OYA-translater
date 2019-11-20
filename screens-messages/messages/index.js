@@ -10,25 +10,34 @@ class ChatRoom extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isConnected: false,
       messages: [],
-      Socket: null,
-      Volunteer: false,
+      Socket: '1234',
+      Volunteer: true,
       User: false,
-      userId: null
+      userId: '1234'
     };
-    this.socket = SocketIOClient(`${chat.serverIP}/socket/talk/${this.socket}`);
+
+    this.socket = SocketIOClient(`${chat.serverIP}`, {
+      path: `/socket/talk/${this.socket}`
+    });
+
+
     this.socket.on('message', this.onReceivedMessage);
 
-   
+    this.socket.on('disconnect', () => {
+      this.chatEnded()
+    })
+
   }
-
-  state = {
-
-  };
 
 
   ComponentdidMount() {
     this.handleUser()
+
+    socket.on('connect', () => {
+      this.setState({ isConnected: true });
+    });
   }
 
 
@@ -72,6 +81,24 @@ class ChatRoom extends Component {
 
   componentWillUnmount() { }
 
+
+  chatEnded = () => {
+    fetch(`https://oyabackend.herokuapp.com/done/chat`, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        socket: this.state.Socket
+      })
+    }).then(
+      console.log("volunteer is now busy")
+    )
+      .catch(err => console.warn(err))
+
+  }
+
   // message events below ========================================================
 
   // Event listeners
@@ -113,15 +140,16 @@ class ChatRoom extends Component {
             onPress={this.handleBackPress}
           />
         </View>
-        <View style={style.Textcontainer}>
+        <Text>connected: {this.state.isConnected ? 'true' : 'false'}</Text>
 
-          {/* // this is the socket IO chat */}
-          <GiftedChat
-            messages={this.state.messages}
-            onSend={messages => this.onSend(messages)}
+        {/* // this is the socket IO chat */}
+        <GiftedChat
+          messages={this.state.messages}
+          onSend={messages => this.onSend(messages)}
 
-          />
-        </View >
+          style={style.giftedChat}
+
+        />
       </View >
     );
   }

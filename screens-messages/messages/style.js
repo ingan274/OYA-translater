@@ -8,8 +8,10 @@ const styles = StyleSheet.create({
     // alignItems: "center"
     backgroundColor: color.blue1,
   },
-  Textcontainer: {
+  textContainer: {
     backgroundColor: color.white,
+    // justifyContent: "center",
+     alignItems: "center"
   },
   header: {
     flexDirection: 'row',
@@ -26,7 +28,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingVertical: 30,
     paddingHorizontal: 30,
-  }
+  },
 });
 
 export default styles;
