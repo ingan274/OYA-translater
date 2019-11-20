@@ -52,13 +52,14 @@ class LoginScreen extends PureComponent {
             },
           }).then((res) => res.json())
             .then(async (res) => {
+              let response = res[0]
               // SAVE RESPONSE IN LOCAL STORAGE
-              const firstname = res.firstname;
-              const lastname = res.lastname;
-              const language1 = res.language1;
-              const language2 = res.language2;
-              const language3 = res.language3;
-              const socket = res.socket;
+              const firstname = response.firstname;
+              const lastname = response.lastname;
+              const language1 = response.language1;
+              const language2 = response.language2;
+              const language3 = response.language3;
+              const socket = response.socket;
 
               this.handleLocalStorage(firstname, lastname, language1, language2, language3, socket)
 

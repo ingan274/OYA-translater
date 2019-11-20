@@ -1,83 +1,36 @@
-import React, { Platform, StyleSheet, Dimensions, AsyncStorage, View, Text, Navigator, PureComponent, Component, PropTypes } from 'react-native';
+import React, { PureComponent, Component } from 'react';
+import { Platform, StyleSheet, Dimensions, AsyncStorage, View, Text, Navigator, PropTypes } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat'
 import chat from '../chat';
 import { Ionicons } from '@expo/vector-icons';
 import style from "./style"
+import SocketIOClient from 'socket.io-client';
 
-// You need to set `window.navigator` to something in order to use the socket.io
-// client. You have to do it like this in order to use the debugger because the
-// debugger in React Native runs in a webworker and only has a getter method for
-// `window.navigator`.
-// Remove this after socket.io releases with this patch
-// https://github.com/socketio/engine.io-parser/pull/55
-if (window.navigator && Object.keys(window.navigator).length == 0) {
-  let window = Object.assign(window, { navigator: { userAgent: 'ReactNative' } });
-}
-
-import io from 'socket.io-client';
-
-class ChatRoom extends PureComponent {
+class ChatRoom extends Component {
   constructor(props) {
-    // super(props);
-
-    // this server need to change in chat
-    const socketServer = `${chat.serverIP}/socket/talk`;
-
-    const options = { transports: ['websocket'], forceNew: true };
-    this.socket = io(socketServer, options);
-
-    this._messages = [];
-
+    super(props);
     this.state = {
-      socket: null,
+      messages: [],
+      Socket: null,
       Volunteer: false,
-      User: false
+      User: false,
+      userId: null
     };
+    this.socket = SocketIOClient(`${chat.serverIP}/socket/talk/${this.socket}`);
+    this.socket.on('message', this.onReceivedMessage);
+
+   
   }
 
-  componentDidMount() {
+  state = {
+
+  };
+
+
+  ComponentdidMount() {
     this.handleUser()
-
-    // Socket events
-    this.socket.on('connect', () => {
-      console.log('connected to socket.io server');
-    });
-
-    this.socket.on('disconnect', () => {
-      console.log('disconnected from socket.io server');
-    });
-
-    var that = this;
-    this.socket.on('new message', function (data) {
-      console.log('new message', JSON.stringify(data));
-      that.handleReceive({
-        text: data.message,
-        name: that.props.recipientEmail,
-        image: null,
-        position: 'left',
-        date: new Date(),
-        uniqueId: Math.round(Math.random() * 10000),
-      });
-    });
-
   }
 
-  // makes volunteer unavailable to get connected with someone else
-  takeVolunteer = () => {
-    fetch('https://oyabackend.herokuapp.com/avail/chat', {
-      method: 'PUT',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        socket: this.state.Vsocket
-      })
-    }).then(
-      console.log("connected with volunteer")
-    )
-      .catch(err => console.warn(err))
-  }
 
   handleUser = async () => {
     try {
@@ -86,11 +39,13 @@ class ChatRoom extends PureComponent {
 
       if (volunteer) {
         this.setState({ Volunteer: true })
+        this.setState({ userId: socket })
         this.setMySocket(socket);
+        this.determineUser();
       } else {
         this.setState({ User: true })
-        this.takeVolunteer()
         this.setMySocket(socket);
+        this.setState({ userId: Math.round(Math.random() * 10000) })
       }
     } catch (error) {
       // Error retrieving data
@@ -98,10 +53,17 @@ class ChatRoom extends PureComponent {
     }
   }
 
+  determineUser = () => {
+    let userId = this.state.userId
+    this.socket.emit('userJoined', userId);
+  }
+
+
   setMySocket = async (socket) => {
     // GET SOCKET ID AND SET THE STATE in local storage
     try {
-      this.setState({ socket: socket })
+      this.setState({ Socket: socket })
+      this.socketEvents()
     } catch (error) {
       // Error retrieving data
       console.log(error.message);
@@ -110,25 +72,32 @@ class ChatRoom extends PureComponent {
 
   componentWillUnmount() { }
 
-  setMessages(messages) {
-    this._messages = messages;
+  // message events below ========================================================
 
-    // append the message
-    this.setState({
-      messages: messages,
-    });
+  // Event listeners
+  /**
+   * When the server sends a message to this.
+   */
+  onReceivedMessage(messages) {
+    this._storeMessages(messages);
   }
 
+  /**
+   * When a message is sent, send the message to the server
+   * and store it in this component's state.
+   */
   onSend(messages = []) {
-    this.setState(previousState => ({
-      messages: GiftedChat.append(previousState.messages, messages),
-    }))
+    this.socket.emit('message', messages[0]);
+    this._storeMessages(messages);
   }
 
-  handleReceive(message = {}) {
-    // make sure that your message contains :
-    // text, name, image, position: 'left', date, uniqueId
-    this.setMessages(this._messages.concat(message));
+  // Helper functions
+  _storeMessages(messages) {
+    this.setState((previousState) => {
+      return {
+        messages: GiftedChat.append(previousState.messages, messages),
+      };
+    });
   }
 
   render() {
@@ -145,6 +114,8 @@ class ChatRoom extends PureComponent {
           />
         </View>
         <View style={style.Textcontainer}>
+
+          {/* // this is the socket IO chat */}
           <GiftedChat
             messages={this.state.messages}
             onSend={messages => this.onSend(messages)}

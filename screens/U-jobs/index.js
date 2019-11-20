@@ -115,60 +115,53 @@ class Job extends PureComponent {
     }
 
       // send the backend to match user with person in chat
-    //   fetch('https://oyabackend.herokuapp.com/match', {
-    //     method: 'POST',
-    //     headers: {
-    //       Accept: 'application/json',
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({
-    //       native: native,
-    //       language: language,
-    //       job: "message"
-    //     })
-    //   }).then((res) => res.json()).then(async (res) => {
-    //     let socket = res.socket
+      fetch('https://oyabackend.herokuapp.com/match', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          native: native,
+          language: language,
+          job: "message"
+        })
+      }).then((res) => res.json()).then(async (res) => {
+        let socket = res.socket
 
-    //     try {
-    //       await AsyncStorage.setItem('Vsocket', socket);
-    //       console.log("Vsocket", socket)
-    //     } catch (error) {
-    //       // Error retrieving data
-    //       console.log(error.message);
-    //     }
+        try {
+          await AsyncStorage.setItem('Vsocket', socket);
+          await AsyncStorage.setItem('User', true);
+          await AsyncStorage.setItem('Volunteer', false);
+          console.log("Vsocket", socket)
+        } catch (error) {
+          // Error retrieving data
+          console.log(error.message);
+        }
 
-    //   })
-    //     .catch(err => console.warn(err))
+        this.takeVolunteer(socket)
 
-
-    // fetch('https://oyabackend.herokuapp.com/socket/talk', {
-    //   method: 'GET',
-    //   headers: {
-    //     Accept: 'application/json',
-    //     'Content-Type': 'application/json',
-    //   },
-    // }).then((res) => res.json()).then(async (res) => {
-    //   // store socket info in local
-    //   console.log(res)
-    //   let socket = res
-
-    //   try {
-    //     await AsyncStorage.setItem('socket', socket);
-    //     console.log("socket", socket)
-    //     await AsyncStorage.setItem('User', "true");
-    //   } catch (error) {
-    //     // Error retrieving data
-    //     console.log(error.message);
-    //   }
-
-    //   const {
-    //     navigation: { navigate },
-    //   } = this.props;
-    //   navigate('Chat');
-    // })
-    //   .catch(err => console.warn(err))
+      })
+        .catch(err => console.warn(err))
 
   };
+
+  // makes volunteer unavailable to get connected with someone else
+  takeVolunteer = (socket) => {
+    fetch(`https://oyabackend.herokuapp.com/busy/chat`, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        socket: socket
+      })
+    }).then(
+      console.log("volunteer is now busy")
+    )
+      .catch(err => console.warn(err))
+  }
 
   handleDocReq = () => {
     const {

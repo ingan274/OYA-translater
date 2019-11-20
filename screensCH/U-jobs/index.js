@@ -104,64 +104,65 @@ class Job extends PureComponent {
     let language;
     // get languages BASED ON LOCAL STORAGE
     try {
-      native = await AsyncStorage.getItem('native') || 'none';
-      language = await AsyncStorage.getItem('language') || 'none';
-      // console.log("native:", native, "language:",language)
+      native = await AsyncStorage.getItem('native');
+      language = await AsyncStorage.getItem('language');
+      // console.log("native:", native, "language:", language)
       return native, language;
-     
+
     } catch (error) {
       // Error retrieving data
       console.log(error.message);
     }
 
-     // [NEED CODE HERE] ADD LOGIC FOR SOCKET!!!!!
-     if (native === "English" && language === "Chinese") {
+      // send the backend to match user with person in chat
+      fetch('https://oyabackend.herokuapp.com/match', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          native: native,
+          language: language,
+          job: "message"
+        })
+      }).then((res) => res.json()).then(async (res) => {
+        let socket = res.socket
 
-    } else if (native === "Chinese" && language === "English") {
+        try {
+          await AsyncStorage.setItem('Vsocket', socket);
+          await AsyncStorage.setItem('User', true);
+          await AsyncStorage.setItem('Volunteer', false);
+          console.log("Vsocket", socket)
+        } catch (error) {
+          // Error retrieving data
+          console.log(error.message);
+        }
 
-    } else if (native === "English" && language === "Spanish") {
+        this.takeVolunteer(socket)
 
-    } else if (native === "Spanish" && language === "English") {
-
-    } else if (native === "Chinese" && language === "Spanish") {
-
-    } else if (native === "Spanish" && language === "Chinese") {
-
-    } 
-
-
-    // // send the backend to match user with person in chat
-    // fetch('https://oyabackend.herokuapp.com/match', {
-    //   method: 'POST',
-    //   headers: {
-    //     Accept: 'application/json',
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     native: native,
-    //     language: language,
-    //     job: "message"
-    //   })
-    // }).then((res) => res.json()) .then(async (res) => {
-    //   // store socket info in local
-    //   let socket = res.socket
-      
-    //   try {
-    //     await AsyncStorage.setItem('socket', socket);
-    //     console.log("socket", socket)
-    //   } catch (error) {
-    //     // Error retrieving data
-    //     console.log(error.message);
-    //   }
-
-    //   const {
-    //     navigation: { navigate },
-    //   } = this.props;
-    //   navigate('Chat');
-    // })
-    //   .catch(err => console.warn(err))
+      })
+        .catch(err => console.warn(err))
 
   };
+
+  // makes volunteer unavailable to get connected with someone else
+  takeVolunteer = (socket) => {
+    fetch(`https://oyabackend.herokuapp.com/busy/chat`, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        socket: socket
+      })
+    }).then(
+      console.log("volunteer is now busy")
+    )
+      .catch(err => console.warn(err))
+  }
+
 
   handleDocReq = () => {
     const {
