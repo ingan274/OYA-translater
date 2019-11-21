@@ -6,6 +6,8 @@ import { Ionicons } from '@expo/vector-icons';
 import style from "./style"
 import SocketIOClient from 'socket.io-client';
 
+let socket;
+
 class ChatRoom extends Component {
   constructor(props) {
     super(props);
@@ -73,7 +75,7 @@ class ChatRoom extends Component {
   }
 
   socketEvents = () => {
-    let socket = io(`${chat.serverIP}/socket/talk/${this.state.socketNum}`, {
+     socket = io(`${chat.serverIP}/socket/talk/${this.state.socketNum}`, {
       transports: ['websocket'],
     });
 
