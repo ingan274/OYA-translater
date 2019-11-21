@@ -37,7 +37,7 @@ class LoginScreen extends PureComponent {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ login })
-    }).then((res) => res.json())
+    })
       .then((response) => {
         if (response.mysqlID === "none") {
           this.setState({ error: true });
@@ -50,7 +50,7 @@ class LoginScreen extends PureComponent {
               Accept: 'application/json',
               'Content-Type': 'application/json',
             },
-          }).then((res) => res.json())
+          })
             .then(async (res) => {
               // SAVE RESPONSE IN LOCAL STORAGE
               const firstname = res.firstname;

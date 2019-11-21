@@ -6,15 +6,17 @@ import { Ionicons } from '@expo/vector-icons';
 import style from "./style"
 import SocketIOClient from 'socket.io-client';
 
+let socket;
+
 class ChatRoom extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isConnected: false,
       messages: [],
-      Socket: '1234',
-      Volunteer: true,
-      User: false,
+      socketNum: '1234',
+      volunteer: true,
+      user: false,
       userId: '1234'
     };
 
@@ -40,12 +42,12 @@ class ChatRoom extends Component {
       let socket = await AsyncStorage.getItem('Vsocket' || 'socket');
 
       if (volunteer) {
-        this.setState({ Volunteer: true })
+        this.setState({ volunteer: true })
         this.setState({ userId: socket })
         this.setMySocket(socket);
         this.determineUser();
       } else {
-        this.setState({ User: true })
+        this.setState({ user: true })
         this.setMySocket(socket);
         this.setState({ userId: Math.round(Math.random() * 10000) })
       }
@@ -64,7 +66,7 @@ class ChatRoom extends Component {
   setMySocket = async (socket) => {
     // GET SOCKET ID AND SET THE STATE in local storage
     try {
-      this.setState({ Socket: socket })
+      this.setState({ socketNum: socket })
       this.socketEvents()
     } catch (error) {
       // Error retrieving data
@@ -73,7 +75,7 @@ class ChatRoom extends Component {
   }
 
   socketEvents = () => {
-    let socket = io(`${chat.serverIP}/socket/talk/${this.socket}`, {
+     socket = io(`${chat.serverIP}/socket/talk/${this.state.socketNum}`, {
       transports: ['websocket'],
     });
 
