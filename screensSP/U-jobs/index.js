@@ -126,7 +126,7 @@ class Job extends PureComponent {
           language: language,
           job: "message"
         })
-      }).then((res) => res.json()).then(async (res) => {
+      }).then(async (res) => {
         let socket = res.socket
 
         try {

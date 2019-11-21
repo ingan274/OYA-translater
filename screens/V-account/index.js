@@ -117,7 +117,7 @@ export default class Account extends React.Component {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-    }).then((res) => res.json())
+    })
       .then((response) => {
         this.setState({
           messageNotification: response.chatavail
@@ -139,7 +139,7 @@ export default class Account extends React.Component {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-    }).then((res) => res.json())
+    })
       .then((response) => {
         this.setState({
           phoneNotification: response

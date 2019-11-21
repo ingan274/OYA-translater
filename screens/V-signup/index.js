@@ -55,7 +55,6 @@ class SignUp extends PureComponent {
         },
         body: JSON.stringify({ newUser })
       })
-        .then((res) => res.json())
         .then((response) => {
           if (response.mysqlID === "none") {
             this.setState({ emailerror: true });

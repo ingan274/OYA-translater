@@ -64,12 +64,12 @@ export default class Account extends React.Component {
     let language3 = '';
 
     try {
-      firstname = await AsyncStorage.getItem('firstname') ;
-      lastname = await AsyncStorage.getItem('lastname') ;
-      language1 = await AsyncStorage.getItem('language1') ;
-      language2 = await AsyncStorage.getItem('language2') ;
-      language3 = await AsyncStorage.getItem('language3') ;
-      socket = await AsyncStorage.getItem('socket') ;
+      firstname = await AsyncStorage.getItem('firstname');
+      lastname = await AsyncStorage.getItem('lastname');
+      language1 = await AsyncStorage.getItem('language1');
+      language2 = await AsyncStorage.getItem('language2');
+      language3 = await AsyncStorage.getItem('language3');
+      socket = await AsyncStorage.getItem('socket');
     } catch (error) {
       // Error retrieving data
       console.log(error.message);
@@ -113,12 +113,12 @@ export default class Account extends React.Component {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-    }) .then((res) => res.json())
-    .then((response) => {
-      this.setState({
-        messageNotification: response.chatavail
-      });
     })
+      .then((response) => {
+        this.setState({
+          messageNotification: response.chatavail
+        });
+      })
       .catch(err => console.warn(err))
 
     if (this.state.appState.match(/inactive/)) {
@@ -170,13 +170,13 @@ export default class Account extends React.Component {
         massageAvail: value
       }
     })
-    .then((res) => {
-      if (res) {
+      .then((res) => {
+        if (res) {
 
-        let socket = res.socket
-        this.saveSocket(socket)
-      }
-    })
+          let socket = res.socket
+          this.saveSocket(socket)
+        }
+      })
       .catch(err => console.warn(err))
   };
 
@@ -187,7 +187,7 @@ export default class Account extends React.Component {
       // Error retrieving data
       console.log(error.message);
     }
-  } 
+  }
 
   togglePhone = value => {
     this.setState({ phoneValue: value });

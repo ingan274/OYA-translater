@@ -100,7 +100,7 @@ class VForm extends PureComponent {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ userLang })
-      }).then((res) => res.json())
+      })
       let socket = res.socket
         .then((res) => {
           // SAVE IN LOCAL STORAGE
