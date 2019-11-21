@@ -18,26 +18,19 @@ class ChatRoom extends Component {
       userId: '1234'
     };
 
-    this.socket = SocketIOClient(`${chat.serverIP}`, {
-      path: `/socket/talk/${this.socket}`
+    this.socket.on('disconnect', () => {
+      this.chatEnded();
     });
 
-
-    this.socket.on('message', this.onReceivedMessage);
-
-    this.socket.on('disconnect', () => {
-      this.chatEnded()
-    })
+    this.socket.on('chat message', msg => {
+      this.setState({ chatMessages: [...this.state.messages, msg] });
+    });
 
   }
 
 
   ComponentdidMount() {
     this.handleUser()
-
-    socket.on('connect', () => {
-      this.setState({ isConnected: true });
-    });
   }
 
 
@@ -77,6 +70,16 @@ class ChatRoom extends Component {
       // Error retrieving data
       console.log(error.message);
     }
+  }
+
+  socketEvents = () => {
+    let socket = io(`${chat.serverIP}/socket/talk/${this.socket}`, {
+      transports: ['websocket'],
+    });
+
+    socket.on('connect', () => {
+      this.setState({ isConnected: true });
+    });
   }
 
   componentWillUnmount() { }
