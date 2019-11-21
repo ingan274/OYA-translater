@@ -6,10 +6,12 @@ const styles = StyleSheet.create({
     flex: 1,
     // justifyContent: "center",
     // alignItems: "center"
-    backgroundColor: color.blue1,
-  },
-  Textcontainer: {
     backgroundColor: color.white,
+  },
+  textContainer: {
+    backgroundColor: color.white,
+    // justifyContent: "center",
+     alignItems: "center"
   },
   header: {
     flexDirection: 'row',
@@ -18,7 +20,7 @@ const styles = StyleSheet.create({
     marginTop: 55,
   },
   back: {
-    color: color.white,
+    color: color.blue4,
      marginBottom: 0,
     paddingVertical: 0,
   },
@@ -26,7 +28,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingVertical: 30,
     paddingHorizontal: 30,
-  }
+  },
 });
 
 export default styles;

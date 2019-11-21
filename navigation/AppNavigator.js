@@ -33,7 +33,7 @@ const AssistanceStack = createSwitchNavigator({
   Account: {screen: Account},
 },
 {
-  initialRouteName: 'Account',
+  initialRouteName: 'Chat',
 });
 
 export default createAppContainer(AssistanceStack);
