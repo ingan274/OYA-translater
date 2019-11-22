@@ -53,14 +53,16 @@ class SignUp extends PureComponent {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ newUser })
+        body: JSON.stringify(newUser)
       })
         .then((response) => {
+          console.log(response)
           if (response.mysqlID === "none") {
             this.setState({ emailerror: true });
           } else {
-            let mysqlID = response.mysqlID
-            this.saveID(mysqlID)
+
+            // let mysqlID = response.mysqlID
+            // this.saveID(mysqlID)
 
             // NAVIGATE
             const {
