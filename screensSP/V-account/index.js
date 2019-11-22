@@ -47,7 +47,7 @@ export default class Account extends React.Component {
 
   getID = async () => {
     try {
-      userId = await AsyncStorage.getItem('mysqlID') || 'none';
+      let userId = await AsyncStorage.getItem('mysqlID') || 'none';
     } catch (error) {
       // Error retrieving data
       console.log(error.message);
@@ -62,6 +62,7 @@ export default class Account extends React.Component {
     let language1 = '';
     let language2 = '';
     let language3 = '';
+    let socket = '';
 
     try {
       firstname = await AsyncStorage.getItem('firstname');
@@ -113,7 +114,7 @@ export default class Account extends React.Component {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-    })
+    }).then(res => res.json())
       .then((response) => {
         this.setState({
           messageNotification: response.chatavail
@@ -130,7 +131,7 @@ export default class Account extends React.Component {
   getNotificationP = () => {
     fetch('Heroku link will go here', {
       method: 'GET'
-    }).then((response) => {
+    }).then(res => res.json()).then((response) => {
       this.setState({
         phoneNotification: response
       });
@@ -147,7 +148,7 @@ export default class Account extends React.Component {
   getNotificationD = () => {
     fetch('Heroku link will go here', {
       method: 'GET'
-    }).then((response) => {
+    }).then(res => res.json()).then((response) => {
       this.setState({
         documentNotification: response
       });
@@ -169,11 +170,11 @@ export default class Account extends React.Component {
         mysqlID: this.state.mysqlID,
         massageAvail: value
       }
-    })
+    }).then(res => res.json())
       .then((res) => {
         if (res) {
 
-          let socket = res.socket
+          let socket = res
           this.saveSocket(socket)
         }
       })

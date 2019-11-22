@@ -15,29 +15,28 @@ class ChatRoom extends Component {
     this.state = {
       isConnected: false,
       messages: defaultmessages,
-      socketNum: '1234',
+      socketNum: '',
       volunteer: true,
       user: false,
-      userId: '1234',
+      userId: '',
       secure: true,
       agent: false,
     };
   }
 
   componentDidMount() {
-
-    this.socketEvents()
     this.handleUser()
   }
 
   handleUser = async () => {
     try {
-      let volunteer = await AsyncStorage.getItem('Volunteer');
+      let volunteer = await AsyncStorage.getItem('volunteer');
+      console.log('volunteer', volunteer)
       let socket = await AsyncStorage.getItem('Vsocket' || 'socket');
 
       if (volunteer) {
         this.setState({ volunteer: true })
-        this.setState({ userId: Math.round(Math.random() * 100) })
+        this.setState({ userId: '9999'})
         this.setMySocket(socket);
       } else {
         this.setState({ user: true })
@@ -130,7 +129,7 @@ class ChatRoom extends Component {
   }
 
   disconnectConvo = () => {
-    this.socket.emit('disconnection', {
+    this.socket.emit('leave room', {
       room: this.state.socketNum
     })
     console.log("Connection is disconnected")
@@ -181,12 +180,12 @@ class ChatRoom extends Component {
   }
 
   handleBackPress = () => {
-    if (this.state.Volunteer) {
+    if (this.state.volunteer) {
       const {
         navigation: { navigate },
       } = this.props;
       navigate('Account');
-    } else if (this.state.User) {
+    } else if (this.state.user) {
       const {
         navigation: { navigate },
       } = this.props;

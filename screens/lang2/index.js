@@ -86,7 +86,7 @@ class Lang1 extends PureComponent {
     console.log("language", language)
     // save language (NATIVE) in local storage
     try {
-      await AsyncStorage.setItem('language', language);
+      await AsyncStorage.setItem('language', `${language}`);
     } catch (error) {
       // Error retrieving data
       console.log(error.message);

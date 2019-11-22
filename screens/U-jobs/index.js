@@ -122,17 +122,17 @@ class Job extends PureComponent {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          native: native,
-          language: language,
-          job: "message"
+          native: `${native}`,
+          language: `${language}`
         })
-      }).then(async (res) => {
-        let socket = res.socket
+      }).then(res => res.json()).then(async (res) => {
+        console.log(res)
+        let socket = res
 
         try {
-          await AsyncStorage.setItem('Vsocket', socket);
-          await AsyncStorage.setItem('User', true);
-          await AsyncStorage.setItem('Volunteer', false);
+          await AsyncStorage.setItem('Vsocket', `${socket}`);
+          await AsyncStorage.setItem('user', true);
+          await AsyncStorage.setItem('volunteer', false);
           console.log("Vsocket", socket)
         } catch (error) {
           // Error retrieving data

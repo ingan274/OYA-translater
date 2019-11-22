@@ -54,15 +54,16 @@ class SignUp extends PureComponent {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(newUser)
-      })
-        .then((response) => {
+      }).then(res => res.json())
+        .then(async (response) => {
           console.log(response)
           if (response.mysqlID === "none") {
             this.setState({ emailerror: true });
           } else {
 
-            // let mysqlID = response.mysqlID
-            // this.saveID(mysqlID)
+            let mysqlID = response.mysqlID
+            // console.log(mysqlID)
+            this.saveID(mysqlID)
 
             // NAVIGATE
             const {
@@ -79,9 +80,8 @@ class SignUp extends PureComponent {
 
   saveID = async (id) => {
     try {
-      await AsyncStorage.setItem('mysqlID', id);
+      await AsyncStorage.setItem('mysqlID', `${id}`);
     } catch (error) {
-      // Error retrieving data
       console.log(error.message);
     }
   }

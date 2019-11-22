@@ -49,7 +49,7 @@ export default class Account extends React.Component {
 
   getID = async () => {
     try {
-      userId = await AsyncStorage.getItem('mysqlID') || 'none';
+      let userId = await AsyncStorage.getItem('mysqlID') || 'none';
     } catch (error) {
       // Error retrieving data
       console.log(error.message);
@@ -65,6 +65,7 @@ export default class Account extends React.Component {
     let language1 = '';
     let language2 = '';
     let language3 = '';
+    let socket = '';
 
     try {
       firstname = await AsyncStorage.getItem('firstname') ;
@@ -117,7 +118,7 @@ export default class Account extends React.Component {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-    })
+    }).then(res => res.json())
       .then((response) => {
         this.setState({
           messageNotification: response.chatavail
@@ -139,7 +140,7 @@ export default class Account extends React.Component {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-    })
+    }).then(res => res.json())
       .then((response) => {
         this.setState({
           phoneNotification: response
@@ -161,7 +162,7 @@ export default class Account extends React.Component {
       this.setState({
         documentNotification: response
       });
-    })
+    }).then(res => res.json())
       .catch(err => console.warn(err))
 
     if (this.state.appState.match(/inactive/)) {
@@ -183,7 +184,7 @@ export default class Account extends React.Component {
         mysqlID: this.state.mysqlID,
         massageAvail: value
       })
-    })
+    }).then(res => res.json())
       .then((res) => {
         console.log(res)
       })

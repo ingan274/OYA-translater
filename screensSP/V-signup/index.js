@@ -54,7 +54,7 @@ class SignUp extends PureComponent {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(newUser)
-      })
+      }).then(res => res.json())
         .then((response) => {
           if (response.mysqlID === "none") {
             this.setState({ emailerror: true });
@@ -76,7 +76,7 @@ class SignUp extends PureComponent {
 
   saveID = async (id) => {
     try {
-      await AsyncStorage.setItem('mysqlID', id);
+      await AsyncStorage.setItem('mysqlID', `${id}`);
     } catch (error) {
       // Error retrieving data
       console.log(error.message);
