@@ -115,7 +115,7 @@ class Job extends PureComponent {
     }
 
       // send the backend to match user with person in chat
-      fetch('https://oyabackend.herokuapp.com/match', {
+      fetch('https://oyabackend.herokuapp.com/user/match', {
         method: 'POST',
         headers: {
           Accept: 'application/json',

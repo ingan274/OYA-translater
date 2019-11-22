@@ -1,40 +1,34 @@
 import React, { PureComponent, Component } from 'react';
 import { Platform, StyleSheet, Dimensions, AsyncStorage, View, Text, Navigator, PropTypes } from 'react-native';
-import { GiftedChat } from 'react-native-gifted-chat'
-import chat from '../chat';
+import { Bubble, GiftedChat } from 'react-native-gifted-chat'
 import { Ionicons } from '@expo/vector-icons';
 import style from "./style"
-import SocketIOClient from 'socket.io-client';
+import io from 'socket.io-client';
+window.navigator.userAgent = 'ReactNative';
+import defaultmessages from './messages'
 
-let socket;
+const SOCKET_URL = "https://oyabackend.herokuapp.com/talk"
 
 class ChatRoom extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isConnected: false,
-      messages: [],
+      messages: defaultmessages,
       socketNum: '1234',
       volunteer: true,
       user: false,
-      userId: '1234'
+      userId: '1234',
+      secure: true,
+      agent: false,
     };
-
-    this.socket.on('disconnect', () => {
-      this.chatEnded();
-    });
-
-    this.socket.on('chat message', msg => {
-      this.setState({ chatMessages: [...this.state.messages, msg] });
-    });
-
   }
 
+  componentDidMount() {
 
-  ComponentdidMount() {
+    this.socketEvents()
     this.handleUser()
   }
-
 
   handleUser = async () => {
     try {
@@ -43,25 +37,18 @@ class ChatRoom extends Component {
 
       if (volunteer) {
         this.setState({ volunteer: true })
-        this.setState({ userId: socket })
+        this.setState({ userId: Math.round(Math.random() * 100) })
         this.setMySocket(socket);
-        this.determineUser();
       } else {
         this.setState({ user: true })
         this.setMySocket(socket);
-        this.setState({ userId: Math.round(Math.random() * 10000) })
+        this.setState({ userId: Math.round(Math.random() * 100) })
       }
     } catch (error) {
       // Error retrieving data
       console.log(error.message);
     }
   }
-
-  determineUser = () => {
-    let userId = this.state.userId
-    this.socket.emit('userJoined', userId);
-  }
-
 
   setMySocket = async (socket) => {
     // GET SOCKET ID AND SET THE STATE in local storage
@@ -74,13 +61,36 @@ class ChatRoom extends Component {
     }
   }
 
+  //${this.state.socketNum}
   socketEvents = () => {
-     socket = io(`${chat.serverIP}/socket/talk/${this.state.socketNum}`, {
-      transports: ['websocket'],
+    console.log("------ CONNECT EVENTS ------")
+    
+    this.socket = io.connect(SOCKET_URL, {
+      jsonp: false,
+      secure: true,
+      reconnection: true,
+      reconnectionDelay: 500,
+      reconnectionAttempts: Infinity,
+      transports: ["websocket"]
     });
 
-    socket.on('connect', () => {
+    console.log("Connection is being established")
+
+    this.socket.on('connected_success', () => {
       this.setState({ isConnected: true });
+      this.socket.emit('room', this.state.socketNum)
+      console.log("connected? yes! and setting room")
+    });
+
+    this.socket.on('disconnection', () => {
+      this.chatEnded();
+      console.log("Connection is disconnected")
+    });
+
+    // recieve message
+    this.socket.on('broadcast', messages => {
+      this._storeMessages(messages);
+      console.log('received', messages);
     });
   }
 
@@ -98,33 +108,37 @@ class ChatRoom extends Component {
         socket: this.state.Socket
       })
     }).then(
-      console.log("volunteer is now busy")
+      console.log("volunteer is now avail")
     )
       .catch(err => console.warn(err))
-
   }
 
   // message events below ========================================================
 
   // Event listeners
-  /**
-   * When the server sends a message to this.
-   */
-  onReceivedMessage(messages) {
-    this._storeMessages(messages);
-  }
 
   /**
    * When a message is sent, send the message to the server
    * and store it in this component's state.
    */
-  onSend(messages = []) {
-    this.socket.emit('message', messages[0]);
+  onSend = (messages = []) => {
+    this.socket.emit('chat message', {
+      message: messages[0],
+      room: this.state.socketNum});
     this._storeMessages(messages);
+    console.log(this.state.messages);
+  }
+
+  disconnectConvo = () => {
+    this.socket.emit('disconnection', {
+      room: this.state.socketNum
+    })
+    console.log("Connection is disconnected")
+    this.chatEnded();
   }
 
   // Helper functions
-  _storeMessages(messages) {
+  _storeMessages = (messages) => {
     this.setState((previousState) => {
       return {
         messages: GiftedChat.append(previousState.messages, messages),
@@ -144,16 +158,23 @@ class ChatRoom extends Component {
             style={style.back}
             onPress={this.handleBackPress}
           />
+          <Ionicons
+            name={
+              Platform.OS === 'ios' ? 'ios-exit' : 'md-exit'
+            }
+            size={40}
+            style={style.back}
+            onPress={this.handleBackPress}
+          />
         </View>
-        <Text>connected: {this.state.isConnected ? 'true' : 'false'}</Text>
-
         {/* // this is the socket IO chat */}
         <GiftedChat
           messages={this.state.messages}
           onSend={messages => this.onSend(messages)}
-
-          style={style.giftedChat}
-
+          user={{
+            _id: this.state.userId,
+          }}
+          shouldUpdateMessage={() => true}
         />
       </View >
     );
