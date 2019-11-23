@@ -31,6 +31,28 @@ class Job extends PureComponent {
   componentDidMount = () => {
     // GETTING RID OF INFO IN LOCAL STORAGE
     this.removeVData()
+    this.logout()
+  }
+
+  logout = async () => {
+
+    try {
+      let socket = await AsyncStorage.getItem('socket');
+
+      fetch('https://oyabackend.herokuapp.com/volunteer/', {
+      method: 'PUT',
+      body: JSON.stringify({
+        mysqlID: `${socket}`,
+        massageAvail: false,
+      })
+        .then(res => res.json())
+        .catch(err => console.warn(err)),
+    });
+    } catch (error) {
+      // Error retrieving data
+      console.log(error.message);
+    }
+    
   }
 
   removeVData = async () => {

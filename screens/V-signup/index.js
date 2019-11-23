@@ -42,6 +42,7 @@ class SignUp extends PureComponent {
       password: pass
     }
 
+    // console.log(newUser)s
     // passwords don't match
     if (pass !== passC) {
       this.setState({ passerror: true });
@@ -51,11 +52,11 @@ class SignUp extends PureComponent {
         method: 'POST',
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(newUser)
       }).then(res => res.json())
-        .then(async (response) => {
+        .then((response) => {
           console.log(response)
           if (response.mysqlID === "none") {
             this.setState({ emailerror: true });
