@@ -10,17 +10,17 @@ Server Code: https://github.com/Avpaige/OyaServer
 
 ##### Volunteer view 
 <p align="center">
-  <img src="./assets/volunteer.gif">
+  <img src="./assets/volunteer.gif" width="400">
 </p>
 
 ##### User view 
 <p align="center">
-  <img src="./assets/user.gif">
+  <img src="./assets/user.gif" width="400">
 </p>
 
 ##### Chat example 
 <p align="center">
-  <img src="./assets/chat.gif">
+  <img src="./assets/chat.gif" width="400">
 </p>
 
 
