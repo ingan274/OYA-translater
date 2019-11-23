@@ -36,13 +36,17 @@ class LoginScreen extends PureComponent {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ login })
-    })
+      body: JSON.stringify(login)
+    }).then(res => res.json())
       .then((response) => {
         if (response.mysqlID === "none") {
           this.setState({ error: true });
         } else {
           let id = response.mysqlID;
+          let firstname = response.firstname;
+          let lastname = response.lastname;
+
+          this.handleLocalStorageName(firstname, lastname)
 
           fetch(`https://oyabackend.herokuapp.com/volunteer/${id}`, {
             method: 'GET',
@@ -50,18 +54,16 @@ class LoginScreen extends PureComponent {
               Accept: 'application/json',
               'Content-Type': 'application/json',
             },
-          })
-            .then(async (res) => {
-              let response = res[0]
+          }).then(res => res.json())
+            .then(async (data) => {
+              const response = data[0]
               // SAVE RESPONSE IN LOCAL STORAGE
-              const firstname = response.firstname;
-              const lastname = response.lastname;
               const language1 = response.language1;
               const language2 = response.language2;
               const language3 = response.language3;
               const socket = response.socket;
 
-              this.handleLocalStorage(firstname, lastname, language1, language2, language3, socket)
+              this.handleLocalStorageLanguage(language1, language2, language3, socket)
 
               //NAVIGATE
               const {
@@ -75,26 +77,33 @@ class LoginScreen extends PureComponent {
       .catch(err => console.warn(err))
   };
 
-  handleLocalStorage = async (firstname, lastname, language1, language2, language3, socket) => {
+  handleLocalStorageName = async (firstname, lastname) => {
     try {
-      await AsyncStorage.setItem('firstname', firstname);
+      await AsyncStorage.setItem('firstname', `${firstname}`);
       console.log('firstname', firstname);
-      await AsyncStorage.setItem('lastname', lastname);
-      console.log('lastname', lastname);
-      await AsyncStorage.setItem('language1', language1);
-      console.log('language1', language1);
-      await AsyncStorage.setItem('language2', language2);
-      console.log('language2', language2);
-      await AsyncStorage.setItem('language3', language3);
-      console.log('language3', language3);
-      await AsyncStorage.setItem('socket', socket);
-      console.log('match', match);
+      await AsyncStorage.setItem('lastname', `${lastname}`);
     } catch (error) {
       // Error retrieving data
       console.log(error.message);
     }
   }
 
+  handleLocalStorageLanguage = async (language1, language2, language3, socket) => {
+    try {
+      await AsyncStorage.setItem('language1', `${language1}`);
+      console.log('language1', language1);
+      await AsyncStorage.setItem('language2', `${language2}`);
+      console.log('language2', language2);
+      await AsyncStorage.setItem('language3', `${language3}`);
+      console.log('language3', language3);
+      await AsyncStorage.setItem('socket', `${socket}`);
+      console.log('socket', socket);
+    } catch (error) {
+      // Error retrieving data
+      console.log(error.message);
+    }
+  }
+  
   showError = () => {
     if (this.state.error) {
       return <Text style={style.error}>Oops! Looks like your username or password did not match. Please try again.</Text>

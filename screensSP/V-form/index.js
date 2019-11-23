@@ -89,7 +89,7 @@ class VForm extends PureComponent {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userInfo })
+        body: JSON.stringify(userInfo)
       });
 
       // to mongo
@@ -99,10 +99,10 @@ class VForm extends PureComponent {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userLang })
-      })
-      let socket = res.socket
+        body: JSON.stringify(userLang)
+      }).then(res => res.json())
         .then((res) => {
+          let socket = res.socket
           // SAVE IN LOCAL STORAGE
           this.handleLocalStorage(firstname, lastname, language1, language2, language3, socket)
           //NAVIGATE
@@ -126,22 +126,25 @@ class VForm extends PureComponent {
       // Error retrieving data
       console.log(error.message);
     }
+
   }
 
   handleLocalStorage = async (firstname, lastname, language1, language2, language3, socket) => {
     try {
-      await AsyncStorage.setItem('firstname', firstname);
+      await AsyncStorage.setItem('firstname', `${firstname}`);
       console.log('firstname', firstname);
-      await AsyncStorage.setItem('lastname', lastname);
+      await AsyncStorage.setItem('lastname', `${lastname}`);
       console.log('lastname', lastname);
-      await AsyncStorage.setItem('language1', language1);
+      await AsyncStorage.setItem('language1', `${language1}`);
       console.log('language1', language1);
-      await AsyncStorage.setItem('language2', language2);
+      await AsyncStorage.setItem('language2', `${language2}`);
       console.log('language2', language2);
-      await AsyncStorage.setItem('language3', language3);
+      await AsyncStorage.setItem('language3', `${language3}`);
       console.log('language3', language3);
-      await AsyncStorage.setItem('socket', socket);
+      await AsyncStorage.setItem('socket', `${socket}`);
       console.log('socket', socket);
+      await AsyncStorage.setItem('volunteer', "true");
+      await AsyncStorage.setItem('user', "false");
     } catch (error) {
       // Error retrieving data
       console.log(error.message);

@@ -46,13 +46,14 @@ export default class Account extends React.Component {
 
   getID = async () => {
     try {
-      userId = await AsyncStorage.getItem('mysqlID') || 'none';
+      let userId = await AsyncStorage.getItem('mysqlID') || 'none';
+      this.setState({ mysqlID: userId })
     } catch (error) {
       // Error retrieving data
       console.log(error.message);
     }
 
-    this.setState({ mysqlID: userId })
+    
   }
 
   handleLocalStorageGet = async () => {
@@ -61,6 +62,7 @@ export default class Account extends React.Component {
     let language1 = '';
     let language2 = '';
     let language3 = '';
+    let socket = '';
 
     try {
       firstname = await AsyncStorage.getItem('firstname') ;
@@ -112,7 +114,7 @@ export default class Account extends React.Component {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-    })
+    }).then(res => res.json())
       .then((response) => {
         this.setState({
           messageNotification: response.chatavail
@@ -127,43 +129,43 @@ export default class Account extends React.Component {
   }
 
 
-  getNotificationP = () => {
-    fetch('Heroku link will go here', {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => {
-        this.setState({
-          phoneNotification: response
-        });
-      })
-      .catch(err => console.warn(err))
+  // getNotificationP = () => {
+  //   fetch('Heroku link will go here', {
+  //     method: 'GET',
+  //     headers: {
+  //       Accept: 'application/json',
+  //       'Content-Type': 'application/json',
+  //     },
+  //   }).then(res => res.json())
+  //     .then((response) => {
+  //       this.setState({
+  //         phoneNotification: response
+  //       });
+  //     })
+  //     .catch(err => console.warn(err))
 
-    if (this.state.appState.match(/inactive/)) {
-      // REMOVE LISTENER
-      this.removeListener("P")
-    }
-  }
+  //   if (this.state.appState.match(/inactive/)) {
+  //     // REMOVE LISTENER
+  //     this.removeListener("P")
+  //   }
+  // }
 
 
-  getNotificationD = () => {
-    fetch('Heroku link will go here', {
-      method: 'GET'
-    }).then((response) => {
-      this.setState({
-        documentNotification: response
-      });
-    })
-      .catch(err => console.warn(err))
+  // getNotificationD = () => {
+  //   fetch('Heroku link will go here', {
+  //     method: 'GET'
+  //   }).then((response) => {
+  //     this.setState({
+  //       documentNotification: response
+  //     });
+  //   }).then(res => res.json())
+  //     .catch(err => console.warn(err))
 
-    if (this.state.appState.match(/inactive/)) {
-      // REMOVE LISTENER
-      this.removeListener("D")
-    }
-  }
+  //   if (this.state.appState.match(/inactive/)) {
+  //     // REMOVE LISTENER
+  //     this.removeListener("D")
+  //   }
+  // }
 
   toggleMessage = value => {
     this.setState({ messageValue: value });
@@ -175,8 +177,8 @@ export default class Account extends React.Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        mysqlID: this.state.mysqlID,
-        massageAvail: value
+        mysqlID: `${this.state.mysqlID}`,
+        massageAvail: `${value}`
       })
     })
       .then((res) => {
@@ -192,7 +194,7 @@ export default class Account extends React.Component {
     fetch('Heroku link will go here', {
       method: 'PUT',
       body: { phoneAvail: value }
-    })
+    }).then(res => res.json())
       .catch(err => console.warn(err))
   };
 
@@ -202,7 +204,7 @@ export default class Account extends React.Component {
     fetch('Heroku link will go here', {
       method: 'PUT',
       body: { documentAvail: value }
-    })
+    }).then(res => res.json())
       .catch(err => console.warn(err))
   };
 
@@ -379,7 +381,7 @@ export default class Account extends React.Component {
         </ScrollView>
       </View>
     );
-  };
+  }
 
   handleMenu = () => {
     this.props.navigation.openDrawer();

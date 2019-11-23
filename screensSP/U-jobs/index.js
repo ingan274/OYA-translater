@@ -107,13 +107,17 @@ class Job extends PureComponent {
       native = await AsyncStorage.getItem('native');
       language = await AsyncStorage.getItem('language');
       // console.log("native:", native, "language:", language)
-      return native, language;
+      // return native, language;
 
     } catch (error) {
       // Error retrieving data
       console.log(error.message);
     }
 
+    const findmatch = {
+      native: native,
+      language: language
+    }
       // send the backend to match user with person in chat
       fetch('https://oyabackend.herokuapp.com/user/match', {
         method: 'POST',
@@ -121,19 +125,21 @@ class Job extends PureComponent {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          native: native,
-          language: language,
-          job: "message"
-        })
-      }).then(async (res) => {
-        let socket = res.socket
+        body: JSON.stringify(findmatch)
+      }).then(res => res.json()).then(async (res) => {
+        let socket = res
 
         try {
-          await AsyncStorage.setItem('Vsocket', socket);
-          await AsyncStorage.setItem('User', true);
-          await AsyncStorage.setItem('Volunteer', false);
+          await AsyncStorage.setItem('Vsocket',`${socket}`);
+          await AsyncStorage.setItem('user', "true");
+          await AsyncStorage.setItem('volunteer', "false");
           console.log("Vsocket", socket)
+          // navigate
+          const {
+            navigation: { navigate },
+          } = this.props;
+          navigate('Chat');
+
         } catch (error) {
           // Error retrieving data
           console.log(error.message);
@@ -148,14 +154,14 @@ class Job extends PureComponent {
 
   // makes volunteer unavailable to get connected with someone else
   takeVolunteer = (socket) => {
-    fetch(`https://oyabackend.herokuapp.com/busy/chat`, {
+    fetch(`https://oyabackend.herokuapp.com/volunteer/busy/chat`, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        socket: socket
+        socket: `${socket}`
       })
     }).then(
       console.log("volunteer is now busy")

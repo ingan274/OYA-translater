@@ -3,6 +3,7 @@ import Account from './6vaccount-jobs';
 import About from '../../screensCH/V-about';
 import Settings from '../../screensCH/V-settings';
 import Logout from '../../screensCH/V-logout'
+// import Logout from './6logout-login-home'
 
 const AccountNavDrawer = createDrawerNavigator({
   Account: {screen: Account},

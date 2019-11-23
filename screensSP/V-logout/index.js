@@ -35,7 +35,11 @@ class Job extends PureComponent {
 
   removeVData = async () => {
     try {
-      await AsyncStorage.removeItem('firstname', 'lastname', 'language1', 'language2', 'language3');
+      await AsyncStorage.removeItem('firstname');
+      await AsyncStorage.removeItem('lastname');
+      await AsyncStorage.removeItem('language1');
+      await AsyncStorage.removeItem('language2');
+      await AsyncStorage.removeItem('language3');
       console.log("removal of volunteer info success")
     } catch (error) {
       // Error retrieving data

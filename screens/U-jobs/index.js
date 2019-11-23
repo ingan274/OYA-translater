@@ -107,55 +107,66 @@ class Job extends PureComponent {
       native = await AsyncStorage.getItem('native');
       language = await AsyncStorage.getItem('language');
       // console.log("native:", native, "language:", language)
-      return native, language;
+      // return native, language;
 
     } catch (error) {
       // Error retrieving data
       console.log(error.message);
     }
 
-      // send the backend to match user with person in chat
-      fetch('https://oyabackend.herokuapp.com/user/match', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          native: native,
-          language: language,
-          job: "message"
-        })
-      }).then(async (res) => {
-        let socket = res.socket
+    const findmatch = {
+      native: native,
+      language: language
+    }
+    // console.log("native:", native, "language:", language)
+    // send the backend to match user with person in chat
+    fetch('https://oyabackend.herokuapp.com/user/match', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(findmatch)
+    }).then(res => {
+      res.json()
+      console.log(res)
+    }).then(async (res) => {
+      // console.log(res)
+      let socket = res.socket
 
-        try {
-          await AsyncStorage.setItem('Vsocket', socket);
-          await AsyncStorage.setItem('User', true);
-          await AsyncStorage.setItem('Volunteer', false);
-          console.log("Vsocket", socket)
-        } catch (error) {
-          // Error retrieving data
-          console.log(error.message);
-        }
+      const {
+        navigation: { navigate },
+      } = this.props;
+      navigate('Chat');
 
-        this.takeVolunteer(socket)
+      try {
+        await AsyncStorage.setItem('Vsocket', `${socket}`);
+        await AsyncStorage.setItem('user', "true");
+        await AsyncStorage.setItem('volunteer', "false");
+        console.log("Vsocket", socket)
+      } catch (error) {
+        // Error retrieving data
+        console.log(error.message);
+      }
 
-      })
-        .catch(err => console.warn(err))
+      this.takeVolunteer(socket)
+
+    })
+      .catch(err => console.warn(err))
+
 
   };
 
   // makes volunteer unavailable to get connected with someone else
   takeVolunteer = (socket) => {
-    fetch(`https://oyabackend.herokuapp.com/busy/chat`, {
+    fetch(`https://oyabackend.herokuapp.com/volunteer/busy/chat`, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        socket: socket
+        socket: `${socket}`
       })
     }).then(
       console.log("volunteer is now busy")
