@@ -71,7 +71,7 @@ class Job extends PureComponent {
             visible={this.state.modalVisible}
           />
           <Jobbtn
-            btntext="Mensaje voluntario"
+            btntext="Mensaje a un voluntario"
             onPress={this.handleMessageReq}
             icon="text"
           />

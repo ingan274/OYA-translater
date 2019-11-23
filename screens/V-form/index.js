@@ -92,7 +92,7 @@ class VForm extends PureComponent {
         method: 'PUT',
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(userInfo)
       });
