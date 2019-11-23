@@ -3,9 +3,10 @@
 <p align="center">
   <img src="https://media.giphy.com/media/7fNXLdViGSlKo/giphy.gif">
 </p>
-<br>
-Live app here: https://snack.expo.io/@ingan/oya-app:-translation-app
-<br>
+
+## Live app here: https://snack.expo.io/@ingan/oya-app:-translation-app
+
+
 #### WHAT IS OYA?
 Oya is a FREE peer to peer translation service that connects you with bilingual speakers able to provide you with translation and context either for simple phrases or to help you facilitate a conversation. Whether it’s to better communicate with a loved one, coworker or make a request of your landlord. OYA voluteeners will help you with what to say and how to say it.
 
