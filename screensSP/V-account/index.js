@@ -382,7 +382,7 @@ export default class Account extends React.Component {
         </ScrollView>
       </View>
     );
-  };
+  }
 
   handleMenu = () => {
     this.props.navigation.openDrawer();
