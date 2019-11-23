@@ -4,21 +4,21 @@
   <img src="https://media.giphy.com/media/7fNXLdViGSlKo/giphy.gif">
 </p>
 <br>
-Live app here: https://snack.expo.io/@ingan/oya-app:-translation-app
-Server Code: https://github.com/Avpaige/OyaServer
+##### Live app here: https://snack.expo.io/@ingan/oya-app:-translation-app
+##### Server Code: https://github.com/Avpaige/OyaServer
 <br>
 
-##### Volunteer view 
+#### Volunteer view 
 <p align="center">
   <img src="./assets/volunteer.gif" width="300">
 </p>
 
-##### User view 
+#### User view 
 <p align="center">
   <img src="./assets/user.gif" width="300">
 </p>
 
-##### Chat example 
+#### Chat example 
 <p align="center">
   <img src="./assets/chat.gif" width="300">
 </p>
