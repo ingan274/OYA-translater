@@ -102,7 +102,7 @@ class VForm extends PureComponent {
         body: JSON.stringify(userLang)
       }).then(res => res.json())
         .then((res) => {
-          let socket = res
+          let socket = res.socket
           // SAVE IN LOCAL STORAGE
           this.handleLocalStorage(firstname, lastname, language1, language2, language3, socket)
           //NAVIGATE

@@ -113,6 +113,11 @@ class Job extends PureComponent {
       // Error retrieving data
       console.log(error.message);
     }
+
+    const findmatch = {
+      native: native,
+      language: language
+    }
     // console.log("native:", native, "language:", language)
     // send the backend to match user with person in chat
     fetch('https://oyabackend.herokuapp.com/user/match', {
@@ -121,12 +126,12 @@ class Job extends PureComponent {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        native: `${native}`,
-        language: `${language}`
-      })
-    }).then(res => res.json()).then(async (res) => {
+      body: JSON.stringify(findmatch)
+    }).then(res => {
+      res.json()
       console.log(res)
+    }).then(async (res) => {
+      // console.log(res)
       let socket = res.socket
 
       const {
@@ -161,7 +166,7 @@ class Job extends PureComponent {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        socket: socket
+        socket: `${socket}`
       })
     }).then(
       console.log("volunteer is now busy")

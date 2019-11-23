@@ -21,18 +21,22 @@ class Lang1 extends PureComponent {
   }
 
   componentDidMount = () => {
-    AppState.addEventListener('change', this.deleteDB);
+    this.deleteDB()
   }
 
   deleteDB = async () => {
-    if (this.state.appState.match(/inactive/)) {
-      // INSERT CODE TO DELETE DATABASE
-      try {
-        await AsyncStorage.removeItem('native', 'lanugage', 'socket');
-      } catch (error) {
-        // Error retrieving data
-        console.log(error.message);
-      }
+    try {
+      await AsyncStorage.removeItem('native');
+      await AsyncStorage.removeItem('lanugage');
+      await AsyncStorage.removeItem('socket');
+      await AsyncStorage.removeItem('language1');
+      await AsyncStorage.removeItem('language2');
+      await AsyncStorage.removeItem('language3');
+      await AsyncStorage.removeItem('firstname');
+      await AsyncStorage.removeItem('lastname');
+    } catch (error) {
+      // Error retrieving data
+      console.log(error.message);
     }
   }
 

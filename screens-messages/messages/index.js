@@ -104,7 +104,7 @@ class ChatRoom extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        socket: this.state.Socket
+        socket: `${this.state.socketNum}`
       })
     }).then(
       console.log("volunteer is now avail")

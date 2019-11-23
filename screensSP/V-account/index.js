@@ -171,24 +171,9 @@ export default class Account extends React.Component {
         massageAvail: `${value}`,
       })
         .then(res => res.json())
-        .then(res => {
-          if (res) {
-            let socket = res;
-            this.saveSocket(socket);
-          }
-        })
         .catch(err => console.warn(err)),
     });
   };
-
-  saveSocket = async (socket) => {
-    try {
-      await AsyncStorage.setItem('Vsocket', socket);
-    } catch (error) {
-      // Error retrieving data
-      console.log(error.message);
-    }
-  }
 
   togglePhone = value => {
     this.setState({ phoneValue: value });
