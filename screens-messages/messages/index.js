@@ -7,7 +7,7 @@ import io from 'socket.io-client';
 window.navigator.userAgent = 'ReactNative';
 import defaultmessages from './messages'
 
-const SOCKET_URL = "https://oyabackend.herokuapp.com/talk"
+const SOCKET_URL = "http://localhost:8000/talk"
 
 class ChatRoom extends Component {
   constructor(props) {
@@ -15,7 +15,7 @@ class ChatRoom extends Component {
     this.state = {
       isConnected: false,
       messages: defaultmessages,
-      socketNum: '',
+      socketNum: '123',
       volunteer: true,
       user: false,
       userId: '',
@@ -25,7 +25,8 @@ class ChatRoom extends Component {
   }
 
   componentDidMount() {
-    this.handleUser()
+    // this.handleUser()
+    this.socketEvents()
   }
 
   handleUser = async () => {

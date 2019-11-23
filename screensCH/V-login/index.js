@@ -99,6 +99,8 @@ class LoginScreen extends PureComponent {
       console.log('language3', language3);
       await AsyncStorage.setItem('socket', `${socket}`);
       console.log('socket', socket);
+      await AsyncStorage.setItem('volunteer', "true");
+      await AsyncStorage.setItem('user', "false");
     } catch (error) {
       // Error retrieving data
       console.log(error.message);

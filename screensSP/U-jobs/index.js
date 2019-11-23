@@ -118,39 +118,43 @@ class Job extends PureComponent {
       native: native,
       language: language
     }
-      // send the backend to match user with person in chat
-      fetch('https://oyabackend.herokuapp.com/user/match', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(findmatch)
-      }).then(res => res.json()).then(async (res) => {
-        let socket = res
+    console.log("native:", native, "language:", language)
+    // send the backend to match user with person in chat
+    fetch('https://oyabackend.herokuapp.com/user/match', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(findmatch)
+    }).then(res => res.json()).then( (res) => {
+      console.log(res)
+      let socket = res.socket
 
-        try {
-          await AsyncStorage.setItem('Vsocket',`${socket}`);
-          await AsyncStorage.setItem('user', "true");
-          await AsyncStorage.setItem('volunteer', "false");
-          console.log("Vsocket", socket)
-          // navigate
-          const {
-            navigation: { navigate },
-          } = this.props;
-          navigate('Chat');
+      const {
+        navigation: { navigate },
+      } = this.props;
+      navigate('Chat');
 
-        } catch (error) {
-          // Error retrieving data
-          console.log(error.message);
-        }
+      this.saveSocket(socket)
 
-        this.takeVolunteer(socket)
+      this.takeVolunteer(socket)
 
-      })
-        .catch(err => console.warn(err))
-
+    })
+      .catch(err => console.warn(err))
   };
+
+  saveSocket = async (socket) => {
+    try {
+         await AsyncStorage.setItem('Vsocket', `${socket}`);
+        await AsyncStorage.setItem('user', "true");
+         await AsyncStorage.setItem('volunteer', "false");
+        console.log("Vsocket", socket)
+      } catch (error) {
+        // Error retrieving data
+        console.log(error.message);
+      }
+  }
 
   // makes volunteer unavailable to get connected with someone else
   takeVolunteer = (socket) => {

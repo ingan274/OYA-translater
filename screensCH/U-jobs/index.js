@@ -118,33 +118,43 @@ class Job extends PureComponent {
       native: native,
       language: language
     }
-      // send the backend to match user with person in chat
-      fetch('https://oyabackend.herokuapp.com/user/match', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(findmatch)
-      }).then(res => res.json()).then(async (res) => {
-        let socket = res
+    console.log("native:", native, "language:", language)
+    // send the backend to match user with person in chat
+    fetch('https://oyabackend.herokuapp.com/user/match', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(findmatch)
+    }).then(res => res.json()).then( (res) => {
+      console.log(res)
+      let socket = res.socket
 
-        try {
-          await AsyncStorage.setItem('Vsocket', `${socket}`);
-          await AsyncStorage.setItem('user', "true");
-          await AsyncStorage.setItem('volunteer', "false");
-          console.log("Vsocket", socket)
-        } catch (error) {
-          // Error retrieving data
-          console.log(error.message);
-        }
+      const {
+        navigation: { navigate },
+      } = this.props;
+      navigate('Chat');
 
-        this.takeVolunteer(socket)
+      this.saveSocket(socket)
 
-      })
-        .catch(err => console.warn(err))
+      this.takeVolunteer(socket)
 
+    })
+      .catch(err => console.warn(err))
   };
+
+  saveSocket = async (socket) => {
+    try {
+         await AsyncStorage.setItem('Vsocket', `${socket}`);
+        await AsyncStorage.setItem('user', "true");
+         await AsyncStorage.setItem('volunteer', "false");
+        console.log("Vsocket", socket)
+      } catch (error) {
+        // Error retrieving data
+        console.log(error.message);
+      }
+  }
 
   // makes volunteer unavailable to get connected with someone else
   takeVolunteer = (socket) => {
