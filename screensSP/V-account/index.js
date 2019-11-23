@@ -48,12 +48,11 @@ export default class Account extends React.Component {
   getID = async () => {
     try {
       let userId = await AsyncStorage.getItem('mysqlID') || 'none';
+      this.setState({ mysqlID: userId })
     } catch (error) {
       // Error retrieving data
       console.log(error.message);
     }
-
-    this.setState({ mysqlID: userId })
   }
 
   handleLocalStorageGet = async () => {
@@ -128,49 +127,48 @@ export default class Account extends React.Component {
     }
   }
 
-  getNotificationP = () => {
-    fetch('Heroku link will go here', {
-      method: 'GET'
-    }).then(res => res.json()).then((response) => {
-      this.setState({
-        phoneNotification: response
-      });
-    })
-      .catch(err => console.warn(err))
+  // getNotificationP = () => {
+  //   fetch('Heroku link will go here', {
+  //     method: 'GET'
+  //   }).then(res => res.json()).then((response) => {
+  //     this.setState({
+  //       phoneNotification: response
+  //     });
+  //   })
+  //     .catch(err => console.warn(err))
 
-    if (this.state.appState.match(/inactive/)) {
-      // REMOVE LISTENER
-      this.removeListener("P")
-    }
-  }
+  //   if (this.state.appState.match(/inactive/)) {
+  //     // REMOVE LISTENER
+  //     this.removeListener("P")
+  //   }
+  // }
 
 
-  getNotificationD = () => {
-    fetch('Heroku link will go here', {
-      method: 'GET'
-    }).then(res => res.json()).then((response) => {
-      this.setState({
-        documentNotification: response
-      });
-    })
-      .catch(err => console.warn(err))
+  // getNotificationD = () => {
+  //   fetch('Heroku link will go here', {
+  //     method: 'GET'
+  //   }).then(res => res.json()).then((response) => {
+  //     this.setState({
+  //       documentNotification: response
+  //     });
+  //   })
+  //     .catch(err => console.warn(err))
 
-    if (this.state.appState.match(/inactive/)) {
-      // REMOVE LISTENER
-      this.removeListener("D")
-    }
-  }
+  //   if (this.state.appState.match(/inactive/)) {
+  //     // REMOVE LISTENER
+  //     this.removeListener("D")
+  //   }
+  // }
 
   toggleMessage = value => {
     this.setState({ messageValue: value });
     // put call
     fetch('https://oyabackend.herokuapp.com/volunteer/', {
       method: 'PUT',
-      body: {
-        mysqlID: this.state.mysqlID,
-        massageAvail: value
-      }
-    }).then(res => res.json())
+      body: JSON.stringify({
+        mysqlID: `${this.state.mysqlID}`,
+        massageAvail: `${value}`
+      }).then(res => res.json())
       .then((res) => {
         if (res) {
 

@@ -34,7 +34,7 @@ class ChatRoom extends Component {
       console.log('volunteer', volunteer)
       let socket = await AsyncStorage.getItem('Vsocket' || 'socket');
 
-      if (volunteer) {
+      if (volunteer === "true") {
         this.setState({ volunteer: true })
         this.setState({ userId: '9999'})
         this.setMySocket(socket);
@@ -97,7 +97,7 @@ class ChatRoom extends Component {
 
 
   chatEnded = () => {
-    fetch(`https://oyabackend.herokuapp.com/done/chat`, {
+    fetch(`https://oyabackend.herokuapp.com/volunteer/done/chat`, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
@@ -180,6 +180,8 @@ class ChatRoom extends Component {
   }
 
   handleBackPress = () => {
+    // console.log ('volunteer', this.state.volunteer)
+    // console.log ('user', this.state.user)
     if (this.state.volunteer) {
       const {
         navigation: { navigate },

@@ -107,7 +107,7 @@ class Job extends PureComponent {
       native = await AsyncStorage.getItem('native');
       language = await AsyncStorage.getItem('language');
       // console.log("native:", native, "language:", language)
-      return native, language;
+      // return native, language;
 
     } catch (error) {
       // Error retrieving data
@@ -123,17 +123,22 @@ class Job extends PureComponent {
         },
         body: JSON.stringify({
           native: `${native}`,
-          language: `${language}`,
-          job: "message"
+          language: `${language}`
         })
       }).then(res => res.json()).then(async (res) => {
         let socket = res
 
         try {
           await AsyncStorage.setItem('Vsocket',`${socket}`);
-          await AsyncStorage.setItem('user', true);
-          await AsyncStorage.setItem('volunteer', false);
+          await AsyncStorage.setItem('user', "true");
+          await AsyncStorage.setItem('volunteer', "false");
           console.log("Vsocket", socket)
+          // navigate
+          const {
+            navigation: { navigate },
+          } = this.props;
+          navigate('Chat');
+
         } catch (error) {
           // Error retrieving data
           console.log(error.message);
@@ -148,7 +153,7 @@ class Job extends PureComponent {
 
   // makes volunteer unavailable to get connected with someone else
   takeVolunteer = (socket) => {
-    fetch(`https://oyabackend.herokuapp.com/busy/chat`, {
+    fetch(`https://oyabackend.herokuapp.com/volunteer/busy/chat`, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
