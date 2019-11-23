@@ -45,20 +45,22 @@ class Aboutscreen extends PureComponent {
           <Text style={style.title}> ¿QUE ES OYA? </Text>
           <Text style={style.desc}>
             {' '}
-            Oya es un servicio GRATUITO de traducción entre pares que lo conecta
-            con hablantes bilingües capaces de brindarle traducción y
-            contexto ya sea para frases simples o para ayudarlo a facilitar un
-            conversacion. Ya sea para comunicarse mejor con un ser querido,
-            compañero de trabajo o haga una solicitud a su arrendador. Voluntarios de OYA
-            ayudarlo con qué decir y cómo decirlo.
+          OYA es un servicio gratuito que lo conecta 
+          con un compañero bilingüe capaz de traducir frases simples o para ayudar
+          a facilitar una conversación con contexto. OYA se puede usar para 
+          comunicarse con un ser querido, compañero de trabajo, o solicitar algo 
+          con su administrador de edificios. Voluntarios de OYA lo ayudaran con 
+          qué decir y cómo decirlo. 
           </Text>
 
           <Text style={style.title}> ¿CUÁNTO CUESTA?</Text>
           <Text style={style.desc}>
             {' '}
-            OYA es un servicio totalmente gratuito. Los voluntarios nunca deberían pedirte
-            pago u otra información personal o confidencial. Si lo hacen,
-            háganos saber de inmediato y finalice su sesión.
+          OYA es un servicio completamente gratis. 
+          Voluntarios no deben pedirle por un pago o alguna otra
+          información personal o sensible. Si ocurre, termine su 
+          sesión y háganos saber inmediatamente. 
+ 
           </Text>
 
           <Text style={style.title}> ¿QUÉ IDIOMAS APOYAS?</Text>
@@ -72,22 +74,20 @@ class Aboutscreen extends PureComponent {
           <Text style={style.title}> ¿PROPORCIONA ASESORAMIENTO LEGAL?</Text>
           <Text style={style.desc}>
             {' '}
-            No, la intención de OYA no es brindar asesoramiento, legal o
-            de otra manera. Los voluntarios de OYA no han sido certificados o verificados como
-            profesionales del derecho
+            No, la intencion de OYA no es de proveer consejos legales.
+            Voluntarios de OYA no son certificados como profesionales de ley. 
           </Text>
 
           <Text style={style.title}>
             ¿REPORTA O COMPARTE CUALQUIER INFORMACIÓN DISCUTIDA CON LA LEY APLICACIÓN U OTRAS AGENCIAS?
           </Text>
           <Text style={style.emphesis}>
-            Nuestra misión es unir a las personas sin miedo.
+            Nuestra misión es de unir a person sin miedo. 
           </Text>
-          <Text style={style.desc}>
-            La única información identificable que recopilamos es de voluntarios para
-                        verificar que su intención es dar información precisa a aquellos
-                        buscando ayuda Los usuarios no necesitan proporcionar ningún personal
-                        información para usar OYA.
+          <Text style={style.desc}>         
+          La única información identificable que colectamos es por parte 
+          de voluntarios para poder verificar que estén dando información
+          precisa para ustedes. No necesitan dar información personal para usar OYA.
           </Text>
 
           <Text style={style.desc}>
