@@ -183,12 +183,12 @@ class ChatRoom extends Component {
   handleBackPress = () => {
     // console.log ('volunteer', this.state.volunteer)
     // console.log ('user', this.state.user)
-    if (this.state.volunteer) {
+    if (this.state.volunteer === "true") {
       const {
         navigation: { navigate },
       } = this.props;
       navigate('Account');
-    } else if (this.state.user) {
+    } else if (this.state.user === "true") {
       const {
         navigation: { navigate },
       } = this.props;
