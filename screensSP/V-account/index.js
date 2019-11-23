@@ -160,6 +160,7 @@ export default class Account extends React.Component {
   //   }
   // }
 
+
   toggleMessage = value => {
     this.setState({ messageValue: value });
     // put call
@@ -167,16 +168,17 @@ export default class Account extends React.Component {
       method: 'PUT',
       body: JSON.stringify({
         mysqlID: `${this.state.mysqlID}`,
-        massageAvail: `${value}`
-      }).then(res => res.json())
-      .then((res) => {
-        if (res) {
-
-          let socket = res
-          this.saveSocket(socket)
-        }
+        massageAvail: `${value}`,
       })
-      .catch(err => console.warn(err))
+        .then(res => res.json())
+        .then(res => {
+          if (res) {
+            let socket = res;
+            this.saveSocket(socket);
+          }
+        })
+        .catch(err => console.warn(err)),
+    });
   };
 
   saveSocket = async (socket) => {
