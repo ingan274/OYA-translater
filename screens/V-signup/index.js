@@ -59,7 +59,7 @@ class SignUp extends PureComponent {
         .then((response) => {
           console.log(response)
           if (response.mysqlID === "none") {
-            this.setState({ emailerror: true });
+            this.setState({ usererror: true });
           } else {
 
             let mysqlID = response.mysqlID
@@ -98,7 +98,7 @@ class SignUp extends PureComponent {
   showError = () => {
     if (this.state.passerror) {
       return <Text style={style.error}>Please make sure your passwords match. Please try again.</Text>
-    } else if (this.state.emailerror) {
+    } else if (this.state.usererror) {
       return <Text style={style.error}>Oops. Looks like that username has already been used. Please choose another username.</Text>
     }
   };
